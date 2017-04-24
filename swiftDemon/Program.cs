@@ -1,0 +1,230 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.OleDb;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace swiftDemon
+{
+    class Program
+    {
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        [DllImport("user32.dll")]
+        private static extern int DeleteMenu(IntPtr hMenu, int nPosition, int wFlags);
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+        private static bool ConsoleVisible = false;
+        private const int HIDE = 0;
+        private const int SHOW = 9;
+        private const int MF_BYCOMMAND = 0;
+        private const int SC_CLOSE = 0xF060;
+        [DllImport("kernel32.dll")]
+        private static extern IntPtr GetConsoleWindow();
+        private static IntPtr ConsoleWindow = GetConsoleWindow();
+
+        private static System.Timers.Timer TrayTimer;
+        private static NotifyIcon TrayIcon;
+
+        private static bool Enabled = true;
+        private static bool Error = false;
+        public static bool firstStart = true;
+
+        static void Main(string[] args)
+        {
+            #region new
+            try
+            {
+                // убрать стандартную кнопку Close
+                DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_CLOSE, MF_BYCOMMAND);
+                // скрываем окно в начале работы
+                ToggleWindow(false);
+                // создаем контекстное меню
+                ContextMenu TrayMenu = new ContextMenu();
+                //TrayMenu.MenuItems.Add("Изменить период обработки", InputParams);
+                TrayMenu.MenuItems.Add("Показать / спрятать", TrayToggle);
+                TrayMenu.MenuItems.Add("Выход", OnExit);
+                // регисртируем иконку для отображения в области уведомлений; файл *.ico должен быть рядом с *.exe
+                TrayIcon = new NotifyIcon();
+                TrayIcon.ContextMenu = TrayMenu; // регистрируем контекстное меню (появляется по правой кнопке мыши)
+                TrayIcon.Icon = new Icon("ico.ico");
+                TrayIcon.Text = "регистрация swift"; // всплывающая подсказка
+                TrayIcon.MouseDoubleClick += new MouseEventHandler(TrayClick); // показать/скрыть конслоль по двойному щелчку
+                TrayIcon.Visible = true;
+                // обработчик событий по таймеру
+                TrayTimer = new System.Timers.Timer();
+                TrayTimer.Interval = 5000;//290000;
+                TrayTimer.Enabled = true;
+                TrayTimer.Elapsed += new System.Timers.ElapsedEventHandler(MainFunction); // основная функция консоли
+                                                                                          // запуск обработчика событий
+                Console.WindowHeight = Console.LargestWindowHeight-50;
+                Console.WindowWidth = Console.LargestWindowWidth-50;
+                
+                Application.Run();
+            }
+            catch (Exception e)
+            {
+                ToggleWindow(true);
+                logs.outStr(e.Message, true, null);
+                logs.outStr(e.StackTrace, true, null);
+            }
+            #endregion
+        }
+        
+        private static Dictionary<string, string> newSwiftFiles(bool firstStart)
+        {
+            Dictionary<string, string> filesDictionary = new Dictionary<string, string>();
+            try
+            {
+                string[] dirs = Directory.GetFiles(@"C:\SWIFT\OUT", "*");
+                int key = 0;
+                for (int i = 0; i < dirs.Length; i++)
+                    //FileInfo file();
+                {
+                    if (Path.GetExtension(dirs[i]) == ".trn")
+                    {
+                        if (firstStart)
+                        {
+                            //logs.outStr("================================================================================================", false, null);
+                            DateTime workDate = DateTime.Now.AddDays(-1);
+                            //logs.outStr("workDate " + workDate.ToString(), false, null);
+                            string pattern = "dd.MM.yyyy H:mm:ff";
+                            DateTime parsedDate;
+                            DateTime.TryParseExact(workDate.ToString(), pattern, null, DateTimeStyles.None, out parsedDate);
+                            //logs.outStr("parsedDate " + parsedDate.ToString(), false, null);
+                            string newDate = string.Format("{0:d}", parsedDate);
+                            newDate += " 17:30:00";
+                            //logs.outStr("newDate " + newDate.ToString(), false, null);
+                            //logs.outStr("File.GetLastAccessTime(dirs[i]) " + File.GetLastWriteTime(dirs[i]), false, null);
+                            //logs.outStr("DateTime.Now - File.GetLastAccessTime(dirs[i]) " + (DateTime.Now - File.GetLastWriteTime(dirs[i])), false, null);
+                            //logs.outStr("(DateTime.Now - File.GetLastAccessTime(dirs[i])).TotalMinutes " + (DateTime.Now - File.GetLastWriteTime(dirs[i])).TotalMinutes, false, null);
+                            //logs.outStr("(DateTime.Now - DateTime.Parse(newDate)) " + (DateTime.Now - DateTime.Parse(newDate)), false, null);
+                            //logs.outStr("(DateTime.Now - DateTime.Parse(newDate)).TotalMinutes " + (DateTime.Now - DateTime.Parse(newDate)).TotalMinutes, false, null);
+                            //logs.outStr("(DateTime.Now - File.GetLastAccessTime(dirs[i])).TotalMinutes < (int)(DateTime.Now - DateTime.Parse(newDate)).TotalMinutes " + ((DateTime.Now - File.GetLastWriteTime(dirs[i])).TotalMinutes < (int)(DateTime.Now - DateTime.Parse(newDate)).TotalMinutes), false, null);
+                            //logs.outStr("key " + key, false, null);
+                            //logs.outStr("==============================================================================================", false, null);
+                            if ((DateTime.Now - File.GetLastWriteTime(dirs[i])).TotalMinutes < (int)(DateTime.Now - DateTime.Parse(newDate)).TotalMinutes)
+                            {
+                                filesDictionary.Add(key.ToString(), dirs[i]);
+                                key++;
+                            }
+                        }
+                        else
+                        {
+                            if ((int)(DateTime.Now - File.GetLastWriteTime(dirs[i])).TotalMinutes < 5)
+                            {
+                                filesDictionary.Add(key.ToString(), dirs[i]);
+                                key++;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (ApplicationException e) {
+                logs.outStr(e.Message, true, null);
+                logs.outStr(e.StackTrace, true, null);
+                MessageBox.Show(e.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+            }
+            return filesDictionary;
+        }
+        static void ToggleWindow(bool visible)
+        {
+            try
+            {
+                ConsoleVisible = visible;
+                ShowWindow(ConsoleWindow, visible ? SHOW : HIDE);
+            }
+            catch (ApplicationException e)
+            {
+                logs.outStr(e.Message, true, null);
+                logs.outStr(e.StackTrace, true, null);
+                MessageBox.Show(e.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+            }
+        }
+
+        static void TrayClick(object Sender, EventArgs e)
+        {
+            try
+            {
+                // по двойному щелчку
+                ToggleWindow(!ConsoleVisible);
+            }
+            catch (ApplicationException ex)
+            {
+                logs.outStr(ex.Message, true, null);
+                logs.outStr(ex.StackTrace, true, null);
+                MessageBox.Show(ex.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+            }
+        }
+
+        static void TrayToggle(object Sender, EventArgs e)
+        {
+            try
+            {
+                // по выбору из меню
+                ToggleWindow(!ConsoleVisible);
+            }
+            catch (ApplicationException exe)
+            {
+                logs.outStr(exe.Message, true, null);
+                logs.outStr(exe.StackTrace, true, null);
+                MessageBox.Show(exe.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+            }
+        }
+
+        static void OnExit(object Sender, EventArgs e)
+        {
+            try
+            {
+                TrayIcon.Visible = false; // спрятать значок перед завершением
+                                          // …
+                                          // и другие завершающие действия по выходу из программы
+            }
+            catch (ApplicationException exep)
+            {
+                logs.outStr(exep.Message, true, null);
+                logs.outStr(exep.StackTrace, true, null);
+                MessageBox.Show(exep.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+            }
+            Application.Exit();
+        }
+        
+        static void MainFunction(object Sender, EventArgs e) // имитатор главного обработчика событий
+        {
+            try
+            {
+                int i = 0;
+                logs.outStr("Start verification " + DateTime.Now + " " + Environment.UserDomainName + " " + Environment.UserName + " " + Environment.MachineName + "\n", false, null);
+                Dictionary<string, string> files = new Dictionary<string, string>();
+                
+                files = newSwiftFiles(firstStart);
+                firstStart = false;
+                if (files.Count > 0)
+                {
+                    string mess = "Получены новые файлы: \n";
+                    for (int z = 0; z < files.Count; z++)
+                    {
+                        swiftMess messObj = new swiftMess(File.ReadAllText(files[z.ToString()]), files[z.ToString()]);
+                        logs.outStr("Новый файл " + files[z.ToString()] + "\t" + File.GetLastAccessTime(files[z.ToString()]), false, messObj);
+                        string[] filName = files[z.ToString()].Split('\\');
+                        mess += filName[filName.Length - 1] + '\n';
+                    }
+                    MessageBox.Show(mess, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                    //throw new ApplicationException();
+                }
+            }
+            catch (ApplicationException exept)
+            {
+                logs.outStr(exept.Message, true, null);
+                logs.outStr(exept.StackTrace, true, null);
+            }
+        }
+    }
+}
