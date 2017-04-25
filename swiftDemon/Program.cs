@@ -36,7 +36,6 @@ namespace swiftDemon
         private static bool Enabled = true;
         private static bool Error = false;
         public static bool firstStart = true;
-
         static void Main(string[] args)
         {
             #region new
@@ -50,6 +49,7 @@ namespace swiftDemon
                 ContextMenu TrayMenu = new ContextMenu();
                 //TrayMenu.MenuItems.Add("Изменить период обработки", InputParams);
                 TrayMenu.MenuItems.Add("Показать / спрятать", TrayToggle);
+                TrayMenu.MenuItems.Add("Настройки", Settings);
                 TrayMenu.MenuItems.Add("Выход", OnExit);
                 // регисртируем иконку для отображения в области уведомлений; файл *.ico должен быть рядом с *.exe
                 TrayIcon = new NotifyIcon();
@@ -77,13 +77,22 @@ namespace swiftDemon
             }
             #endregion
         }
-        
+
+        private static void Settings(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+            //Form settingsForm = new Form();
+            settingsForm settingF = new settingsForm();
+            settingF.Show();
+        }
+
         private static Dictionary<string, string> newSwiftFiles(bool firstStart)
         {
             Dictionary<string, string> filesDictionary = new Dictionary<string, string>();
             try
             {
-                string[] dirs = Directory.GetFiles(@"C:\SWIFT\OUT", "*");
+                settings settingsVal = new settings();
+                string[] dirs = Directory.GetFiles(settingsVal.outMess, "*");
                 int key = 0;
                 for (int i = 0; i < dirs.Length; i++)
                     //FileInfo file();

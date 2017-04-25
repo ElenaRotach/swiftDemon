@@ -9,10 +9,12 @@ namespace swiftDemon
 {
     class connectionDB
     {
-        public static string connectionString = @"Provider=Microsoft.Ace.OLEDB.12.0;Data Source=" + Environment.CurrentDirectory + @"\swift.mdb";
+        public settings obj = new settings();
+        public string connectionString; //= @"Provider=Microsoft.Ace.OLEDB.12.0;Data Source=" +  + @"\swift.mdb";
 
         OleDbDataReader initConnect(string strQuery)
         {
+            connectionString = @"Provider=Microsoft.Ace.OLEDB.12.0;Data Source=" + obj.dbPath + obj.dbName;
             OleDbConnection myOleDbConnection;
             OleDbDataReader myOleDbDataReader = null;
             try
