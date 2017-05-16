@@ -60,7 +60,7 @@ namespace swiftDemon
                 TrayIcon.Visible = true;
                 // обработчик событий по таймеру
                 TrayTimer = new System.Timers.Timer();
-                TrayTimer.Interval = 5000;//290000;
+                TrayTimer.Interval = 290000;//290000;
                 TrayTimer.Enabled = true;
                 TrayTimer.Elapsed += new System.Timers.ElapsedEventHandler(MainFunction); // основная функция консоли
                                                                                           // запуск обработчика событий
@@ -86,13 +86,15 @@ namespace swiftDemon
             settingF.Show();
         }
 
-        private static Dictionary<string, string> newSwiftFiles(bool firstStart)
+        private static Dictionary<string, string> newSwiftFiles(bool firstStart, bool outFil)
         {
             Dictionary<string, string> filesDictionary = new Dictionary<string, string>();
             try
             {
                 settings settingsVal = new settings();
-                string[] dirs = Directory.GetFiles(settingsVal.outMess, "*");
+                string[] dirs;// = Directory.GetFiles(settingsVal.outMess, "*");
+                if (outFil) { dirs = Directory.GetFiles(settingsVal.outMess, "*"); }
+                else { dirs = Directory.GetFiles(settingsVal.inMess, "*"); }
                 int key = 0;
                 for (int i = 0; i < dirs.Length; i++)
                     //FileInfo file();
@@ -211,28 +213,37 @@ namespace swiftDemon
             {
                 int i = 0;
                 logs.outStr("Start verification " + DateTime.Now + " " + Environment.UserDomainName + " " + Environment.UserName + " " + Environment.MachineName + "\n", false, null);
-                Dictionary<string, string> files = new Dictionary<string, string>();
-                
-                files = newSwiftFiles(firstStart);
-                firstStart = false;
-                if (files.Count > 0)
-                {
-                    string mess = "Получены новые файлы: \n";
-                    for (int z = 0; z < files.Count; z++)
-                    {
-                        swiftMess messObj = new swiftMess(File.ReadAllText(files[z.ToString()]), files[z.ToString()]);
-                        logs.outStr("Новый файл " + files[z.ToString()] + "\t" + File.GetLastAccessTime(files[z.ToString()]), false, messObj);
-                        string[] filName = files[z.ToString()].Split('\\');
-                        mess += filName[filName.Length - 1] + '\n';
-                    }
-                    MessageBox.Show(mess, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
-                    //throw new ApplicationException();
-                }
+                work(true);
+                work(false);
             }
             catch (ApplicationException exept)
             {
                 logs.outStr(exept.Message, true, null);
                 logs.outStr(exept.StackTrace, true, null);
+            }
+        }
+
+        public static void work(bool outMess)
+        {
+            Dictionary<string, string> files = new Dictionary<string, string>();
+
+            files = newSwiftFiles(firstStart, outMess);
+            firstStart = false;
+            if (files.Count > 0)
+            {
+                string mess = "Получены новые файлы: \n";
+                for (int z = 0; z < files.Count; z++)
+                {
+                    swiftMess messObj = new swiftMess(File.ReadAllText(files[z.ToString()]), files[z.ToString()]);
+                    logs.outStr("Новый файл " + files[z.ToString()] + "\t" + File.GetLastAccessTime(files[z.ToString()]), false, messObj);
+                    string[] filName = files[z.ToString()].Split('\\');
+                    mess += filName[filName.Length - 1] + '\n';
+                }
+                if (outMess)
+                {
+                    MessageBox.Show(mess, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                }
+                //throw new ApplicationException();
             }
         }
     }

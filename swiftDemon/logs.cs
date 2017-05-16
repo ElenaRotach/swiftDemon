@@ -71,7 +71,8 @@ namespace swiftDemon
                         obj.valueDate_30V + "', '" + obj.fileName + "', '" + obj.thread + "')";
                     connectionDB.addDB(sql);
                 }
-            }
+                
+                }
             //logs log = new logs();
             logs.logEntry(str + '\n');
         }

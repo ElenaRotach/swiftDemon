@@ -41,6 +41,8 @@ namespace swiftDemon
                 //                    @"orderingInstitution_52, senderCorrespondent_53, receiverCorrespondent_54, intermediaryInstitution_56, accountWithInstitution_57, beneficiaryInstitution_58, beneficiaryCustomer_59, " +
                 //                    @"processingCharacteristic, mess_direction, comment) values(" + , '1', '1', now(), now(), '1', 100.00, '1', 100.00, '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1')";
                 OleDbDataReader myOleDbDataReader = newConnect.initConnect(str);
+                while (myOleDbDataReader.Read())
+                { }
                 myOleDbDataReader.Close();
             }
             catch(Exception e)
