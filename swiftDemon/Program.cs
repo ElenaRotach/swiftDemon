@@ -230,7 +230,9 @@ namespace swiftDemon
         public static void work(bool outMess)
         {
             Dictionary<string, string> files = new Dictionary<string, string>();
-
+            string direction = "";
+            if (outMess) { direction = "OUT"; }
+            else { direction = "IN"; }
             files = newSwiftFiles(firstStart, outMess);
             firstStart = false;
             if (files.Count > 0)
@@ -238,7 +240,7 @@ namespace swiftDemon
                 string mess = "Получены новые файлы: \n";
                 for (int z = 0; z < files.Count; z++)
                 {
-                    swiftMess messObj = new swiftMess(File.ReadAllText(files[z.ToString()]), files[z.ToString()]);
+                    swiftMess messObj = new swiftMess(File.ReadAllText(files[z.ToString()]), files[z.ToString()], direction);
                     logs.outStr("Новый файл " + files[z.ToString()] + "\t" + File.GetLastAccessTime(files[z.ToString()]), false, messObj);
                     string[] filName = files[z.ToString()].Split('\\');
                     mess += filName[filName.Length - 1] + '\n';

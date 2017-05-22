@@ -33,9 +33,11 @@ namespace swiftDemon
         public string naimBankKontragent = "";
         public string thread = "";
         public string fileName = "";
-        public swiftMess(string strMess, string fn)
+        public string direction = "";
+        public swiftMess(string strMess, string fn, string direction)
         {
-            if(strMess.Length>0)
+            this.direction = direction;
+            if (strMess.Length>0)
             {
                 fileName = fn;
                 thread = strMess.Replace("'", "\'\'").Replace(@"\", @"\\");
