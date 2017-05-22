@@ -230,9 +230,37 @@ namespace swiftDemon
         public static void work(bool outMess)
         {
             Dictionary<string, string> files = new Dictionary<string, string>();
+            settings setting = new settings();
+            /*получаем папку для переноса файлов по принципу:
+             1. Формируем родительскую папку если исходящии setting.outArhiv, иначе setting.inArhiv
+             2. Формируем имя папки формат "YYYY_MM_DD"
+             3. Если папку не существует - создаем
+             */
             string direction = "";
-            if (outMess) { direction = "OUT"; }
-            else { direction = "IN"; }
+            string path = "";
+
+            if (outMess)
+            {
+                direction = "OUT";
+                path = setting.outArhiv;
+            }
+            else
+            {
+                direction = "IN";
+                path = setting.inArhiv;
+            }
+
+            DateTime workDate = DateTime.Now;
+            string pattern = "dd.MM.yyyy H:mm:ff";
+            DateTime parsedDate;
+            DateTime.TryParseExact(workDate.ToString(), pattern, null, DateTimeStyles.None, out parsedDate);
+            string newDate = string.Format("{0:d}", parsedDate);
+
+            string pathName = newDate;
+            if (!Directory.Exists(path + pathName))
+            {
+                Directory.CreateDirectory(path + pathName);
+            }
             files = newSwiftFiles(firstStart, outMess);
             firstStart = false;
             if (files.Count > 0)
@@ -244,17 +272,19 @@ namespace swiftDemon
                     logs.outStr("Новый файл " + files[z.ToString()] + "\t" + File.GetLastAccessTime(files[z.ToString()]), false, messObj);
                     string[] filName = files[z.ToString()].Split('\\');
                     mess += filName[filName.Length - 1] + '\n';
+                    File.Move(files[z.ToString()], path + pathName + "\\" + filName[filName.Length - 1]);
                 }
                 if (outMess)
                 {
                     MessageBox.Show(mess, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
                 }
                 //пока просто переносим обработанные, без архивирования, архивирование логично запускать для предыдущего дня при утреннем старте
-                settings setting = new settings();
+
                 //string startPath = @"c:\example\start";
                 //string zipPath = @"c:\example\result.zip";
-
                 //ZipFile.CreateFromDirectory(startPath, zipPath);
+
+
             }
         }
     }
