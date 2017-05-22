@@ -12,12 +12,16 @@ namespace swiftDemon
         private string _dbPath;
         private string _inMess;
         private string _outMess;
+        private string _inArhiv;
+        private string _outArhiv;
         public settings()
         {
             _dbName = reestr.getParam("dbName");
             _dbPath = reestr.getParam("dbPath");
             _inMess = reestr.getParam("inMess");
             _outMess = reestr.getParam("outMess");
+            _inArhiv = reestr.getParam("inArhiv");
+            _outArhiv = reestr.getParam("outArhiv");
         }
         public string dbName
         {
@@ -63,7 +67,28 @@ namespace swiftDemon
                 }
             }
         }
-
+        public string inArhiv
+        {
+            get { return _inArhiv; }
+            set
+            {
+                if(value!="")
+                {
+                    reestr param = new reestr("inArhiv", value);
+                }
+            }
+        }
+        public string outArhiv
+        {
+            get { return _outArhiv; }
+            set
+            {
+                if(value!="")
+                {
+                    reestr param = new reestr("outArhiv", value);
+                }
+            }
+        }
     }
     class reestr
     {

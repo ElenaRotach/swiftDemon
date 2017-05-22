@@ -82,8 +82,12 @@ namespace swiftDemon
         {
             //throw new NotImplementedException();
             //Form settingsForm = new Form();
-            settingsForm settingF = new settingsForm();
-            settingF.Show();
+            try
+            {
+                settingsForm settingF = new settingsForm();
+                settingF.Show();
+            }
+            catch { }
         }
 
         private static Dictionary<string, string> newSwiftFiles(bool firstStart, bool outFil)
@@ -243,7 +247,12 @@ namespace swiftDemon
                 {
                     MessageBox.Show(mess, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
                 }
-                //throw new ApplicationException();
+                //пока просто переносим обработанные, без архивирования, архивирование логично запускать для предыдущего дня при утреннем старте
+                settings setting = new settings();
+                //string startPath = @"c:\example\start";
+                //string zipPath = @"c:\example\result.zip";
+
+                //ZipFile.CreateFromDirectory(startPath, zipPath);
             }
         }
     }

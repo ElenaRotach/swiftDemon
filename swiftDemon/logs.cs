@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using System.IO.Compression;
 
 namespace swiftDemon
 {
@@ -72,7 +73,7 @@ namespace swiftDemon
                     connectionDB.addDB(sql);
                 }
                 
-                }
+            }
             //logs log = new logs();
             logs.logEntry(str + '\n');
         }

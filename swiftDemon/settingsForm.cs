@@ -21,10 +21,17 @@ namespace swiftDemon
         Label lb_outMess = new Label();
         TextBox tb_outMess = new TextBox();
         Button b_outMess = new Button();
+        Label lb_inArhiv = new Label();
+        TextBox tb_inArhiv = new TextBox();
+        Button b_inArhiv = new Button();
+        Label lb_outArhiv = new Label();
+        TextBox tb_outArhiv = new TextBox();
+        Button b_outArhiv = new Button();
+
         public settingsForm()
         {
             
-            this.Size = new Size(400, 210);
+            this.Size = new Size(400, 310);
             //=================== dbName ===============
             
             lb_dbName.Text = "База данных";
@@ -89,6 +96,41 @@ namespace swiftDemon
             b_outMess.Location = new Point(300, 150);
             b_outMess.Width = 90;
             b_outMess.Click += B_outMess_Click;
+
+            //=================== inArhiv ===============
+
+            lb_inArhiv.Text = "Архив исходящих";
+            lb_inArhiv.Location = new Point(10, 200);
+            lb_inArhiv.Width = 90;
+            lb_inArhiv.Height = 40;
+
+
+            tb_inArhiv.Text = param.inArhiv;
+            tb_inArhiv.Location = new Point(100, 200);
+            tb_inArhiv.Width = 190;
+
+
+            b_inArhiv.Text = "Изменить";
+            b_inArhiv.Location = new Point(300, 200);
+            b_inArhiv.Width = 90;
+            b_inArhiv.Click += b_inArhiv_Click;
+            //=================== outArhiv ===============
+
+            lb_outArhiv.Text = "Архив входящих";
+            lb_outArhiv.Location = new Point(10, 250);
+            lb_outArhiv.Width = 90;
+            lb_outArhiv.Height = 40;
+
+            tb_outArhiv.Text = param.outArhiv;
+            tb_outArhiv.Location = new Point(100, 250);
+            tb_outArhiv.Width = 190;
+
+
+            b_outArhiv.Text = "Изменить";
+            b_outArhiv.Location = new Point(300, 250);
+            b_outArhiv.Width = 90;
+            b_outArhiv.Click += b_outArhiv_Click;
+
             this.Controls.Add(lb_dbName);
             this.Controls.Add(tb_dbName);
             this.Controls.Add(b_dbName);
@@ -101,6 +143,24 @@ namespace swiftDemon
             this.Controls.Add(lb_outMess);
             this.Controls.Add(tb_outMess);
             this.Controls.Add(b_outMess);
+            this.Controls.Add(lb_inArhiv);
+            this.Controls.Add(tb_inArhiv);
+            this.Controls.Add(b_inArhiv);
+            this.Controls.Add(lb_outArhiv);
+            this.Controls.Add(tb_outArhiv);
+            this.Controls.Add(b_outArhiv);
+        }
+
+        private void b_outArhiv_Click(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+            param.outArhiv = tb_outArhiv.Text;
+        }
+
+        private void b_inArhiv_Click(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+            param.inArhiv = tb_inArhiv.Text;
         }
 
         private void B_dbName_Click(object sender, EventArgs e)
