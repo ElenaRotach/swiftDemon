@@ -9,8 +9,8 @@ namespace swiftDemon
     class swiftMess
     {
         public string transactionReferenceNumber_20 = "";
-        public DateTime valueDate_30V;
-        public DateTime date_32;
+        public DateTime valueDate_30V = new DateTime();
+        public DateTime date_32 = new DateTime();
         public string currency_32 = "";
         public double amount_32 = 0;
         public string currency_33B = "";
@@ -26,7 +26,7 @@ namespace swiftDemon
         public string processingCharacteristic = "";
         public bool mess_direction = false;
         public string comment = "";
-        public DateTime dateTime_mess;
+        public DateTime dateTime_mess = new DateTime();
         public string referenceMess = "";
         public string fin = "";
         public string swiftNumberBankKontragent = "";
@@ -34,10 +34,20 @@ namespace swiftDemon
         public string thread = "";
         public string fileName = "";
         public string direction = "";
+        public string id = "";
         public swiftMess(string strMess, string fn, string direction)
         {
             this.direction = direction;
             if (strMess.Length>0)
+            {
+                fileName = fn;
+                thread = strMess.Replace("'", "\'\'").Replace(@"\", @"\\");
+                parse(strMess);
+            }
+        }
+        public swiftMess(string strMess, string fn)
+        {
+            if (strMess.Length > 0)
             {
                 fileName = fn;
                 thread = strMess.Replace("'", "\'\'").Replace(@"\", @"\\");

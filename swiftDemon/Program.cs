@@ -90,8 +90,12 @@ namespace swiftDemon
         }
         private static void JurnalStart()
         {
-            fMain jurnal = new fMain();
-            jurnal.ShowDialog();
+            try
+            {
+                fMain jurnal = new fMain();
+                jurnal.ShowDialog();
+            }
+            catch { }
         }
         private static void Settings(object sender, EventArgs e)
         {

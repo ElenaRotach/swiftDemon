@@ -20,7 +20,7 @@ namespace swift
         public JournalForm()
         {
             InitializeComponent();
-            
+            tabMess.AllowUserToOrderColumns = true;
             // создаем элементы меню
             ToolStripMenuItem printMenuItem = new ToolStripMenuItem("Печать");
             ToolStripMenuItem editMenuItem = new ToolStripMenuItem("Изменить");
@@ -78,7 +78,8 @@ namespace swift
         {
             List<swiftMess_str> allMess = new List<swiftMess_str>();
             string sql = @"select * from mess";
-            string connectionString = @"Provider=Microsoft.Ace.OLEDB.12.0;Data Source=" + Environment.CurrentDirectory + @"\swift.mdb";
+            settings obj = new settings();
+            string connectionString = @"Provider=Microsoft.Ace.OLEDB.12.0;Data Source=" + obj.dbPath + obj.dbName;
             OleDbConnection myOleDbConnection = new OleDbConnection(connectionString);
             OleDbCommand myOleDbCommand = myOleDbConnection.CreateCommand();
             myOleDbCommand.CommandText = sql;
