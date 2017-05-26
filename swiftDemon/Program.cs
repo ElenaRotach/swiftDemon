@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using swift;
 
 namespace swiftDemon
 {
@@ -36,6 +37,8 @@ namespace swiftDemon
         private static bool Enabled = true;
         private static bool Error = false;
         public static bool firstStart = true;
+        private static Thread jurnalThread;
+        private Thread jurnalStart;
         static void Main(string[] args)
         {
             #region new
@@ -49,6 +52,7 @@ namespace swiftDemon
                 ContextMenu TrayMenu = new ContextMenu();
                 //TrayMenu.MenuItems.Add("Изменить период обработки", InputParams);
                 TrayMenu.MenuItems.Add("Показать / спрятать", TrayToggle);
+                TrayMenu.MenuItems.Add("Журнал", Jurnal);
                 TrayMenu.MenuItems.Add("Настройки", Settings);
                 TrayMenu.MenuItems.Add("Выход", OnExit);
                 // регисртируем иконку для отображения в области уведомлений; файл *.ico должен быть рядом с *.exe
@@ -60,13 +64,13 @@ namespace swiftDemon
                 TrayIcon.Visible = true;
                 // обработчик событий по таймеру
                 TrayTimer = new System.Timers.Timer();
-                TrayTimer.Interval = 290000;//290000;
+                TrayTimer.Interval = 2000;//290000;
                 TrayTimer.Enabled = true;
                 TrayTimer.Elapsed += new System.Timers.ElapsedEventHandler(MainFunction); // основная функция консоли
                                                                                           // запуск обработчика событий
                 Console.WindowHeight = Console.LargestWindowHeight-50;
                 Console.WindowWidth = Console.LargestWindowWidth-50;
-                
+                jurnalThread = new Thread(JurnalStart) { };
                 Application.Run();
             }
             catch (Exception e)
@@ -78,6 +82,17 @@ namespace swiftDemon
             #endregion
         }
 
+        private static void Jurnal(object sender, EventArgs e)
+        {
+            jurnalThread.Start();
+            // throw new NotImplementedException();
+            //Application.Run(new fMain());
+        }
+        private static void JurnalStart()
+        {
+            fMain jurnal = new fMain();
+            jurnal.ShowDialog();
+        }
         private static void Settings(object sender, EventArgs e)
         {
             //throw new NotImplementedException();

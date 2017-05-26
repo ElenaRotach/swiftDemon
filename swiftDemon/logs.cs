@@ -17,35 +17,13 @@ namespace swiftDemon
     static class logs 
     {
         static string curFile = Environment.CurrentDirectory + @"\log.txt";
-        //private bool existenceOfTheFile()
-        //{
-        //    bool end = false;
-        //    if (File.Exists(curFile)) { end = true; }
-        //    return end;
-        //}
-        //private bool fileCreation()
-        //{
-        //    try
-        //    {
-        //        if (existenceOfTheFile()) { return true; }
-        //        else
-        //        {
-        //            File.Create(curFile);
-        //            return true;
-        //        }
-        //    }
-        //    catch { return false; }
-        //}
         private static void logEntry(string mess)
         {
-            //if (fileCreation())
-            //{
                 using (StreamWriter sw = File.AppendText(curFile))
                 {
                     sw.WriteLine(mess);
                     sw.Close();
                 }
-            //}
         }
         public static void outStr(string str, bool err, swiftMess obj)
         {
@@ -74,8 +52,33 @@ namespace swiftDemon
                 }
                 
             }
-            //logs log = new logs();
             logs.logEntry(str + '\n');
+        }
+        public static void saveParam(string paramName, string value, string id)
+        {
+            try
+            {
+                if (paramName != "valueDate_30V" && paramName != "date_32" && paramName != "dateTime_mess")
+                {
+                    if (paramName == "amount_32" || paramName == "amount_33B")
+                    {
+                        if (value == "") { value = "0"; }
+                        value = value.Replace(",", ".");
+                        string sql = @"UPDATE mess SET " + paramName + " = " + value + " where id=" + id + "; ";
+                        connectionDB.addDB(sql);
+                    }
+                    else
+                    {
+                        string sql = @"UPDATE mess SET " + paramName + " = '" + value + "' where id=" + id + "; ";
+                        connectionDB.addDB(sql);
+                    }
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("Не возможно сохранить изменения");
+            }
         }
     }
 }

@@ -51,5 +51,19 @@ namespace swiftDemon
                 logs.outStr(e.StackTrace, true, null);
             }
         }
+        public OleDbDataReader initConnectRet(string strQuery)
+        {
+            //propertyDB connectionStringProp = new propertyDB();
+            //System.Windows.Forms.MessageBox.Show("test");
+            //проблемы при запуске через терминал
+            //string connectionString = @"Provider=SQLOLEDB;Data Source=" + connectionStringProp.ServerDB + ";Password=curr;User ID=" + connectionStringProp.UserDB + ";Initial Catalog=" + connectionStringProp.NameDB;
+            string connectionString = @"Provider=Microsoft.Ace.OLEDB.12.0;Data Source=" + Environment.CurrentDirectory + @"\swift.mdb";
+            OleDbConnection myOleDbConnection = new OleDbConnection(connectionString);
+            OleDbCommand myOleDbCommand = myOleDbConnection.CreateCommand();
+            myOleDbCommand.CommandText = strQuery;
+            myOleDbConnection.Open();
+            OleDbDataReader myOleDbDataReader = myOleDbCommand.ExecuteReader();
+            return myOleDbDataReader;
+        }
     }
 }
