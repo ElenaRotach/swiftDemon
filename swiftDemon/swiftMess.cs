@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -147,25 +148,23 @@ namespace swiftDemon
         public swiftMess_str(string p1, string p2, string p3, string p4, string p5, string p6, string p7, string p8, string p9, string p10, string p11, string p12, string p13, string p14, string p15, string p16,
             string p17, string p18, string p19, string p20, string p21, string p22, string p23, string p24, string p25, string p26, string p27)
         {
+            NumberFormatInfo nfi = new CultureInfo("en-US", false).NumberFormat;
+            nfi.NumberGroupSeparator = " ";
+
             transactionReferenceNumber_20 = p1;
             if (p2 != "" && p2 != "01.01.2001 0:00:00")
             {
-                valueDate_30V = p2;
+                valueDate_30V = p2.Substring(0,10);
             }
             if (p3 != "" && p3 != "01.01.2001 0:00:00")
             {
-                date_32 = p3;
+                date_32 = p3.Substring(0, 10);
             }
             currency_32 = p4;
-            if (p5 != "" && p5 != "01.01.2001 0:00:00")
-            {
-                amount_32 = p5;
-            }
-            if (p6 != "" && p6 != "01.01.2001 0:00:00")
-            {
-                currency_33B = p6;
-            }
-            amount_33B = p7;
+            amount_32 = Convert.ToDouble(p5).ToString("N", nfi); //(Convert.ToUInt32(p5)).ToString("N", nfi);
+            currency_33B = p6;
+
+            amount_33B = Convert.ToDouble(p7).ToString("N", nfi); //(Convert.ToUInt32(p7)).ToString("N", nfi);
             orderingCustomer_50 = p8;
             orderingInstitution_52 = p9;
             senderCorrespondent_53 = p10;
