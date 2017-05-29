@@ -64,7 +64,7 @@ namespace swiftDemon
                 TrayIcon.Visible = true;
                 // обработчик событий по таймеру
                 TrayTimer = new System.Timers.Timer();
-                TrayTimer.Interval = 2000;//290000;
+                TrayTimer.Interval = 20000;//290000;
                 TrayTimer.Enabled = true;
                 TrayTimer.Elapsed += new System.Timers.ElapsedEventHandler(MainFunction); // основная функция консоли
                                                                                           // запуск обработчика событий
