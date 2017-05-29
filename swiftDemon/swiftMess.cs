@@ -50,38 +50,6 @@ namespace swiftDemon
                 {
                     //получаем fin
                     fin = strMess.Substring(ind + 4, 3);
-                    //System.Windows.Forms.MessageBox.Show(fin);
-                    //Application.Exit();
-                    switch (fin)
-                    {
-                        case "103":
-                            parse103(strMess);
-                            break;
-                        case "202":
-                            parse202(strMess);
-                            break;
-                        case "299":
-                            parse299(strMess);
-                            break;
-                        case "300":
-                            parse300(strMess);
-                            break;
-                        case "320":
-                            parse320(strMess);
-                            break;
-                        case "900":
-                            parse900(strMess);
-                            break;
-                        case "910":
-                            parse910(strMess);
-                            break;
-                        default:
-                            parse(strMess);
-                            break;
-                    }
-                }
-                else
-                {
                     parse(strMess);
                 }
             }
@@ -110,108 +78,41 @@ namespace swiftDemon
                     swiftNumberBankKontragent = workArr[ind].Split(':')[1];
                     naimBankKontragent = workArr[ind + 1] + " " + workArr[ind + 2];
                 }
-                if (workArr[ind].IndexOf("20: Sender's Reference") != -1)
-                {
-                    transactionReferenceNumber_20 = workArr[ind + 1];
-                }
-                if (workArr[ind].IndexOf("32A: Val Dte/Curr/Interbnk Settld Amt ") != -1)
-                {
-                    string[] dateStr = (workArr[ind + 1].Split(':')[1]).Split(' ');
-                    date_32 = new DateTime(Convert.ToInt32(dateStr[2]), thesaurus.mount(dateStr[1]), Convert.ToInt32(dateStr[0]));
-                    currency_32 = workArr[ind + 2].Split(':')[1].Split('(')[0];
-                    amount_32 = Convert.ToDouble(workArr[ind + 3].Split('#')[1]);
-                }
-                if (workArr[ind].IndexOf("50K: Ordering Customer-Name & Address") != -1)
-                {
-                    orderingCustomer_50 = workArr[ind + 1] + ' ' + workArr[ind + 2];
-                }
-                if (workArr[ind].IndexOf("57A: Account With Institution - FI BIC") != -1)
-                {
-                    accountWithInstitution_57 = workArr[ind + 1] + ' ' + workArr[ind + 2] + ' ' + workArr[ind + 3];
-                }
-                if (workArr[ind].IndexOf("59: Beneficiary Customer-Name & Addr") != -1)
-                {
-                    beneficiaryCustomer_59 = workArr[ind + 1] + ' ' + workArr[ind + 2];
-                }
-                if (workArr[ind].IndexOf("32B: Currency and Principal Amount") != -1)
-                {
-                    currency_32 = workArr[ind + 1].Split(':')[1].Split('(')[0];
-                    amount_32 = Convert.ToDouble(workArr[ind + 2].Split('#')[1]);
-                }
-            }
-        }
-        private void parse103(string str)
-        {
-            str = str.Replace("\n", "").Replace("\t", "");
-            String[] workArr = str.Split('\r');
-            dateTime_mess = DateTime.Parse((workArr[3].Split(' ')[0]).Replace("-", " "));
-            referenceMess = workArr[3].Split(' ')[12].Replace("MPALLout-", "");
-            for (int ind = 0; ind < workArr.Length; ind++)
-            {
-                if (workArr[ind].IndexOf("Swift Output                  : FIN") != -1)
-                {
-                    char[] test = workArr[ind].Where(x => Char.IsDigit(x)).ToArray();
-                    fin = new string(test);
-                }
-                if (workArr[ind].IndexOf("Sender   : ") != -1)
-                {
-                    swiftNumberBankKontragent = workArr[ind].Split(':')[1];
-                    naimBankKontragent = workArr[ind + 1] + " " + workArr[ind + 2];
-                }
-                if (workArr[ind].IndexOf("20: Sender's Reference") != -1)
-                {
-                    transactionReferenceNumber_20 = workArr[ind + 1];
-                }
+
+                if (workArr[ind].IndexOf("20: Sender's Reference") != -1 || workArr[ind].IndexOf("20: Transaction Reference Number") != -1) { transactionReferenceNumber_20 = workArr[ind + 1]; }
                 if (workArr[ind].IndexOf("30V: Value Date") != -1)
                 {
-                    valueDate_30V = new DateTime(Convert.ToInt32(workArr[ind + 1].Replace(" ", "").Substring(0, 4)), Convert.ToInt32(workArr[ind + 1].Replace(" ", "").Substring(4, 2)), Convert.ToInt32(workArr[ind + 1].Replace(" ", "").Substring(6, 2)));
+                    string dateStr = workArr[ind + 1].Replace(" ", "");
+                    valueDate_30V = new DateTime(Convert.ToInt32(dateStr.Substring(0, 4)), Convert.ToInt32(dateStr.Substring(4, 2)), Convert.ToInt32(dateStr.Substring(6, 2)));
                 }
-                
-                if (workArr[ind].IndexOf("32A: Val Dte/Curr/Interbnk Settld Amt ") != -1)
+
+                if (workArr[ind].IndexOf("32A:") != -1)
                 {
                     string[] dateStr = (workArr[ind + 1].Split(':')[1]).Split(' ');
                     date_32 = new DateTime(Convert.ToInt32(dateStr[3]), thesaurus.mount(dateStr[2]), Convert.ToInt32(dateStr[1]));
                     currency_32 = workArr[ind + 2].Split(':')[1].Split('(')[0];
                     amount_32 = Convert.ToDouble(workArr[ind + 3].Split('#')[1]);
                 }
-                if (workArr[ind].IndexOf("50K: Ordering Customer-Name & Address") != -1)
+
+                if (workArr[ind].IndexOf("32B:") != -1)
                 {
-                    orderingCustomer_50 = workArr[ind + 1] + ' ' + workArr[ind + 2];
+                    currency_32 = workArr[ind + 1].Split(':')[1].Split('(')[0];
+                    amount_32 = Convert.ToDouble(workArr[ind + 2].Split('#')[1]);
                 }
-                if (workArr[ind].IndexOf("57A: Account With Institution - FI BIC") != -1)
+                if (workArr[ind].IndexOf("33B: Currency, Amount") != -1)
                 {
-                    accountWithInstitution_57 = workArr[ind + 1] + ' ' + workArr[ind + 2] + ' ' + workArr[ind + 3];
+                    currency_33B = workArr[ind + 1].Split(':')[1].Split('(')[0];
+                    amount_33B = Convert.ToDouble(workArr[ind + 2].Split('#')[1]);
                 }
-                if (workArr[ind].IndexOf("59: Beneficiary Customer-Name & Addr") != -1)
-                {
-                    beneficiaryCustomer_59 = workArr[ind + 1] + ' ' + workArr[ind + 2];
-                }
+                if (workArr[ind].IndexOf("50K:") != -1){orderingCustomer_50 = workArr[ind + 1] + ' ' + workArr[ind + 2];}
+                if (workArr[ind].IndexOf("52D:") != -1 || workArr[ind].IndexOf("52A:") != -1) { this.orderingInstitution_52 = workArr[ind + 1]; }
+                if (workArr[ind].IndexOf("53B:") != -1) { senderCorrespondent_53 = workArr[ind + 1]; }
+                if (workArr[ind].IndexOf("57A:") != -1 || workArr[ind].IndexOf("57D:") != -1) { accountWithInstitution_57 += workArr[ind + 1] + ' ' + workArr[ind + 2] + ' ' + workArr[ind + 3]; }
+                if (workArr[ind].IndexOf("58A:") != -1) { beneficiaryInstitution_58 = workArr[ind + 1]; }
+                if (workArr[ind].IndexOf("59:") != -1) { beneficiaryCustomer_59 = workArr[ind + 1] + ' ' + workArr[ind + 2]; }
+                
+                
             }
-            MessageBox.Show("103");
-        }
-        private void parse202(string str)
-        {
-            MessageBox.Show("202");
-        }
-        private void parse299(string str)
-        {
-            MessageBox.Show("299");
-        }
-        private void parse300(string str)
-        {
-            MessageBox.Show("300");
-        }
-        private void parse320(string str)
-        {
-            MessageBox.Show("320");
-        }
-        private void parse900(string str)
-        {
-            MessageBox.Show("900");
-        }
-        private void parse910(string str)
-        {
-            MessageBox.Show("910");
         }
     }
     public class swiftMess_str
