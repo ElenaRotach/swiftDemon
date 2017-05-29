@@ -120,9 +120,9 @@ namespace swiftDemon
                 else { dirs = Directory.GetFiles(settingsVal.inMess, "*"); }
                 int key = 0;
                 for (int i = 0; i < dirs.Length; i++)
-                    //FileInfo file();
+                //FileInfo file();
                 {
-                    if (Path.GetExtension(dirs[i]) == ".trn")
+                    if (Path.GetExtension(dirs[i]) == ".trn" && dirs[i].IndexOf("FIN-082") == -1 && dirs[i].IndexOf("FIN-081") == -1 && dirs[i].IndexOf("APC-081") == -1)
                     {
                         if (firstStart)
                         {
