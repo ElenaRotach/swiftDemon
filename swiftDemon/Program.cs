@@ -84,6 +84,12 @@ namespace swiftDemon
 
         private static void Jurnal(object sender, EventArgs e)
         {
+            ////if (jurnalThread.IsAlive)
+            ////{
+            //    jurnalThread.Abort();
+            //Thread.Sleep(1000);
+            ////}
+            jurnalThread = new Thread(JurnalStart) { };
             jurnalThread.Start();
             // throw new NotImplementedException();
             //Application.Run(new fMain());

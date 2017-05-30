@@ -23,6 +23,7 @@ namespace swiftDemon
             }
             InitializeComponent();
             cb_columnsName.DataSource = tabNameSource;
+            cb_conditions.DataSource = thesaurus.conditions;
         }
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
@@ -33,6 +34,31 @@ namespace swiftDemon
         private void label3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void cb_columnsName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //MessageBox.Show(cb_columnsName.SelectedValue.ToString());
+            string type = thesaurus.getType(cb_columnsName.SelectedValue.ToString());
+            //MessageBox.Show(type);
+            Control elemFoRemove = null;
+            foreach(Control control in Controls)
+            {
+                if (control.Name == "tb_value")
+                {
+                    elemFoRemove = control;
+                    break;
+                }
+            }
+            if(elemFoRemove != null)
+            {
+                this.Controls.Remove(elemFoRemove);
+                Label testControl = new Label();
+                testControl.Text = "Это тест!!!!!!!!!!!!!!!!!!!";
+                testControl.Location = new Point(644, 51);
+                TextBox test = new TextBox();
+                this.Controls.Add(testControl);
+            }
         }
     }
 }

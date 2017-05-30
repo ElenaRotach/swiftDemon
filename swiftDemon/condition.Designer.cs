@@ -28,53 +28,53 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.rb_II = new System.Windows.Forms.RadioButton();
+            this.rb_OR = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cb_columnsName = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.lab_columnName = new System.Windows.Forms.Label();
+            this.lab_condition = new System.Windows.Forms.Label();
+            this.cb_conditions = new System.Windows.Forms.ComboBox();
+            this.cb_inversion = new System.Windows.Forms.CheckBox();
+            this.lab_value = new System.Windows.Forms.Label();
+            this.tb_value = new System.Windows.Forms.TextBox();
+            this.btn_OK = new System.Windows.Forms.Button();
+            this.btn_exit = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // radioButton1
+            // rb_II
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(16, 19);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(85, 17);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "radioButton1";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.rb_II.AutoSize = true;
+            this.rb_II.Location = new System.Drawing.Point(16, 19);
+            this.rb_II.Name = "rb_II";
+            this.rb_II.Size = new System.Drawing.Size(43, 17);
+            this.rb_II.TabIndex = 0;
+            this.rb_II.TabStop = true;
+            this.rb_II.Text = "\"И\"";
+            this.rb_II.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // rb_OR
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(16, 42);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(85, 17);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "radioButton2";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.rb_OR.AutoSize = true;
+            this.rb_OR.Location = new System.Drawing.Point(16, 42);
+            this.rb_OR.Name = "rb_OR";
+            this.rb_OR.Size = new System.Drawing.Size(59, 17);
+            this.rb_OR.TabIndex = 1;
+            this.rb_OR.TabStop = true;
+            this.rb_OR.Text = "\"ИЛИ\"";
+            this.rb_OR.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Controls.Add(this.radioButton2);
+            this.groupBox1.Controls.Add(this.rb_II);
+            this.groupBox1.Controls.Add(this.rb_OR);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(134, 80);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.groupBox1.Text = "объединение";
             // 
             // cb_columnsName
             // 
@@ -83,91 +83,92 @@
             this.cb_columnsName.Name = "cb_columnsName";
             this.cb_columnsName.Size = new System.Drawing.Size(262, 21);
             this.cb_columnsName.TabIndex = 3;
+            this.cb_columnsName.SelectedIndexChanged += new System.EventHandler(this.cb_columnsName_SelectedIndexChanged);
             // 
-            // label1
+            // lab_columnName
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(172, 31);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "label1";
+            this.lab_columnName.AutoSize = true;
+            this.lab_columnName.Location = new System.Drawing.Point(172, 31);
+            this.lab_columnName.Name = "lab_columnName";
+            this.lab_columnName.Size = new System.Drawing.Size(101, 13);
+            this.lab_columnName.TabIndex = 4;
+            this.lab_columnName.Text = "Выберите столбец";
             // 
-            // label2
+            // lab_condition
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(492, 31);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "label2";
+            this.lab_condition.AutoSize = true;
+            this.lab_condition.Location = new System.Drawing.Point(492, 31);
+            this.lab_condition.Name = "lab_condition";
+            this.lab_condition.Size = new System.Drawing.Size(101, 13);
+            this.lab_condition.TabIndex = 6;
+            this.lab_condition.Text = "Выберите условие";
             // 
-            // comboBox2
+            // cb_conditions
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(495, 50);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(138, 21);
-            this.comboBox2.TabIndex = 5;
+            this.cb_conditions.FormattingEnabled = true;
+            this.cb_conditions.Location = new System.Drawing.Point(495, 50);
+            this.cb_conditions.Name = "cb_conditions";
+            this.cb_conditions.Size = new System.Drawing.Size(138, 21);
+            this.cb_conditions.TabIndex = 5;
             // 
-            // checkBox1
+            // cb_inversion
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(458, 52);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(80, 17);
-            this.checkBox1.TabIndex = 7;
-            this.checkBox1.Text = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.cb_inversion.AutoSize = true;
+            this.cb_inversion.Location = new System.Drawing.Point(458, 52);
+            this.cb_inversion.Name = "cb_inversion";
+            this.cb_inversion.Size = new System.Drawing.Size(29, 17);
+            this.cb_inversion.TabIndex = 7;
+            this.cb_inversion.Text = "!";
+            this.cb_inversion.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // lab_value
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(641, 30);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "label3";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
+            this.lab_value.AutoSize = true;
+            this.lab_value.Location = new System.Drawing.Point(641, 30);
+            this.lab_value.Name = "lab_value";
+            this.lab_value.Size = new System.Drawing.Size(99, 13);
+            this.lab_value.TabIndex = 9;
+            this.lab_value.Text = "Введите значение";
+            this.lab_value.Click += new System.EventHandler(this.label3_Click);
             // 
-            // textBox1
+            // tb_value
             // 
-            this.textBox1.Location = new System.Drawing.Point(644, 51);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(262, 20);
-            this.textBox1.TabIndex = 10;
+            this.tb_value.Location = new System.Drawing.Point(644, 51);
+            this.tb_value.Name = "tb_value";
+            this.tb_value.Size = new System.Drawing.Size(262, 20);
+            this.tb_value.TabIndex = 10;
             // 
-            // button1
+            // btn_OK
             // 
-            this.button1.Location = new System.Drawing.Point(732, 115);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btn_OK.Location = new System.Drawing.Point(732, 115);
+            this.btn_OK.Name = "btn_OK";
+            this.btn_OK.Size = new System.Drawing.Size(75, 23);
+            this.btn_OK.TabIndex = 11;
+            this.btn_OK.Text = "Применить";
+            this.btn_OK.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btn_exit
             // 
-            this.button2.Location = new System.Drawing.Point(831, 115);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 12;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btn_exit.Location = new System.Drawing.Point(831, 115);
+            this.btn_exit.Name = "btn_exit";
+            this.btn_exit.Size = new System.Drawing.Size(75, 23);
+            this.btn_exit.TabIndex = 12;
+            this.btn_exit.Text = "Выход";
+            this.btn_exit.UseVisualStyleBackColor = true;
             // 
             // condition
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(955, 164);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.btn_exit);
+            this.Controls.Add(this.btn_OK);
+            this.Controls.Add(this.tb_value);
+            this.Controls.Add(this.lab_value);
+            this.Controls.Add(this.cb_inversion);
+            this.Controls.Add(this.lab_condition);
+            this.Controls.Add(this.cb_conditions);
+            this.Controls.Add(this.lab_columnName);
             this.Controls.Add(this.cb_columnsName);
             this.Controls.Add(this.groupBox1);
             this.Name = "condition";
@@ -181,17 +182,17 @@
 
         #endregion
 
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton rb_II;
+        private System.Windows.Forms.RadioButton rb_OR;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox cb_columnsName;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label lab_columnName;
+        private System.Windows.Forms.Label lab_condition;
+        private System.Windows.Forms.ComboBox cb_conditions;
+        private System.Windows.Forms.CheckBox cb_inversion;
+        private System.Windows.Forms.Label lab_value;
+        private System.Windows.Forms.TextBox tb_value;
+        private System.Windows.Forms.Button btn_OK;
+        private System.Windows.Forms.Button btn_exit;
     }
 }

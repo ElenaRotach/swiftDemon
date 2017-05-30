@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using transliter_RUENGRU;
@@ -49,6 +50,11 @@ namespace swift
 
         private void выходToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            //Message val = new Message();
+            //MessageBox.Show(val.ToString());
+            Thread.EndThreadAffinity();
+            Thread work = Thread.CurrentThread;
+            work.Abort();
             this.Close();
         }
 

@@ -8,6 +8,46 @@ namespace swiftDemon
 {
     public static class thesaurus
     {
+        public static List<string> conditions = new List<string>(new[] {">", ">=", "<", "<=", "=", "!=", "содержит"});
+        public static Dictionary<string, string> columnsType = new Dictionary<string, string> {
+            { "transactionReferenceNumber_20", "string"},
+            {"valueDate_30V", "date" },
+            {"date_32", "date" },
+            {"currency_32", "string" },
+            {"amount_32", "double" },
+            {"currency_33B", "string" },
+            {"amount_33B", "double" },
+            {"orderingCustomer_50", "string" },
+            {"orderingInstitution_52", "string" },
+            {"senderCorrespondent_53", "string" },
+            {"receiverCorrespondent_54", "string" },
+            {"intermediaryInstitution_56", "string" },
+            {"accountWithInstitution_57", "string" },
+            {"beneficiaryInstitution_58", "string" },
+            {"beneficiaryCustomer_59", "string" },
+            {"processingCharacteristic", "string" },
+            {"mess_direction", "string" },
+            {"comment", "string" },
+            {"dateTime_mess", "string" },
+            {"referenceMess", "string" },
+            {"fin", "" },
+            {"swiftNumberBankKontragent", "string" },
+            {"naimBankKontragent", "string" },
+            {"thread", "string" },
+            {"fileName", "string" },
+            {"direction", "string" },
+            {"id", "int" }
+        };
+
+        public static string getType(string name)
+        {
+            string value = "string";
+            if (columnsType.ContainsKey(name))
+            {
+                columnsType.TryGetValue(name, out value);
+            }
+            return value;
+        }
         public static int mount(string name)
         {
             Dictionary<string, int> mount = new Dictionary<string, int>();
