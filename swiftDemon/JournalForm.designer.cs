@@ -36,15 +36,18 @@
             // 
             // tabMess
             // 
+            this.tabMess.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabMess.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tabMess.Location = new System.Drawing.Point(29, 26);
+            this.tabMess.Location = new System.Drawing.Point(31, 58);
             this.tabMess.Name = "tabMess";
             this.tabMess.Size = new System.Drawing.Size(1352, 517);
             this.tabMess.TabIndex = 0;
             // 
             // export
             // 
-            this.export.Location = new System.Drawing.Point(1214, 581);
+            this.export.Location = new System.Drawing.Point(89, 12);
             this.export.Name = "export";
             this.export.Size = new System.Drawing.Size(75, 23);
             this.export.TabIndex = 1;
