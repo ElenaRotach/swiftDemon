@@ -39,8 +39,8 @@ namespace swiftDemon
                 Console.WriteLine(str + '\n');
                 if (obj != null)
                 {
-                    string sql = @"insert into mess (accountWithInstitution_57, amount_32, amount_33B, beneficiaryCustomer_59, beneficiaryInstitution_58, comment, сurrency_32" +
-                        ",  сurrency_33B, dateTime_mess, date_32, fin, intermediaryInstitution_56, mess_direction, naimBankKontragent, orderingCustomer_50, orderingInstitution_52" +
+                    string sql = @"insert into mess (accountWithInstitution_57, amount_32, amount_33B, beneficiaryCustomer_59, beneficiaryInstitution_58, comment, currency_32" +
+                        ",  currency_33B, dateTime_mess, date_32, fin, intermediaryInstitution_56, mess_direction, naimBankKontragent, orderingCustomer_50, orderingInstitution_52" +
                         ", processingCharacteristic, receiverCorrespondent_54, referenceMess, senderCorrespondent_53, swiftNumberBankKontragent, transactionReferenceNumber_20, valueDate_30V" +
                         ", fileName, thread, direction) values('" + 
                         obj.accountWithInstitution_57 + "', '" + obj.amount_32 + "', '" + obj.amount_33B + "', '" + obj.beneficiaryCustomer_59 + "', '" + obj.beneficiaryInstitution_58 + "', '" +

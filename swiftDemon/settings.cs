@@ -172,5 +172,20 @@ namespace swiftDemon
             Microsoft.Win32.RegistryKey rk = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(path);
             return rk.GetValue(name).ToString();
         }
+
+        public static string getParam(string prefix, string name)
+        {
+            string str = "HKEY_CURRENT_USER" + path + prefix + name;
+            Microsoft.Win32.RegistryKey rk = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(path + prefix);
+            System.Windows.Forms.MessageBox.Show(rk.GetValue(name).ToString());
+            return rk.GetValue(name).ToString();
+        }
+        public static void setParam(string prefix, string name, string value)
+        {
+            Microsoft.Win32.RegistryKey key;
+            key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(path + prefix);
+            key.SetValue(name, value);
+            key.Close();
+        }
     }
 }

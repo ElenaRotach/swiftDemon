@@ -83,9 +83,9 @@ namespace swift
                 tabMess.Columns.Add("0", "transactionReferenceNumber_20");
                 tabMess.Columns.Add("1", "valueDate_30V");
                 tabMess.Columns.Add("2", "date_32");
-                tabMess.Columns.Add("3", "сurrency_32");
+                tabMess.Columns.Add("3", "currency_32");
                 tabMess.Columns.Add("4", "amount_32");
-                tabMess.Columns.Add("5", "сurrency_33B");
+                tabMess.Columns.Add("5", "currency_33B");
                 tabMess.Columns.Add("6", "amount_33B");
                 tabMess.Columns.Add("7", "orderingCustomer_50");
                 tabMess.Columns.Add("8", "orderingInstitution_52");
@@ -107,6 +107,17 @@ namespace swift
                 tabMess.Columns.Add("24", "fileName");
                 tabMess.Columns.Add("25", "direction");
                 tabMess.Columns.Add("26", "id");
+
+            for(int i=0; i < tabMess.Columns.Count; i++)
+            {
+                string columnName = tabMess.Columns[i].HeaderCell.FormattedValue.ToString();
+                MessageBox.Show(columnName);
+                string columnWidth = reestr.getParam("\\columnWidth", columnName);
+                MessageBox.Show(columnWidth);
+                tabMess.Columns[i].Width = Convert.ToInt32(columnWidth);
+            }
+            
+            //MessageBox.Show(tabMess.Columns[0].HeaderCell.FormattedValue.ToString());
             showRows(allMess);
         }
 

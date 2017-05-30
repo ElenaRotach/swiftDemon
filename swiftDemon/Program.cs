@@ -95,7 +95,9 @@ namespace swiftDemon
                 fMain jurnal = new fMain();
                 jurnal.ShowDialog();
             }
-            catch { }
+            catch(ApplicationException e) {
+                MessageBox.Show(e.Message);
+            }
         }
         private static void Settings(object sender, EventArgs e)
         {
