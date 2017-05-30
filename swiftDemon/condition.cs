@@ -53,11 +53,28 @@ namespace swiftDemon
             if(elemFoRemove != null)
             {
                 this.Controls.Remove(elemFoRemove);
-                Label testControl = new Label();
-                testControl.Text = "Это тест!!!!!!!!!!!!!!!!!!!";
-                testControl.Location = new Point(644, 51);
-                TextBox test = new TextBox();
-                this.Controls.Add(testControl);
+                //Label testControl = new Label();
+                //testControl.Text = "Это тест!!!!!!!!!!!!!!!!!!!";
+                //testControl.Location = new Point(644, 51);
+                //TextBox test = new TextBox();
+                //this.Controls.Add(testControl);
+                Control el = new Control();
+                switch(type){
+                    case "string":
+                    case "int":
+                    case "double":
+                        TextBox el1 = new TextBox();
+                        el = el1;
+                        break;
+                    case "date":
+                        DateTimePicker el2 = new DateTimePicker();
+                        el = el2;
+                        break;
+                }
+                el.Name = "tb_value";
+                el.Width = 150;
+                el.Location = new Point(644, 51);
+                this.Controls.Add(el);
             }
         }
     }
