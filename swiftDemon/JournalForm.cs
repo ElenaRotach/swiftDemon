@@ -76,6 +76,7 @@ namespace swift
 
         private void JournalForm_Load(object sender, EventArgs e)
         {
+            InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new System.Globalization.CultureInfo("en-US"));
             List<swiftMess_str> allMess = new List<swiftMess_str>();
             allMess = getDataJournal();
                 tabMess.Columns.Add("0", "transactionReferenceNumber_20");
