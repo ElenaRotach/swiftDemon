@@ -125,6 +125,7 @@ namespace swift
                 string columnWidth = reestr.getParam("\\columnWidth", columnName);
                 //MessageBox.Show(columnWidth);
                 tabMess.Columns[i].Width = Convert.ToInt32(columnWidth);
+                tabMess.Columns[i].ReadOnly = true;
             }
             
             //MessageBox.Show(tabMess.Columns[0].HeaderCell.FormattedValue.ToString());
@@ -238,6 +239,17 @@ namespace swift
                 tabMess.Rows[i].Cells[26].Value = msg.id;
                 i++;
             }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_condition_Click(object sender, EventArgs e)
+        {
+            condition conditionForm = new condition(this);
+            conditionForm.Show();
         }
     }
 }

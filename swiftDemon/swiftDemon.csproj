@@ -50,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="condition.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="condition.Designer.cs">
+      <DependentUpon>condition.cs</DependentUpon>
+    </Compile>
     <Compile Include="connectionDB.cs" />
     <Compile Include="editProps.cs">
       <SubType>Form</SubType>
@@ -95,6 +101,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="condition.resx">
+      <DependentUpon>condition.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="editProps.resx">
       <DependentUpon>editProps.cs</DependentUpon>
     </EmbeddedResource>
