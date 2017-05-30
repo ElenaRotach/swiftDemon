@@ -144,13 +144,26 @@ namespace swift
             (worksheet.Application.ActiveWorkbook.Sheets[1]).Activate();
             worksheet = workbook.ActiveSheet;
             worksheet.Name = "export";
-            excel.Columns("A:E").ColumnWidth = 15;
-            int str = 0;
+            excel.Columns("A:AA").ColumnWidth = 50;
+            int str = 1;
+            for(int z=0; z<23; z++)
+            {
+                worksheet.Cells[1, z+1] = tabMess.Columns[z].HeaderCell.FormattedValue.ToString();
+            }
             while (str < tabMess.RowCount)
             {
                 for (int st = 0; st < 23; st++)
                 {
-                    worksheet.Cells[str + 1, st + 1] = tabMess.Rows[str].Cells[st].Value;
+                    string value = "";
+                    if (tabMess.Rows[str].Cells[st].Value == null)
+                    {
+                        value = "";
+                    }
+                    else
+                    {
+                        value = tabMess.Rows[str].Cells[st].Value.ToString();
+                    }
+                    worksheet.Cells[str + 1, st + 1] = value;
                 }
                 str++;
             }
