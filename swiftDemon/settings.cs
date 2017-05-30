@@ -177,7 +177,7 @@ namespace swiftDemon
         {
             string str = "HKEY_CURRENT_USER" + path + prefix + name;
             Microsoft.Win32.RegistryKey rk = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(path + prefix);
-            System.Windows.Forms.MessageBox.Show(rk.GetValue(name).ToString());
+            //System.Windows.Forms.MessageBox.Show(rk.GetValue(name).ToString());
             return rk.GetValue(name).ToString();
         }
         public static void setParam(string prefix, string name, string value)

@@ -33,6 +33,16 @@ namespace swift
             editMenuItem.Click += EditMenuItem_Click;
             //tabMess.CellMouseClick += TabMess_CellMouseClick;
             //tabMess.CellContextMenuStripNeeded += TabMess_CellContextMenuStripNeeded;
+            tabMess.ColumnWidthChanged += TabMess_ColumnWidthChanged;
+        }
+
+        private void TabMess_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            int ind = e.Column.Index;
+            string columnName = tabMess.Columns[ind].HeaderCell.FormattedValue.ToString();
+            //MessageBox.Show(columnName);
+            reestr.setParam("\\columnWidth", columnName, e.Column.Width.ToString());
+            //throw new NotImplementedException();
         }
 
         private void EditMenuItem_Click(object sender, EventArgs e)
@@ -111,9 +121,9 @@ namespace swift
             for(int i=0; i < tabMess.Columns.Count; i++)
             {
                 string columnName = tabMess.Columns[i].HeaderCell.FormattedValue.ToString();
-                MessageBox.Show(columnName);
+                //MessageBox.Show(columnName);
                 string columnWidth = reestr.getParam("\\columnWidth", columnName);
-                MessageBox.Show(columnWidth);
+                //MessageBox.Show(columnWidth);
                 tabMess.Columns[i].Width = Convert.ToInt32(columnWidth);
             }
             
