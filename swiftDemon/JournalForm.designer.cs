@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JournalForm));
             this.tabMess = new System.Windows.Forms.DataGridView();
             this.export = new System.Windows.Forms.Button();
+            this.reshow = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tabMess)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,11 +56,22 @@
             this.export.UseVisualStyleBackColor = true;
             this.export.Click += new System.EventHandler(this.export_Click);
             // 
+            // reshow
+            // 
+            this.reshow.Location = new System.Drawing.Point(12, 12);
+            this.reshow.Name = "reshow";
+            this.reshow.Size = new System.Drawing.Size(75, 23);
+            this.reshow.TabIndex = 2;
+            this.reshow.Text = "reshow";
+            this.reshow.UseVisualStyleBackColor = true;
+            this.reshow.Click += new System.EventHandler(this.reshow_Click);
+            // 
             // JournalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1407, 636);
+            this.Controls.Add(this.reshow);
             this.Controls.Add(this.export);
             this.Controls.Add(this.tabMess);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -74,5 +86,6 @@
         #endregion
         private System.Windows.Forms.Button export;
         public System.Windows.Forms.DataGridView tabMess;
+        private System.Windows.Forms.Button reshow;
     }
 }
