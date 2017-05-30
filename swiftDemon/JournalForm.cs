@@ -64,6 +64,7 @@ namespace swift
         private void printMenuItem_Click(object sender, EventArgs e)
         {
             int index = tabMess.CurrentRow.Index;
+            tabMess.Rows[index].Selected = true;
             File.Delete(Environment.CurrentDirectory + @"\tmp.txt");
             string curFile = Environment.CurrentDirectory + @"\tmp.txt";
             using (StreamWriter sw = File.AppendText(curFile))
