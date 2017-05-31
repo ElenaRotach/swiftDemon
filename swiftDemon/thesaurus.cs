@@ -30,7 +30,7 @@ namespace swiftDemon
             {"comment", "string" },
             {"dateTime_mess", "string" },
             {"referenceMess", "string" },
-            {"fin", "" },
+            {"fin", "string" },
             {"swiftNumberBankKontragent", "string" },
             {"naimBankKontragent", "string" },
             {"thread", "string" },

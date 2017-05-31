@@ -16,6 +16,8 @@ namespace swiftDemon
     }
     static class logs 
     {
+        public delegate void MethodContainer(bool s);
+        public static event MethodContainer onCount;
         static string curFile = Environment.CurrentDirectory + @"\log.txt";
         private static void logEntry(string mess)
         {
@@ -49,6 +51,10 @@ namespace swiftDemon
                         obj.receiverCorrespondent_54 + "', '" + obj.referenceMess + "', '" + obj.senderCorrespondent_53 + "', '" + obj.swiftNumberBankKontragent + "', '" + obj.transactionReferenceNumber_20 + "', '" +
                         obj.valueDate_30V + "', '" + obj.fileName + "', '" + obj.thread + "', '" + obj.direction + "')";
                     connectionDB.addDB(sql);
+                    if (onCount != null)
+                    {
+                        onCount(false);
+                    }
                 }
                 
             }

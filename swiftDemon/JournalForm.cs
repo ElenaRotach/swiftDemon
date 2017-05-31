@@ -17,6 +17,9 @@ namespace swift
     public partial class JournalForm : Form
     {
         ContextMenuStrip contextMenuStripJournal = new ContextMenuStrip();
+        delegate void rowsClear();
+        delegate void rowsAdd(string count);
+        bool repet = true;
         public JournalForm()
         {
             InitializeComponent();
@@ -34,6 +37,7 @@ namespace swift
             //tabMess.CellMouseClick += TabMess_CellMouseClick;
             //tabMess.CellContextMenuStripNeeded += TabMess_CellContextMenuStripNeeded;
             tabMess.ColumnWidthChanged += TabMess_ColumnWidthChanged;
+            logs.onCount += reshouBtbClick;
         }
 
         private void TabMess_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
@@ -173,10 +177,7 @@ namespace swift
 
         private void reshow_Click(object sender, EventArgs e)
         {
-            tabMess.Rows.Clear();
-            List<swiftMess_str> newData = new List<swiftMess_str>();
-            newData = getDataJournal(tb_condition.Text);
-            showRows(newData);
+            reshouBtbClick();
         }
         private List<swiftMess_str> getDataJournal(string condition)
         {
@@ -213,38 +214,68 @@ namespace swift
         {
             if (allMess.Count > 0)
             {
-                tabMess.Rows.Add(allMess.Count);
-                int i = 0;
-                foreach (swiftMess_str msg in allMess)
+                //dgLogGrid.Invoke((MethodInvoker)(() => dgLogGrid.Rows.Add(myArray)));
+                tabMess.Invoke((MethodInvoker)(() => tabMess.Rows.Add(allMess.Count+1)));
+                //tabMess.Invoke(new rowsAdd((s) => tabMess.Rows.Add(s), allMess.Count));
+                //tabMess.Rows.Add(allMess.Count);
+                //int i = 0;
+                for(int i=0; i< allMess.Count; i++)
                 {
-                    tabMess.Rows[i].Cells[0].Value = msg.transactionReferenceNumber_20;
-                    tabMess.Rows[i].Cells[1].Value = msg.valueDate_30V;
-                    tabMess.Rows[i].Cells[2].Value = msg.date_32;
-                    tabMess.Rows[i].Cells[3].Value = msg.currency_32;
-                    tabMess.Rows[i].Cells[4].Value = msg.amount_32;
-                    tabMess.Rows[i].Cells[5].Value = msg.currency_33B;
-                    tabMess.Rows[i].Cells[6].Value = msg.amount_33B;
-                    tabMess.Rows[i].Cells[7].Value = msg.orderingCustomer_50;
-                    tabMess.Rows[i].Cells[8].Value = msg.orderingInstitution_52;
-                    tabMess.Rows[i].Cells[9].Value = msg.senderCorrespondent_53;
-                    tabMess.Rows[i].Cells[10].Value = msg.receiverCorrespondent_54;
-                    tabMess.Rows[i].Cells[11].Value = msg.intermediaryInstitution_56;
-                    tabMess.Rows[i].Cells[12].Value = msg.accountWithInstitution_57;
-                    tabMess.Rows[i].Cells[13].Value = msg.beneficiaryInstitution_58;
-                    tabMess.Rows[i].Cells[14].Value = msg.beneficiaryCustomer_59;
-                    tabMess.Rows[i].Cells[15].Value = msg.processingCharacteristic;
-                    tabMess.Rows[i].Cells[16].Value = msg.mess_direction;
-                    tabMess.Rows[i].Cells[17].Value = msg.comment;
-                    tabMess.Rows[i].Cells[18].Value = msg.dateTime_mess;
-                    tabMess.Rows[i].Cells[19].Value = msg.referenceMess;
-                    tabMess.Rows[i].Cells[20].Value = msg.fin;
-                    tabMess.Rows[i].Cells[21].Value = msg.swiftNumberBankKontragent;
-                    tabMess.Rows[i].Cells[22].Value = msg.naimBankKontragent;
-                    tabMess.Rows[i].Cells[23].Value = msg.thread;
-                    tabMess.Rows[i].Cells[24].Value = msg.fileName;
-                    tabMess.Rows[i].Cells[25].Value = msg.direction;
-                    tabMess.Rows[i].Cells[26].Value = msg.id;
-                    i++;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[0].Value = s), allMess[i].transactionReferenceNumber_20);
+                    //tabMess.Rows[i].Cells[0].Value = allMess[i].transactionReferenceNumber_20;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[1].Value = s), allMess[i].valueDate_30V);
+                    //tabMess.Rows[i].Cells[1].Value = allMess[i].valueDate_30V;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[2].Value = s), allMess[i].date_32);
+                    //tabMess.Rows[i].Cells[2].Value = allMess[i].date_32;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[3].Value = s), allMess[i].currency_32);
+                    //tabMess.Rows[i].Cells[3].Value = allMess[i].currency_32;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[4].Value = s), allMess[i].amount_32);
+                    //tabMess.Rows[i].Cells[4].Value = allMess[i].amount_32;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[5].Value = s), allMess[i].currency_33B);
+                    //                    tabMess.Rows[i].Cells[5].Value = allMess[i].currency_33B;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[6].Value = s), allMess[i].amount_33B);
+                    //                    tabMess.Rows[i].Cells[6].Value = allMess[i].amount_33B;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[7].Value = s), allMess[i].orderingCustomer_50);
+                    //                    tabMess.Rows[i].Cells[7].Value = allMess[i].orderingCustomer_50;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[8].Value = s), allMess[i].orderingInstitution_52);
+                    //                    tabMess.Rows[i].Cells[8].Value = allMess[i].orderingInstitution_52;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[9].Value = s), allMess[i].senderCorrespondent_53);
+                    //                    tabMess.Rows[i].Cells[9].Value = allMess[i].senderCorrespondent_53;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[10].Value = s), allMess[i].receiverCorrespondent_54);
+                    //                    tabMess.Rows[i].Cells[10].Value = allMess[i].receiverCorrespondent_54;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[11].Value = s), allMess[i].intermediaryInstitution_56);
+                    //                    tabMess.Rows[i].Cells[11].Value = allMess[i].intermediaryInstitution_56;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[12].Value = s), allMess[i].accountWithInstitution_57);
+                    //                    tabMess.Rows[i].Cells[12].Value = allMess[i].accountWithInstitution_57;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[13].Value = s), allMess[i].beneficiaryInstitution_58);
+                    //                    tabMess.Rows[i].Cells[13].Value = allMess[i].beneficiaryInstitution_58;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[14].Value = s), allMess[i].beneficiaryCustomer_59);
+                    //                    tabMess.Rows[i].Cells[14].Value = allMess[i].beneficiaryCustomer_59;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[15].Value = s), allMess[i].processingCharacteristic);
+                    //                    tabMess.Rows[i].Cells[15].Value = allMess[i].processingCharacteristic;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[16].Value = s), allMess[i].mess_direction);
+                    //                    tabMess.Rows[i].Cells[16].Value = allMess[i].mess_direction;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[17].Value = s), allMess[i].comment);
+                    //                    tabMess.Rows[i].Cells[17].Value = allMess[i].comment;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[18].Value = s), allMess[i].dateTime_mess);
+                    //                    tabMess.Rows[i].Cells[18].Value = allMess[i].dateTime_mess;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[19].Value = s), allMess[i].referenceMess);
+                    //                    tabMess.Rows[i].Cells[19].Value = allMess[i].referenceMess;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[20].Value = s), allMess[i].fin);
+                    //                    tabMess.Rows[i].Cells[20].Value = allMess[i].fin;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[21].Value = s), allMess[i].swiftNumberBankKontragent);
+                    //                    tabMess.Rows[i].Cells[21].Value = allMess[i].swiftNumberBankKontragent;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[22].Value = s), allMess[i].naimBankKontragent);
+                    //                    tabMess.Rows[i].Cells[22].Value = allMess[i].naimBankKontragent;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[23].Value = s), allMess[i].thread);
+                    //                    tabMess.Rows[i].Cells[23].Value = allMess[i].thread;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[24].Value = s), allMess[i].fileName);
+                    //                    tabMess.Rows[i].Cells[24].Value = allMess[i].fileName;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[25].Value = s), allMess[i].direction);
+                    //                    tabMess.Rows[i].Cells[25].Value = allMess[i].direction;
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[26].Value = s), allMess[i].id);
+//                    tabMess.Rows[i].Cells[26].Value = allMess[i].id;
+//                    i++;
                 }
             }
         }
@@ -257,6 +288,21 @@ namespace swift
         {
             condition conditionForm = new condition(this);
             conditionForm.Show();
+        }
+        public void reshouBtbClick(bool sss=false)
+        {
+            tabMess.Invoke(new rowsClear(() => tabMess.Rows.Clear()));
+                List<swiftMess_str> newData = new List<swiftMess_str>();
+                newData = getDataJournal(tb_condition.Text);
+                this.showRows(newData);
+            if (this.repet)
+            {
+                repet = false;
+                MessageBox.Show("Test");
+                reshouBtbClick();
+                
+            }
+            repet = true;
         }
     }
 }
