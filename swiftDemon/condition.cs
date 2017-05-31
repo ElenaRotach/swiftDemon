@@ -61,10 +61,15 @@ namespace swiftDemon
                 Control el = new Control();
                 switch(type){
                     case "string":
+                        el = new TextBox();
+                        break;
                     case "int":
+                        el = new TextBox();
+                        el.Text = "0";
+                        break;
                     case "double":
-                        TextBox el1 = new TextBox();
-                        el = el1;
+                        el = new TextBox();
+                        el.Text = "0.00";
                         break;
                     case "date":
                         DateTimePicker el2 = new DateTimePicker();
@@ -75,6 +80,95 @@ namespace swiftDemon
                 el.Width = 150;
                 el.Location = new Point(644, 51);
                 this.Controls.Add(el);
+            }
+        }
+
+        private void btn_exit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        public bool validSaveCondition(out string msg)
+        {
+            bool rez = true;
+            msg = "";
+            string type = thesaurus.getType(cb_columnsName.SelectedValue.ToString());
+            switch (type)
+            {
+                case "string":
+                    if(cb_conditions.Text == ">" || cb_conditions.Text == ">=" || cb_conditions.Text == "<" || cb_conditions.Text == "<=")
+                    {
+                        msg = "Сравнение строк не может быть произведено при помощи >, >=, <, <=";
+                        rez = false;
+                    }
+                    break;
+                case "int":
+                    if (cb_conditions.Text == "содержит") {
+                        msg = "Сравнение не может быть произведено при помощи 'содержит'";
+                        rez = false;
+                    }
+                    if(tb_value.Text == "")
+                    {
+                        msg = "Не заполнено значение для сравнения";
+                        rez = false;
+                    }
+                    int strInt = 0;
+                    if (!Int32.TryParse(tb_value.Text, out strInt))
+                    {
+                        msg = "Сравнение производится только с целыми положительными числами";
+                        rez = false;
+                    }
+                    break;
+                case "double":
+                    if (cb_conditions.Text == "содержит")
+                    {
+                        msg = "Сравнение не может быть произведено при помощи 'содержит'";
+                        rez = false;
+                    }
+                    if (tb_value.Text == "")
+                    {
+                        msg = "Не заполнено значение для сравнения";
+                        rez = false;
+                    }
+                    double strDbl = 0.00;
+                    if (!Double.TryParse(tb_value.Text, out strDbl))
+                    {
+                        msg = "Сравнение производится только с числами двойной точности";
+                        rez = false;
+                    }
+                    break;
+                case "date":
+                    if (cb_conditions.Text == "содержит")
+                    {
+                        msg = "Сравнение не может быть произведено при помощи 'содержит'";
+                        rez = false;
+                    }
+                    if (((DateTimePicker)Controls["tb_value"]).Value.ToString() == "")
+                    {
+                        msg = "Не заполнено значение для сравнения";
+                        rez = false;
+                    }
+                    DateTime strDate;
+                    //MessageBox.Show(Controls["tb_value"].Value);
+                    if (!DateTime.TryParse(((DateTimePicker)Controls["tb_value"]).Value.ToString(), out strDate))
+                    {
+                        msg = "Сравнение производится только с датами";
+                        rez = false;
+                    }
+                    break;
+            }
+            return rez;
+        }
+
+        private void btn_OK_Click(object sender, EventArgs e)
+        {
+            string msg;
+            if (validSaveCondition(out msg)) {
+                MessageBox.Show("Валидно");
+            }
+            else
+            {
+                MessageBox.Show(msg);
             }
         }
     }

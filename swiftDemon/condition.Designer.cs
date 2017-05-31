@@ -146,6 +146,7 @@
             this.btn_OK.TabIndex = 11;
             this.btn_OK.Text = "Применить";
             this.btn_OK.UseVisualStyleBackColor = true;
+            this.btn_OK.Click += new System.EventHandler(this.btn_OK_Click);
             // 
             // btn_exit
             // 
@@ -155,6 +156,7 @@
             this.btn_exit.TabIndex = 12;
             this.btn_exit.Text = "Выход";
             this.btn_exit.UseVisualStyleBackColor = true;
+            this.btn_exit.Click += new System.EventHandler(this.btn_exit_Click);
             // 
             // condition
             // 
