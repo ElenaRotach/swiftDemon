@@ -8,7 +8,7 @@ namespace swiftDemon
 {
     public static class thesaurus
     {
-        public static List<string> conditions = new List<string>(new[] {">", ">=", "<", "<=", "=", "!=", "содержит"});
+        public static List<string> conditions = new List<string>(new[] {">", ">=", "<", "<=", "=", "!=", "like"});
         public static Dictionary<string, string> columnsType = new Dictionary<string, string> {
             { "transactionReferenceNumber_20", "string"},
             {"valueDate_30V", "date" },

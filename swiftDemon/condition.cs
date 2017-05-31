@@ -13,6 +13,7 @@ namespace swiftDemon
     public partial class condition : Form
     {
         private JournalForm parent;
+        private string outCondition;
         public condition(JournalForm parent)
         {
             this.parent = parent;
@@ -101,44 +102,49 @@ namespace swiftDemon
                         msg = "Сравнение строк не может быть произведено при помощи >, >=, <, <=";
                         rez = false;
                     }
+                    outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + " '" + ((TextBox)Controls["tb_value"]).Text + "'";
                     break;
                 case "int":
-                    if (cb_conditions.Text == "содержит") {
+                    if (cb_conditions.Text == "like") {
                         msg = "Сравнение не может быть произведено при помощи 'содержит'";
                         rez = false;
                     }
-                    if(tb_value.Text == "")
+                    if(((TextBox)Controls["tb_value"]).Text == "")
                     {
                         msg = "Не заполнено значение для сравнения";
                         rez = false;
                     }
                     int strInt = 0;
-                    if (!Int32.TryParse(tb_value.Text, out strInt))
+                    if (!Int32.TryParse(((TextBox)Controls["tb_value"]).Text, out strInt))
                     {
                         msg = "Сравнение производится только с целыми положительными числами";
                         rez = false;
                     }
+                    outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((TextBox)Controls["tb_value"]).Text;
                     break;
                 case "double":
-                    if (cb_conditions.Text == "содержит")
+                    if (cb_conditions.Text == "like")
                     {
                         msg = "Сравнение не может быть произведено при помощи 'содержит'";
                         rez = false;
                     }
-                    if (tb_value.Text == "")
+                    if (((TextBox)Controls["tb_value"]).Text == "")
                     {
                         msg = "Не заполнено значение для сравнения";
                         rez = false;
                     }
+                    outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((TextBox)Controls["tb_value"]).Text;
                     double strDbl = 0.00;
-                    if (!Double.TryParse(tb_value.Text, out strDbl))
+                    string test = ((TextBox)Controls["tb_value"]).Text;
+                    if (!Double.TryParse(test.Replace(".", ","), out strDbl))
                     {
                         msg = "Сравнение производится только с числами двойной точности";
                         rez = false;
                     }
+                    outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((TextBox)Controls["tb_value"]).Text;
                     break;
                 case "date":
-                    if (cb_conditions.Text == "содержит")
+                    if (cb_conditions.Text == "like")
                     {
                         msg = "Сравнение не может быть произведено при помощи 'содержит'";
                         rez = false;
@@ -155,6 +161,7 @@ namespace swiftDemon
                         msg = "Сравнение производится только с датами";
                         rez = false;
                     }
+                    outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + " '" + ((DateTimePicker)Controls["tb_value"]).Value.ToString().Substring(0, 10) + "'";
                     break;
             }
             return rez;
@@ -164,7 +171,7 @@ namespace swiftDemon
         {
             string msg;
             if (validSaveCondition(out msg)) {
-                MessageBox.Show("Валидно");
+                parent.tb_condition.Text = outCondition;
             }
             else
             {

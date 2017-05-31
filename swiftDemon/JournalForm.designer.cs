@@ -109,7 +109,7 @@
         private System.Windows.Forms.Button export;
         public System.Windows.Forms.DataGridView tabMess;
         private System.Windows.Forms.Button reshow;
-        private System.Windows.Forms.TextBox tb_condition;
         private System.Windows.Forms.Button btn_condition;
+        public System.Windows.Forms.TextBox tb_condition;
     }
 }
