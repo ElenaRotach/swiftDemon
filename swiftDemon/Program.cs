@@ -128,44 +128,31 @@ namespace swiftDemon
                 else { dirs = Directory.GetFiles(settingsVal.inMess, "*"); }
                 int key = 0;
                 for (int i = 0; i < dirs.Length; i++)
-                //FileInfo file();
                 {
                     if (Path.GetExtension(dirs[i]) == ".trn" && dirs[i].IndexOf("FIN-082") == -1 && dirs[i].IndexOf("FIN-081") == -1 && dirs[i].IndexOf("APC-081") == -1)
                     {
-                        if (firstStart)
-                        {
-                            //logs.outStr("================================================================================================", false, null);
-                            DateTime workDate = DateTime.Now.AddDays(-1);
-                            //logs.outStr("workDate " + workDate.ToString(), false, null);
-                            string pattern = "dd.MM.yyyy H:mm:ff";
-                            DateTime parsedDate;
-                            DateTime.TryParseExact(workDate.ToString(), pattern, null, DateTimeStyles.None, out parsedDate);
-                            //logs.outStr("parsedDate " + parsedDate.ToString(), false, null);
-                            string newDate = string.Format("{0:d}", parsedDate);
-                            newDate += " 17:30:00";
-                            //logs.outStr("newDate " + newDate.ToString(), false, null);
-                            //logs.outStr("File.GetLastAccessTime(dirs[i]) " + File.GetLastWriteTime(dirs[i]), false, null);
-                            //logs.outStr("DateTime.Now - File.GetLastAccessTime(dirs[i]) " + (DateTime.Now - File.GetLastWriteTime(dirs[i])), false, null);
-                            //logs.outStr("(DateTime.Now - File.GetLastAccessTime(dirs[i])).TotalMinutes " + (DateTime.Now - File.GetLastWriteTime(dirs[i])).TotalMinutes, false, null);
-                            //logs.outStr("(DateTime.Now - DateTime.Parse(newDate)) " + (DateTime.Now - DateTime.Parse(newDate)), false, null);
-                            //logs.outStr("(DateTime.Now - DateTime.Parse(newDate)).TotalMinutes " + (DateTime.Now - DateTime.Parse(newDate)).TotalMinutes, false, null);
-                            //logs.outStr("(DateTime.Now - File.GetLastAccessTime(dirs[i])).TotalMinutes < (int)(DateTime.Now - DateTime.Parse(newDate)).TotalMinutes " + ((DateTime.Now - File.GetLastWriteTime(dirs[i])).TotalMinutes < (int)(DateTime.Now - DateTime.Parse(newDate)).TotalMinutes), false, null);
-                            //logs.outStr("key " + key, false, null);
-                            //logs.outStr("==============================================================================================", false, null);
-                            if ((DateTime.Now - File.GetLastWriteTime(dirs[i])).TotalMinutes < (int)(DateTime.Now - DateTime.Parse(newDate)).TotalMinutes)
-                            {
+                        //if (firstStart)
+                        //{
+                        //    DateTime workDate = DateTime.Now.AddDays(-1);
+                        //    string pattern = "dd.MM.yyyy H:mm:ff";
+                        //    DateTime parsedDate;
+                        //    DateTime.TryParseExact(workDate.ToString(), pattern, null, DateTimeStyles.None, out parsedDate);
+                        //    string newDate = string.Format("{0:d}", parsedDate);
+                        //    newDate += " 17:30:00";
+                        //    if ((DateTime.Now - File.GetLastWriteTime(dirs[i])).TotalMinutes < (int)(DateTime.Now - DateTime.Parse(newDate)).TotalMinutes)
+                        //    {
+                        //        filesDictionary.Add(key.ToString(), dirs[i]);
+                        //        key++;
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    if ((int)(DateTime.Now - File.GetLastWriteTime(dirs[i])).TotalMinutes < 5)
+                        //    {
                                 filesDictionary.Add(key.ToString(), dirs[i]);
                                 key++;
-                            }
-                        }
-                        else
-                        {
-                            if ((int)(DateTime.Now - File.GetLastWriteTime(dirs[i])).TotalMinutes < 5)
-                            {
-                                filesDictionary.Add(key.ToString(), dirs[i]);
-                                key++;
-                            }
-                        }
+                        //    }
+                        //}
                     }
                 }
             }

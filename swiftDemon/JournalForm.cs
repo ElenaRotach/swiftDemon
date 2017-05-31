@@ -90,7 +90,7 @@ namespace swift
         {
             InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new System.Globalization.CultureInfo("en-US"));
             List<swiftMess_str> allMess = new List<swiftMess_str>();
-            allMess = getDataJournal();
+            allMess = getDataJournal("");
                 tabMess.Columns.Add("0", "transactionReferenceNumber_20");
                 tabMess.Columns.Add("1", "valueDate_30V");
                 tabMess.Columns.Add("2", "date_32");
@@ -175,13 +175,17 @@ namespace swift
         {
             tabMess.Rows.Clear();
             List<swiftMess_str> newData = new List<swiftMess_str>();
-            newData = getDataJournal();
+            newData = getDataJournal(tb_condition.Text);
             showRows(newData);
         }
-        private List<swiftMess_str> getDataJournal()
+        private List<swiftMess_str> getDataJournal(string condition)
         {
             List<swiftMess_str> allMess = new List<swiftMess_str>();
-            string sql = @"select * from mess";
+            string sql = @"SELECT * FROM mess";
+            if (condition != "")
+            {
+                sql = @"SELECT * FROM [mess] WHERE " + condition;
+            }
             settings obj = new settings();
             string connectionString = @"Provider=Microsoft.Ace.OLEDB.12.0;Data Source=" + obj.dbPath + obj.dbName;
             OleDbConnection myOleDbConnection = new OleDbConnection(connectionString);
@@ -207,41 +211,43 @@ namespace swift
 
         private void showRows(List<swiftMess_str> allMess)
         {
-            tabMess.Rows.Add(allMess.Count);
-            int i = 0;
-            foreach (swiftMess_str msg in allMess)
+            if (allMess.Count > 0)
             {
-                tabMess.Rows[i].Cells[0].Value = msg.transactionReferenceNumber_20;
-                tabMess.Rows[i].Cells[1].Value = msg.valueDate_30V;
-                tabMess.Rows[i].Cells[2].Value = msg.date_32;
-                tabMess.Rows[i].Cells[3].Value = msg.currency_32;
-                tabMess.Rows[i].Cells[4].Value = msg.amount_32;
-                tabMess.Rows[i].Cells[5].Value = msg.currency_33B;
-                tabMess.Rows[i].Cells[6].Value = msg.amount_33B;
-                tabMess.Rows[i].Cells[7].Value = msg.orderingCustomer_50;
-                tabMess.Rows[i].Cells[8].Value = msg.orderingInstitution_52;
-                tabMess.Rows[i].Cells[9].Value = msg.senderCorrespondent_53;
-                tabMess.Rows[i].Cells[10].Value = msg.receiverCorrespondent_54;
-                tabMess.Rows[i].Cells[11].Value = msg.intermediaryInstitution_56;
-                tabMess.Rows[i].Cells[12].Value = msg.accountWithInstitution_57;
-                tabMess.Rows[i].Cells[13].Value = msg.beneficiaryInstitution_58;
-                tabMess.Rows[i].Cells[14].Value = msg.beneficiaryCustomer_59;
-                tabMess.Rows[i].Cells[15].Value = msg.processingCharacteristic;
-                tabMess.Rows[i].Cells[16].Value = msg.mess_direction;
-                tabMess.Rows[i].Cells[17].Value = msg.comment;
-                tabMess.Rows[i].Cells[18].Value = msg.dateTime_mess;
-                tabMess.Rows[i].Cells[19].Value = msg.referenceMess;
-                tabMess.Rows[i].Cells[20].Value = msg.fin;
-                tabMess.Rows[i].Cells[21].Value = msg.swiftNumberBankKontragent;
-                tabMess.Rows[i].Cells[22].Value = msg.naimBankKontragent;
-                tabMess.Rows[i].Cells[23].Value = msg.thread;
-                tabMess.Rows[i].Cells[24].Value = msg.fileName;
-                tabMess.Rows[i].Cells[25].Value = msg.direction;
-                tabMess.Rows[i].Cells[26].Value = msg.id;
-                i++;
+                tabMess.Rows.Add(allMess.Count);
+                int i = 0;
+                foreach (swiftMess_str msg in allMess)
+                {
+                    tabMess.Rows[i].Cells[0].Value = msg.transactionReferenceNumber_20;
+                    tabMess.Rows[i].Cells[1].Value = msg.valueDate_30V;
+                    tabMess.Rows[i].Cells[2].Value = msg.date_32;
+                    tabMess.Rows[i].Cells[3].Value = msg.currency_32;
+                    tabMess.Rows[i].Cells[4].Value = msg.amount_32;
+                    tabMess.Rows[i].Cells[5].Value = msg.currency_33B;
+                    tabMess.Rows[i].Cells[6].Value = msg.amount_33B;
+                    tabMess.Rows[i].Cells[7].Value = msg.orderingCustomer_50;
+                    tabMess.Rows[i].Cells[8].Value = msg.orderingInstitution_52;
+                    tabMess.Rows[i].Cells[9].Value = msg.senderCorrespondent_53;
+                    tabMess.Rows[i].Cells[10].Value = msg.receiverCorrespondent_54;
+                    tabMess.Rows[i].Cells[11].Value = msg.intermediaryInstitution_56;
+                    tabMess.Rows[i].Cells[12].Value = msg.accountWithInstitution_57;
+                    tabMess.Rows[i].Cells[13].Value = msg.beneficiaryInstitution_58;
+                    tabMess.Rows[i].Cells[14].Value = msg.beneficiaryCustomer_59;
+                    tabMess.Rows[i].Cells[15].Value = msg.processingCharacteristic;
+                    tabMess.Rows[i].Cells[16].Value = msg.mess_direction;
+                    tabMess.Rows[i].Cells[17].Value = msg.comment;
+                    tabMess.Rows[i].Cells[18].Value = msg.dateTime_mess;
+                    tabMess.Rows[i].Cells[19].Value = msg.referenceMess;
+                    tabMess.Rows[i].Cells[20].Value = msg.fin;
+                    tabMess.Rows[i].Cells[21].Value = msg.swiftNumberBankKontragent;
+                    tabMess.Rows[i].Cells[22].Value = msg.naimBankKontragent;
+                    tabMess.Rows[i].Cells[23].Value = msg.thread;
+                    tabMess.Rows[i].Cells[24].Value = msg.fileName;
+                    tabMess.Rows[i].Cells[25].Value = msg.direction;
+                    tabMess.Rows[i].Cells[26].Value = msg.id;
+                    i++;
+                }
             }
         }
-
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 

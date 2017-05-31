@@ -102,10 +102,17 @@ namespace swiftDemon
                         msg = "Сравнение строк не может быть произведено при помощи >, >=, <, <=";
                         rez = false;
                     }
-                    outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + " '" + ((TextBox)Controls["tb_value"]).Text + "'";
+                    if (cb_conditions.Text == "LIKE")
+                    {
+                        outCondition = "[" + cb_columnsName.SelectedValue.ToString() + "] " + cb_conditions.Text + " '%" + ((TextBox)Controls["tb_value"]).Text + "%'";
+                    }
+                    else
+                    {
+                        outCondition = "[" + cb_columnsName.SelectedValue.ToString() + "] " + cb_conditions.Text + " '" + ((TextBox)Controls["tb_value"]).Text + "'";
+                    }
                     break;
                 case "int":
-                    if (cb_conditions.Text == "like") {
+                    if (cb_conditions.Text == "LIKE") {
                         msg = "Сравнение не может быть произведено при помощи 'содержит'";
                         rez = false;
                     }
@@ -123,7 +130,7 @@ namespace swiftDemon
                     outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((TextBox)Controls["tb_value"]).Text;
                     break;
                 case "double":
-                    if (cb_conditions.Text == "like")
+                    if (cb_conditions.Text == "LIKE")
                     {
                         msg = "Сравнение не может быть произведено при помощи 'содержит'";
                         rez = false;
@@ -144,7 +151,7 @@ namespace swiftDemon
                     outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((TextBox)Controls["tb_value"]).Text;
                     break;
                 case "date":
-                    if (cb_conditions.Text == "like")
+                    if (cb_conditions.Text == "LIKE")
                     {
                         msg = "Сравнение не может быть произведено при помощи 'содержит'";
                         rez = false;
