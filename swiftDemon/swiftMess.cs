@@ -87,7 +87,7 @@ namespace swiftDemon
                     valueDate_30V = new DateTime(Convert.ToInt32(dateStr.Substring(0, 4)), Convert.ToInt32(dateStr.Substring(4, 2)), Convert.ToInt32(dateStr.Substring(6, 2)));
                 }
 
-                if (workArr[ind].IndexOf("32A:") != -1)
+                if (workArr[ind].IndexOf("32A:") != -1 || workArr[ind].IndexOf("32D:") != -1)
                 {
                     string[] dateStr = (workArr[ind + 1].Split(':')[1]).Split(' ');
                     date_32 = new DateTime(Convert.ToInt32(dateStr[3]), thesaurus.mount(dateStr[2]), Convert.ToInt32(dateStr[1]));

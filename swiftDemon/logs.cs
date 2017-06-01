@@ -41,6 +41,7 @@ namespace swiftDemon
                 Console.WriteLine(str + '\n');
                 if (obj != null)
                 {
+                    //MessageBox.Show(obj.dateTime_mess.ToString());
                     string sql = @"insert into mess (accountWithInstitution_57, amount_32, amount_33B, beneficiaryCustomer_59, beneficiaryInstitution_58, comment, currency_32" +
                         ",  currency_33B, dateTime_mess, date_32, fin, intermediaryInstitution_56, mess_direction, naimBankKontragent, orderingCustomer_50, orderingInstitution_52" +
                         ", processingCharacteristic, receiverCorrespondent_54, referenceMess, senderCorrespondent_53, swiftNumberBankKontragent, transactionReferenceNumber_20, valueDate_30V" +
@@ -51,10 +52,10 @@ namespace swiftDemon
                         obj.receiverCorrespondent_54 + "', '" + obj.referenceMess + "', '" + obj.senderCorrespondent_53 + "', '" + obj.swiftNumberBankKontragent + "', '" + obj.transactionReferenceNumber_20 + "', '" +
                         obj.valueDate_30V + "', '" + obj.fileName + "', '" + obj.thread + "', '" + obj.direction + "')";
                     connectionDB.addDB(sql);
-                    if (onCount != null)
-                    {
-                        onCount(false);
-                    }
+                    //if (onCount != null)
+                    //{
+                    //    onCount(false);
+                    //}
                 }
                 
             }
@@ -70,16 +71,29 @@ namespace swiftDemon
                     {
                         if (value == "") { value = "0"; }
                         value = value.Replace(",", ".");
-                        string sql = @"UPDATE mess SET " + paramName + " = " + value + " where id=" + id + "; ";
+                        string sql = @"UPDATE mess SET " + paramName + " = " + value + ", mess_direction = true where id=" + id + "; ";
                         connectionDB.addDB(sql);
                     }
                     else
                     {
-                        string sql = @"UPDATE mess SET " + paramName + " = '" + value + "' where id=" + id + "; ";
+                        string sql = @"UPDATE mess SET " + paramName + " = '" + value + "', mess_direction = true where id=" + id + "; ";
                         connectionDB.addDB(sql);
                     }
                 }
 
+            }
+            catch
+            {
+                MessageBox.Show("Не возможно сохранить изменения");
+            }
+        }
+
+        public static void saveParam(string id)
+        {
+            try
+            {
+                string sql = @"UPDATE mess SET  mess_direction = true where id=" + id + "; ";
+                connectionDB.addDB(sql);
             }
             catch
             {

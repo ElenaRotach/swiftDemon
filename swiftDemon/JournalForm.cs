@@ -79,6 +79,13 @@ namespace swift
         private void printMenuItem_Click(object sender, EventArgs e)
         {
             int index = tabMess.CurrentRow.Index;
+            logs.saveParam(tabMess.Rows[index].Cells["26"].Value.ToString());
+            tabMess.Rows[index].Cells[16].Value = "True";
+            for (int cellNum = 0; cellNum < 27; cellNum++)
+            {
+                tabMess.Rows[index].Cells[cellNum].Style.BackColor = System.Drawing.Color.White;
+            }
+
             tabMess.Rows[index].Selected = true;
             File.Delete(Environment.CurrentDirectory + @"\tmp.txt");
             string curFile = Environment.CurrentDirectory + @"\tmp.txt";
@@ -203,7 +210,7 @@ namespace swift
                     myOleDbDataReader.GetValue(4).ToString(), myOleDbDataReader.GetValue(5).ToString(), myOleDbDataReader.GetValue(6).ToString(), myOleDbDataReader.GetValue(7).ToString(),
                     myOleDbDataReader.GetValue(8).ToString(), myOleDbDataReader.GetValue(9).ToString(), myOleDbDataReader.GetValue(10).ToString(), myOleDbDataReader.GetValue(11).ToString(),
                     myOleDbDataReader.GetValue(12).ToString(), myOleDbDataReader.GetValue(13).ToString(), myOleDbDataReader.GetValue(14).ToString(), myOleDbDataReader.GetValue(15).ToString(),
-                    myOleDbDataReader.GetValue(16).ToString(), myOleDbDataReader.GetValue(17).ToString(), myOleDbDataReader.GetValue(19).ToString(), myOleDbDataReader.GetValue(19).ToString(),
+                    myOleDbDataReader.GetValue(16).ToString(), myOleDbDataReader.GetValue(17).ToString(), myOleDbDataReader.GetValue(18).ToString(), myOleDbDataReader.GetValue(19).ToString(),
                     myOleDbDataReader.GetValue(20).ToString(), myOleDbDataReader.GetValue(21).ToString(), myOleDbDataReader.GetValue(22).ToString(), myOleDbDataReader.GetValue(23).ToString(),
                     myOleDbDataReader.GetValue(24).ToString(), myOleDbDataReader.GetValue(25).ToString(), myOleDbDataReader.GetValue(26).ToString()));
             }
@@ -215,11 +222,11 @@ namespace swift
             if (allMess.Count > 0)
             {
                 //dgLogGrid.Invoke((MethodInvoker)(() => dgLogGrid.Rows.Add(myArray)));
-                tabMess.Invoke((MethodInvoker)(() => tabMess.Rows.Add(allMess.Count+1)));
+                tabMess.Invoke((MethodInvoker)(() => tabMess.Rows.Add(allMess.Count + 1)));
                 //tabMess.Invoke(new rowsAdd((s) => tabMess.Rows.Add(s), allMess.Count));
                 //tabMess.Rows.Add(allMess.Count);
                 //int i = 0;
-                for(int i=0; i< allMess.Count; i++)
+                for (int i = 0; i < allMess.Count; i++)
                 {
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[0].Value = s), allMess[i].transactionReferenceNumber_20);
                     //tabMess.Rows[i].Cells[0].Value = allMess[i].transactionReferenceNumber_20;
@@ -274,9 +281,10 @@ namespace swift
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[25].Value = s), allMess[i].direction);
                     //                    tabMess.Rows[i].Cells[25].Value = allMess[i].direction;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[26].Value = s), allMess[i].id);
-//                    tabMess.Rows[i].Cells[26].Value = allMess[i].id;
-//                    i++;
+                    //                    tabMess.Rows[i].Cells[26].Value = allMess[i].id;
+                    //                    i++;
                 }
+                paintCells();
             }
         }
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -298,11 +306,27 @@ namespace swift
             if (this.repet)
             {
                 repet = false;
-                MessageBox.Show("Test");
-                reshouBtbClick();
-                
+                //MessageBox.Show("Test");
+                //reshouBtbClick();
+                //reshow.PerformClick();
+                //reshow.Invoke((MethodInvoker)(() => reshow.PerformClick()));
+
             }
             repet = true;
+        }
+        private void paintCells()
+        {
+            for (int j = 0; j < tabMess.Rows.Count - 2; j++)
+            {
+                if (tabMess.Rows[j].Cells[16].Value.ToString() == "False")
+                {
+                    for (int cellNum = 0; cellNum < 27; cellNum++)
+                    {
+                        tabMess.Rows[j].Cells[cellNum].Style.BackColor = System.Drawing.Color.CadetBlue;
+                    }
+
+                }
+            }
         }
     }
 }

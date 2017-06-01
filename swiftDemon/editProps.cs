@@ -32,6 +32,11 @@ namespace swift
         {
             parent.tabMess.Rows[X].Cells[Y].Value = param.Text;
             logs.saveParam(parent.tabMess.Columns[Y].HeaderCell.FormattedValue.ToString(), param.Text, parent.tabMess.Rows[X].Cells["26"].Value.ToString());
+            parent.tabMess.Rows[X].Cells[16].Value = "True";
+            for (int cellNum = 0; cellNum < 27; cellNum++)
+            {
+                parent.tabMess.Rows[X].Cells[cellNum].Style.BackColor = System.Drawing.Color.White;
+            }
             this.Close();
         }
     }
