@@ -139,7 +139,8 @@ namespace swift
                 tabMess.Columns[i].Width = Convert.ToInt32(columnWidth);
                 tabMess.Columns[i].ReadOnly = true;
             }
-            
+            tabMess.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            tabMess.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             //MessageBox.Show(tabMess.Columns[0].HeaderCell.FormattedValue.ToString());
             showRows(allMess);
         }
