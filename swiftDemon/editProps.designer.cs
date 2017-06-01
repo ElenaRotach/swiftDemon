@@ -38,6 +38,7 @@
             this.param.Location = new System.Drawing.Point(36, 22);
             this.param.Multiline = true;
             this.param.Name = "param";
+            this.param.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.param.Size = new System.Drawing.Size(574, 46);
             this.param.TabIndex = 0;
             // 

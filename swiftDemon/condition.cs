@@ -23,7 +23,7 @@ namespace swiftDemon
             List<string> tabNameSource = new List<string>(); //new Array(parent.tabMess.ColumnCount);
             for (int i = 0; i < parent.tabMess.ColumnCount; i++)
             {
-                tabNameSource.Add(parent.tabMess.Columns[i].HeaderCell.FormattedValue.ToString());
+                tabNameSource.Add(parent.tabMess.Columns[i].HeaderCell.FormattedValue.ToString().Split(' ')[1]);
             }
             InitializeComponent();
             cb_columnsName.DataSource = tabNameSource;

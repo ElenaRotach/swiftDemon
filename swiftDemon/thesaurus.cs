@@ -65,5 +65,15 @@ namespace swiftDemon
             mount.Add("December", 12);
             return mount[name];
         }
+        public static int columnIndex(System.Windows.Forms.DataGridViewColumnCollection dg, string name)
+        {
+            foreach (System.Windows.Forms.DataGridViewTextBoxColumn el in dg) {
+                if (el.HeaderText.IndexOf(name)!=-1)
+                {
+                    return el.Index;
+                }
+            }
+            return -1;
+        }
     }
 }

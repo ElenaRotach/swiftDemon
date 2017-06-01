@@ -145,6 +145,36 @@ namespace swiftDemon
         public string fileName = "";
         public string direction = "";
         public string id = "";
+
+        /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+        public static string transactionReferenceNumber_20_n = "transactionReferenceNumber_20";
+        public static string valueDate_30V_n = "valueDate_30V";
+        public static string date_32_n = "date_32";
+        public static string currency_32_n = "currency_32";
+        public static string amount_32_n = "amount_32";
+        public static string currency_33B_n = "currency_33B";
+        public static string amount_33B_n = "amount_33B";
+        public static string orderingCustomer_50_n = "orderingCustomer_50";
+        public static string orderingInstitution_52_n = "orderingInstitution_52";
+        public static string senderCorrespondent_53_n = "senderCorrespondent_53";
+        public static string receiverCorrespondent_54_n = "receiverCorrespondent_54";
+        public static string intermediaryInstitution_56_n = "intermediaryInstitution_56";
+        public static string accountWithInstitution_57_n = "accountWithInstitution_57";
+        public static string beneficiaryInstitution_58_n = "beneficiaryInstitution_58";
+        public static string beneficiaryCustomer_59_n = "beneficiaryCustomer_59";
+        public static string processingCharacteristic_n = "processingCharacteristic";
+        public static string mess_direction_n = "mess_direction";
+        public static string comment_n = "comment";
+        public static string dateTime_mess_n = "dateTime_mess";
+        public static string referenceMess_n = "referenceMess";
+        public static string fin_n = "fin";
+        public static string swiftNumberBankKontragent_n = "swiftNumberBankKontragent";
+        public static string naimBankKontragent_n = "naimBankKontragent";
+        public static string thread_n = "thread";
+        public static string fileName_n = "fileName";
+        public static string direction_n = "direction";
+        public static string id_n = "id";
+        /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
         public swiftMess_str(string p1, string p2, string p3, string p4, string p5, string p6, string p7, string p8, string p9, string p10, string p11, string p12, string p13, string p14, string p15, string p16,
             string p17, string p18, string p19, string p20, string p21, string p22, string p23, string p24, string p25, string p26, string p27)
         {
@@ -174,6 +204,10 @@ namespace swiftDemon
             beneficiaryInstitution_58 = p14;
             beneficiaryCustomer_59 = p15;
             processingCharacteristic = p16;
+            if(p17 == "")
+            {
+                p17 = "False";
+            }
             mess_direction = p17;
             comment = p18;
             dateTime_mess = p19;
