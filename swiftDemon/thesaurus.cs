@@ -26,7 +26,7 @@ namespace swiftDemon
             {"beneficiaryInstitution_58", "string" },
             {"beneficiaryCustomer_59", "string" },
             {"processingCharacteristic", "string" },
-            {"mess_direction", "string" },
+            {"mess_direction", "bool" },
             {"comment", "string" },
             {"dateTime_mess", "string" },
             {"referenceMess", "string" },

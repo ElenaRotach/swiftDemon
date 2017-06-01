@@ -295,7 +295,7 @@ namespace swift
 
         private void btn_condition_Click(object sender, EventArgs e)
         {
-            condition conditionForm = new condition(this);
+            condition conditionForm = new condition(this, "");
             conditionForm.Show();
         }
         public void reshouBtbClick(bool sss=false)

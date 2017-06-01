@@ -12,6 +12,7 @@ namespace swift
         public editProps(JournalForm parent, int str, int column)
         {
             InitializeComponent();
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.parent = parent;
             X = str;
             Y = column;

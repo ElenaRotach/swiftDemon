@@ -12,11 +12,14 @@ namespace swiftDemon
 {
     public partial class condition : Form
     {
-        private JournalForm parent;
+        public JournalForm parent;
+        public string join;
         private string outCondition;
-        public condition(JournalForm parent)
+        public string childOutCondition = "";
+        public condition(JournalForm parent, string join)
         {
             this.parent = parent;
+            this.join = join;
             List<string> tabNameSource = new List<string>(); //new Array(parent.tabMess.ColumnCount);
             for (int i = 0; i < parent.tabMess.ColumnCount; i++)
             {
@@ -76,6 +79,9 @@ namespace swiftDemon
                         DateTimePicker el2 = new DateTimePicker();
                         el = el2;
                         break;
+                    case "bool":
+                        el = new CheckBox();
+                        break;
                 }
                 el.Name = "tb_value";
                 el.Width = 150;
@@ -104,11 +110,11 @@ namespace swiftDemon
                     }
                     if (cb_conditions.Text == "LIKE")
                     {
-                        outCondition = "[" + cb_columnsName.SelectedValue.ToString() + "] " + cb_conditions.Text + " '%" + ((TextBox)Controls["tb_value"]).Text + "%'";
+                        outCondition = '(' + "[" + cb_columnsName.SelectedValue.ToString() + "] " + cb_conditions.Text + " '%" + ((TextBox)Controls["tb_value"]).Text + "%'" + childOutCondition + ')';
                     }
                     else
                     {
-                        outCondition = "[" + cb_columnsName.SelectedValue.ToString() + "] " + cb_conditions.Text + " '" + ((TextBox)Controls["tb_value"]).Text + "'";
+                        outCondition = '(' + "[" + cb_columnsName.SelectedValue.ToString() + "] " + cb_conditions.Text + " '" + ((TextBox)Controls["tb_value"]).Text + "'" + childOutCondition + ')';
                     }
                     break;
                 case "int":
@@ -127,7 +133,7 @@ namespace swiftDemon
                         msg = "Сравнение производится только с целыми положительными числами";
                         rez = false;
                     }
-                    outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((TextBox)Controls["tb_value"]).Text;
+                    outCondition = '(' + cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((TextBox)Controls["tb_value"]).Text + childOutCondition + ')';
                     break;
                 case "double":
                     if (cb_conditions.Text == "LIKE")
@@ -140,7 +146,7 @@ namespace swiftDemon
                         msg = "Не заполнено значение для сравнения";
                         rez = false;
                     }
-                    outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((TextBox)Controls["tb_value"]).Text;
+                    outCondition = '(' + cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((TextBox)Controls["tb_value"]).Text + childOutCondition + ')';
                     double strDbl = 0.00;
                     string test = ((TextBox)Controls["tb_value"]).Text;
                     if (!Double.TryParse(test.Replace(".", ","), out strDbl))
@@ -148,9 +154,10 @@ namespace swiftDemon
                         msg = "Сравнение производится только с числами двойной точности";
                         rez = false;
                     }
-                    outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((TextBox)Controls["tb_value"]).Text;
+                    outCondition = '(' + cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((TextBox)Controls["tb_value"]).Text + childOutCondition + ')';
                     break;
                 case "date":
+                    //#4/11/2017#
                     if (cb_conditions.Text == "LIKE")
                     {
                         msg = "Сравнение не может быть произведено при помощи 'содержит'";
@@ -168,8 +175,30 @@ namespace swiftDemon
                         msg = "Сравнение производится только с датами";
                         rez = false;
                     }
-                    outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + " '" + ((DateTimePicker)Controls["tb_value"]).Value.ToString().Substring(0, 10) + "'";
+                    
+                    outCondition = '(' + cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + " #" + strDate.Month + "/" + strDate.Day + "/" + strDate.Year + "#" + childOutCondition + ')';
                     break;
+                case "bool":
+                    if (cb_conditions.Text == ">" || cb_conditions.Text == ">=" || cb_conditions.Text == "<" || cb_conditions.Text == "<=" || cb_conditions.Text == "LIKE")
+                    {
+                        msg = "Для логического типа данных доступны операции =, <>";
+                        rez = false;
+                    }
+                    outCondition = '(' + cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((CheckBox)Controls["tb_value"]).Checked.ToString() + childOutCondition + ')';
+                    break;
+            }
+            if(join == "")
+            {
+                if (tb_outCondition.Text != "")
+                {
+                    join = radioVoid();
+                    outCondition = tb_outCondition.Text + " " + join + outCondition;
+                }
+                //outCondition = " " + join + outCondition;
+            }
+            else
+            {
+                outCondition = tb_outCondition.Text + " " + join + outCondition;
             }
             return rez;
         }
@@ -178,12 +207,34 @@ namespace swiftDemon
         {
             string msg;
             if (validSaveCondition(out msg)) {
+                //this.lb_outCondition.
+                tb_outCondition.Text = outCondition;
                 parent.tb_condition.Text = outCondition;
             }
             else
             {
                 MessageBox.Show(msg);
             }
+        }
+
+        private void btn_addFilter_Click(object sender, EventArgs e)
+        {
+            string join = radioVoid();
+            condition addFilter = new condition(parent, join);
+            addFilter.Show();
+        }
+        private string radioVoid()
+        {
+            if(((RadioButton)((GroupBox)Controls["groupBox1"]).Controls["rb_OR"]).Checked)
+            {
+                return "OR";
+            }
+            else
+            {
+                return "AND";
+            }
+            //MessageBox.Show(((RadioButton)Controls["rb_OR"]).Checked.ToString());
+            //((GroupBox)Controls["groupBox1"])
         }
     }
 }

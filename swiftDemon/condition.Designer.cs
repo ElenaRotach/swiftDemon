@@ -40,6 +40,9 @@
             this.tb_value = new System.Windows.Forms.TextBox();
             this.btn_OK = new System.Windows.Forms.Button();
             this.btn_exit = new System.Windows.Forms.Button();
+            this.btn_addFilter = new System.Windows.Forms.Button();
+            this.lb_outCondition_test = new System.Windows.Forms.Label();
+            this.tb_outCondition = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -140,7 +143,7 @@
             // 
             // btn_OK
             // 
-            this.btn_OK.Location = new System.Drawing.Point(732, 115);
+            this.btn_OK.Location = new System.Drawing.Point(732, 154);
             this.btn_OK.Name = "btn_OK";
             this.btn_OK.Size = new System.Drawing.Size(75, 23);
             this.btn_OK.TabIndex = 11;
@@ -150,7 +153,7 @@
             // 
             // btn_exit
             // 
-            this.btn_exit.Location = new System.Drawing.Point(831, 115);
+            this.btn_exit.Location = new System.Drawing.Point(831, 154);
             this.btn_exit.Name = "btn_exit";
             this.btn_exit.Size = new System.Drawing.Size(75, 23);
             this.btn_exit.TabIndex = 12;
@@ -158,11 +161,42 @@
             this.btn_exit.UseVisualStyleBackColor = true;
             this.btn_exit.Click += new System.EventHandler(this.btn_exit_Click);
             // 
+            // btn_addFilter
+            // 
+            this.btn_addFilter.Location = new System.Drawing.Point(175, 154);
+            this.btn_addFilter.Name = "btn_addFilter";
+            this.btn_addFilter.Size = new System.Drawing.Size(141, 23);
+            this.btn_addFilter.TabIndex = 13;
+            this.btn_addFilter.Text = "Добавить фильтр";
+            this.btn_addFilter.UseVisualStyleBackColor = true;
+            this.btn_addFilter.Click += new System.EventHandler(this.btn_addFilter_Click);
+            // 
+            // lb_outCondition_test
+            // 
+            this.lb_outCondition_test.AutoSize = true;
+            this.lb_outCondition_test.Location = new System.Drawing.Point(172, 90);
+            this.lb_outCondition_test.Name = "lb_outCondition_test";
+            this.lb_outCondition_test.Size = new System.Drawing.Size(0, 13);
+            this.lb_outCondition_test.TabIndex = 2;
+            // 
+            // tb_outCondition
+            // 
+            this.tb_outCondition.Location = new System.Drawing.Point(175, 87);
+            this.tb_outCondition.Multiline = true;
+            this.tb_outCondition.Name = "tb_outCondition";
+            this.tb_outCondition.ReadOnly = true;
+            this.tb_outCondition.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tb_outCondition.Size = new System.Drawing.Size(731, 49);
+            this.tb_outCondition.TabIndex = 14;
+            // 
             // condition
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(955, 164);
+            this.ClientSize = new System.Drawing.Size(955, 211);
+            this.Controls.Add(this.tb_outCondition);
+            this.Controls.Add(this.lb_outCondition_test);
+            this.Controls.Add(this.btn_addFilter);
             this.Controls.Add(this.btn_exit);
             this.Controls.Add(this.btn_OK);
             this.Controls.Add(this.tb_value);
@@ -173,6 +207,7 @@
             this.Controls.Add(this.lab_columnName);
             this.Controls.Add(this.cb_columnsName);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "condition";
             this.Text = "condition";
             this.groupBox1.ResumeLayout(false);
@@ -196,5 +231,8 @@
         private System.Windows.Forms.TextBox tb_value;
         private System.Windows.Forms.Button btn_OK;
         private System.Windows.Forms.Button btn_exit;
+        private System.Windows.Forms.Button btn_addFilter;
+        private System.Windows.Forms.Label lb_outCondition_test;
+        private System.Windows.Forms.TextBox tb_outCondition;
     }
 }
