@@ -132,8 +132,11 @@ namespace swiftDemon
                 }
                 if (workArr[ind].IndexOf("57A:") != -1 || workArr[ind].IndexOf("57D:") != -1)
                 {
-                    accountWithInstitution_57 += workArr[ind + 1] + ' ' + workArr[ind + 2] + ' ' + workArr[ind + 3];
-                    accountWithInstitution_57 = accountWithInstitution_57.Replace("'", "''");
+                    if (fin != "320")
+                    {
+                        accountWithInstitution_57 += workArr[ind + 1] + ' ' + workArr[ind + 2] + ' ' + workArr[ind + 3];
+                        accountWithInstitution_57 = accountWithInstitution_57.Replace("'", "''");
+                    }
                 }
                 if (workArr[ind].IndexOf("58A:") != -1)
                 {
