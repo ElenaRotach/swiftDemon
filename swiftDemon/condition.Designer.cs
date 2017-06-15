@@ -40,7 +40,6 @@
             this.tb_value = new System.Windows.Forms.TextBox();
             this.btn_OK = new System.Windows.Forms.Button();
             this.btn_exit = new System.Windows.Forms.Button();
-            this.btn_addFilter = new System.Windows.Forms.Button();
             this.lb_outCondition_test = new System.Windows.Forms.Label();
             this.tb_outCondition = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
@@ -161,16 +160,6 @@
             this.btn_exit.UseVisualStyleBackColor = true;
             this.btn_exit.Click += new System.EventHandler(this.btn_exit_Click);
             // 
-            // btn_addFilter
-            // 
-            this.btn_addFilter.Location = new System.Drawing.Point(175, 154);
-            this.btn_addFilter.Name = "btn_addFilter";
-            this.btn_addFilter.Size = new System.Drawing.Size(141, 23);
-            this.btn_addFilter.TabIndex = 13;
-            this.btn_addFilter.Text = "Добавить фильтр";
-            this.btn_addFilter.UseVisualStyleBackColor = true;
-            this.btn_addFilter.Click += new System.EventHandler(this.btn_addFilter_Click);
-            // 
             // lb_outCondition_test
             // 
             this.lb_outCondition_test.AutoSize = true;
@@ -196,7 +185,6 @@
             this.ClientSize = new System.Drawing.Size(955, 211);
             this.Controls.Add(this.tb_outCondition);
             this.Controls.Add(this.lb_outCondition_test);
-            this.Controls.Add(this.btn_addFilter);
             this.Controls.Add(this.btn_exit);
             this.Controls.Add(this.btn_OK);
             this.Controls.Add(this.tb_value);
@@ -231,7 +219,6 @@
         private System.Windows.Forms.TextBox tb_value;
         private System.Windows.Forms.Button btn_OK;
         private System.Windows.Forms.Button btn_exit;
-        private System.Windows.Forms.Button btn_addFilter;
         private System.Windows.Forms.Label lb_outCondition_test;
         private System.Windows.Forms.TextBox tb_outCondition;
     }

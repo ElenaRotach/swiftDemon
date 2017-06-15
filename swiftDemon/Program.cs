@@ -65,7 +65,7 @@ namespace swiftDemon
                 TrayIcon.Visible = true;
                 // обработчик событий по таймеру
                 TrayTimer = new System.Timers.Timer();
-                TrayTimer.Interval = 20000;//290000;
+                TrayTimer.Interval = 290000;//290000;
                 TrayTimer.Enabled = true;
                 TrayTimer.Elapsed += new System.Timers.ElapsedEventHandler(MainFunction); // основная функция консоли
                                                                                           // запуск обработчика событий
@@ -100,7 +100,11 @@ namespace swiftDemon
             try
             {
                 fMain jurnal = new fMain();
-                jurnal.ShowDialog();
+                try
+                {
+                    jurnal.ShowDialog();
+                }
+                catch { }
             }
             catch(ApplicationException e) {
                 MessageBox.Show(e.Message);

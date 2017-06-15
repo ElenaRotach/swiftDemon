@@ -63,6 +63,8 @@ namespace swift
         {
             //throw new NotImplementedException();
             int index = tabMess.CurrentRow.Index;
+            int id = thesaurus.columnIndex(tabMess.Columns, "id");
+            int mess_direction = thesaurus.columnIndex(tabMess.Columns, "mess_direction");
             tabMess.Rows[index].Selected = true;
             //swiftMess_str msg = new swiftMess_str(tabMess.Rows[index].Cells[0].Value.ToString(), tabMess.Rows[index].Cells[1].Value.ToString(), tabMess.Rows[index].Cells[2].Value.ToString(), tabMess.Rows[index].Cells[3].Value.ToString(), tabMess.Rows[index].Cells[4].Value.ToString(), tabMess.Rows[index].Cells[5].Value.ToString(), tabMess.Rows[index].Cells[6].Value.ToString(), tabMess.Rows[index].Cells[7].Value.ToString(), tabMess.Rows[index].Cells[8].Value.ToString(), tabMess.Rows[index].Cells[9].Value.ToString(), tabMess.Rows[index].Cells[10].Value.ToString(), tabMess.Rows[index].Cells[11].Value.ToString(), tabMess.Rows[index].Cells[12].Value.ToString(), tabMess.Rows[index].Cells[13].Value.ToString(), tabMess.Rows[index].Cells[14].Value.ToString(), tabMess.Rows[index].Cells[15].Value.ToString(), tabMess.Rows[index].Cells[16].Value.ToString(), tabMess.Rows[index].Cells[17].Value.ToString(), tabMess.Rows[index].Cells[18].Value.ToString(), tabMess.Rows[index].Cells[19].Value.ToString(), tabMess.Rows[index].Cells[20].Value.ToString(), tabMess.Rows[index].Cells[21].Value.ToString(), tabMess.Rows[index].Cells[22].Value.ToString(), tabMess.Rows[index].Cells[23].Value.ToString(), tabMess.Rows[index].Cells[24].Value.ToString(), tabMess.Rows[index].Cells[25].Value.ToString(), tabMess.Rows[index].Cells[26].Value.ToString());
             editProps editPropWindow = new editProps(this, index, tabMess.CurrentCell.ColumnIndex);
@@ -89,8 +91,10 @@ namespace swift
         private void printMenuItem_Click(object sender, EventArgs e)
         {
             int index = tabMess.CurrentRow.Index;
-            logs.saveParam(tabMess.Rows[index].Cells["26"].Value.ToString());
-            tabMess.Rows[index].Cells[16].Value = "True";
+            int id = thesaurus.columnIndex(tabMess.Columns, "id");
+            int mess_direction = thesaurus.columnIndex(tabMess.Columns, "mess_direction");
+            logs.saveParam(tabMess.Rows[index].Cells[id].Value.ToString());   //TODO
+            tabMess.Rows[index].Cells[mess_direction].Value = "True";   //TODO
             for (int cellNum = 0; cellNum < 27; cellNum++)
             {
                 tabMess.Rows[index].Cells[cellNum].Style.BackColor = System.Drawing.Color.White;
@@ -112,33 +116,33 @@ namespace swift
             InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new System.Globalization.CultureInfo("en-US"));
             List<swiftMess_str> allMess = new List<swiftMess_str>();
             allMess = getDataJournal("");
-                tabMess.Columns.Add("0", "1 transactionReferenceNumber_20");
-                tabMess.Columns.Add("1", "2 valueDate_30V");
-                tabMess.Columns.Add("2", "3 date_32");
-                tabMess.Columns.Add("3", "4 currency_32");
-                tabMess.Columns.Add("4", "5 amount_32");
-                tabMess.Columns.Add("5", "6 currency_33B");
-                tabMess.Columns.Add("6", "7 amount_33B");
-                tabMess.Columns.Add("7", "8 orderingCustomer_50");
-                tabMess.Columns.Add("8", "9 orderingInstitution_52");
-                tabMess.Columns.Add("9", "10 senderCorrespondent_53");
-                tabMess.Columns.Add("10", "11 receiverCorrespondent_54");
-                tabMess.Columns.Add("11", "12 intermediaryInstitution_56");
-                tabMess.Columns.Add("12", "13 accountWithInstitution_57");
-                tabMess.Columns.Add("13", "14 beneficiaryInstitution_58");
-                tabMess.Columns.Add("14", "15 beneficiaryCustomer_59");
-                tabMess.Columns.Add("15", "16 processingCharacteristic");
-                tabMess.Columns.Add("16", "17 mess_direction");
-                tabMess.Columns.Add("17", "18 comment");
-                tabMess.Columns.Add("18", "19 dateTime_mess");
-                tabMess.Columns.Add("19", "20 referenceMess");
-                tabMess.Columns.Add("20", "21 fin");
-                tabMess.Columns.Add("21", "22 swiftNumberBankKontragent");
-                tabMess.Columns.Add("22", "23 naimBankKontragent");
-                tabMess.Columns.Add("23", "24 thread");
-                tabMess.Columns.Add("24", "25 fileName");
-                tabMess.Columns.Add("25", "26 direction");
-                tabMess.Columns.Add("26", "27 id");
+                tabMess.Columns.Add("0", "20 transactionReferenceNumber_20");
+                tabMess.Columns.Add("1", "30 valueDate_30V");
+                tabMess.Columns.Add("2", "32 date_32");
+                tabMess.Columns.Add("3", "32 currency_32");
+                tabMess.Columns.Add("4", "32 amount_32");
+                tabMess.Columns.Add("5", "33 currency_33B");
+                tabMess.Columns.Add("6", "33 amount_33B");
+                tabMess.Columns.Add("7", "50 orderingCustomer_50");
+                tabMess.Columns.Add("8", "52 orderingInstitution_52");
+                tabMess.Columns.Add("9", "53 senderCorrespondent_53");
+                tabMess.Columns.Add("10", "54 receiverCorrespondent_54");
+                tabMess.Columns.Add("11", "56 intermediaryInstitution_56");
+                tabMess.Columns.Add("12", "57 accountWithInstitution_57");
+                tabMess.Columns.Add("13", "58 beneficiaryInstitution_58");
+                tabMess.Columns.Add("14", "59 beneficiaryCustomer_59");
+                tabMess.Columns.Add("15", "00 processingCharacteristic");
+                tabMess.Columns.Add("16", "00 mess_direction");
+                tabMess.Columns.Add("17", "00 comment");
+                tabMess.Columns.Add("18", "00 dateTime_mess");
+                tabMess.Columns.Add("19", "00 referenceMess");
+                tabMess.Columns.Add("20", "00 fin");
+                tabMess.Columns.Add("21", "00 swiftNumberBankKontragent");
+                tabMess.Columns.Add("22", "00 naimBankKontragent");
+                tabMess.Columns.Add("23", "00 thread");
+                tabMess.Columns.Add("24", "00 fileName");
+                tabMess.Columns.Add("25", "00 direction");
+                tabMess.Columns.Add("26", "00 id");
 
             for (int i = 0; i < tabMess.Columns.Count; i++)
             {
@@ -147,10 +151,11 @@ namespace swift
                 string columnWidth = reestr.getParam("\\columnWidth", columnName);
                 //MessageBox.Show(columnWidth);
                 tabMess.Columns[i].Width = Convert.ToInt32(columnWidth);
+                tabMess.Columns[i].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
                 tabMess.Columns[i].ReadOnly = true;
             }
-            tabMess.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            tabMess.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            tabMess.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;   
+            tabMess.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;   
             //MessageBox.Show(tabMess.Columns[0].HeaderCell.FormattedValue.ToString());
             showRows(allMess);
         }
