@@ -74,16 +74,23 @@ namespace swiftDemon
             if(referenceMess=="")
             {
                 referenceMess = workArr[3].Split(' ')[16].Replace("MpALLack-", "");
+                referenceMess = referenceMess.Replace("'", "''");
             }
             for (int ind = 0; ind < workArr.Length; ind++)
             {
                 if (workArr[ind].IndexOf("Sender   : ") != -1)
                 {
                     swiftNumberBankKontragent = workArr[ind].Split(':')[1];
+                    swiftNumberBankKontragent = swiftNumberBankKontragent.Replace("'", "''");
                     naimBankKontragent = workArr[ind + 1] + " " + workArr[ind + 2];
+                    naimBankKontragent = naimBankKontragent.Replace("'", "''");
                 }
 
-                if (workArr[ind].IndexOf("20: Sender's Reference") != -1 || workArr[ind].IndexOf("20: Transaction Reference Number") != -1) { transactionReferenceNumber_20 = workArr[ind + 1]; }
+                if (workArr[ind].IndexOf("20: Sender's Reference") != -1 || workArr[ind].IndexOf("20: Transaction Reference Number") != -1)
+                {
+                    transactionReferenceNumber_20 = workArr[ind + 1];
+                    transactionReferenceNumber_20 = transactionReferenceNumber_20.Replace("'", "''");
+                }
                 if (workArr[ind].IndexOf("30V: Value Date") != -1)
                 {
                     string dateStr = workArr[ind + 1].Replace(" ", "");
@@ -108,19 +115,36 @@ namespace swiftDemon
                     currency_33B = workArr[ind + 1].Split(':')[1].Split('(')[0];
                     amount_33B = Convert.ToDouble(workArr[ind + 2].Split('#')[1]);
                 }
-                if (workArr[ind].IndexOf("50K:") != -1){orderingCustomer_50 = workArr[ind + 1] + ' ' + workArr[ind + 2];}
-                if (workArr[ind].IndexOf("52D:") != -1 || workArr[ind].IndexOf("52A:") != -1) { this.orderingInstitution_52 = workArr[ind + 1]; }
-                if (workArr[ind].IndexOf("53B:") != -1) { senderCorrespondent_53 = workArr[ind + 1]; }
+                if (workArr[ind].IndexOf("50K:") != -1)
+                {
+                    orderingCustomer_50 = workArr[ind + 1] + ' ' + workArr[ind + 2];
+                    orderingCustomer_50 = orderingCustomer_50.Replace("'", "''");
+                }
+                if (workArr[ind].IndexOf("52D:") != -1 || workArr[ind].IndexOf("52A:") != -1)
+                {
+                    this.orderingInstitution_52 = workArr[ind + 1];
+                    orderingInstitution_52 = orderingInstitution_52.Replace("'", "''");
+                }
+                if (workArr[ind].IndexOf("53B:") != -1)
+                {
+                    senderCorrespondent_53 = workArr[ind + 1];
+                    senderCorrespondent_53 = senderCorrespondent_53.Replace("'", "''");
+                }
                 if (workArr[ind].IndexOf("57A:") != -1 || workArr[ind].IndexOf("57D:") != -1)
                 {
                     accountWithInstitution_57 += workArr[ind + 1] + ' ' + workArr[ind + 2] + ' ' + workArr[ind + 3];
                     accountWithInstitution_57 = accountWithInstitution_57.Replace("'", "''");
                 }
-                if (workArr[ind].IndexOf("58A:") != -1) { beneficiaryInstitution_58 = workArr[ind + 1]; }
+                if (workArr[ind].IndexOf("58A:") != -1)
+                {
+                    beneficiaryInstitution_58 = workArr[ind + 1];
+                    beneficiaryInstitution_58 = beneficiaryInstitution_58.Replace("'", "''");
+                }
                 if (workArr[ind].IndexOf("59: Beneficiary Customer-Name & Addr") != -1)
                 {
                     //MessageBox.Show(ind.ToString());
                     beneficiaryCustomer_59 = workArr[ind + 1] + ' ' + workArr[ind + 2];
+                    beneficiaryCustomer_59 = beneficiaryCustomer_59.Replace("'", "''");
                 }
             }
         }
