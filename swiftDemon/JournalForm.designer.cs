@@ -34,6 +34,8 @@
             this.reshow = new System.Windows.Forms.Button();
             this.tb_condition = new System.Windows.Forms.TextBox();
             this.btn_condition = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.l_strAll = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tabMess)).BeginInit();
             this.SuspendLayout();
             // 
@@ -85,11 +87,31 @@
             this.btn_condition.UseVisualStyleBackColor = true;
             this.btn_condition.Click += new System.EventHandler(this.btn_condition_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(1164, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(40, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Строк:";
+            // 
+            // l_strAll
+            // 
+            this.l_strAll.AutoSize = true;
+            this.l_strAll.Location = new System.Drawing.Point(1210, 22);
+            this.l_strAll.Name = "l_strAll";
+            this.l_strAll.Size = new System.Drawing.Size(13, 13);
+            this.l_strAll.TabIndex = 6;
+            this.l_strAll.Text = "0";
+            // 
             // JournalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1407, 636);
+            this.Controls.Add(this.l_strAll);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btn_condition);
             this.Controls.Add(this.tb_condition);
             this.Controls.Add(this.reshow);
@@ -111,5 +133,7 @@
         private System.Windows.Forms.Button reshow;
         private System.Windows.Forms.Button btn_condition;
         public System.Windows.Forms.TextBox tb_condition;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label l_strAll;
     }
 }

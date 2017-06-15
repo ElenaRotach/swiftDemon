@@ -235,6 +235,7 @@ namespace swift
 
         private void showRows(List<swiftMess_str> allMess)
         {
+            l_strAll.Text = allMess.Count.ToString();
             if (allMess.Count > 0)
             {
                 //dgLogGrid.Invoke((MethodInvoker)(() => dgLogGrid.Rows.Add(myArray)));
