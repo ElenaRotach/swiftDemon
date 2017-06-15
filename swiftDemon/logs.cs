@@ -21,7 +21,11 @@ namespace swiftDemon
         static string curFile = Environment.CurrentDirectory + @"\log\log_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + ".txt";
         private static void logEntry(string mess)
         {
-                using (StreamWriter sw = File.AppendText(curFile))
+            if (!Directory.Exists(Environment.CurrentDirectory + @"\log"))
+            {
+                Directory.CreateDirectory(Environment.CurrentDirectory + @"\log");
+            }
+            using (StreamWriter sw = File.AppendText(curFile))
                 {
                     sw.WriteLine(mess);
                     sw.Close();

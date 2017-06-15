@@ -99,10 +99,20 @@ namespace swiftDemon
 
                 if (workArr[ind].IndexOf("32A:") != -1 || workArr[ind].IndexOf("32D:") != -1)
                 {
-                    string[] dateStr = (workArr[ind + 1].Split(':')[1]).Split(' ');
-                    date_32 = new DateTime(Convert.ToInt32(dateStr[3]), thesaurus.mount(dateStr[2]), Convert.ToInt32(dateStr[1]));
-                    currency_32 = workArr[ind + 2].Split(':')[1].Split('(')[0];
-                    amount_32 = Convert.ToDouble(workArr[ind + 3].Split('#')[1]);
+                    if (fin == "192") {
+                        /*170609CNY31724,33*/
+                        string workStr = workArr[ind].Replace(" ", "");
+                        date_32 = new DateTime(Convert.ToInt32(workStr.Substring(5, 2)), Convert.ToInt32(workStr.Substring(7, 2)), Convert.ToInt32(workStr.Substring(9,2)));
+                        currency_32 = new string(workStr.Substring(5, workStr.Length-5).Where(Char.IsLetter).ToArray());
+                        amount_32 = Convert.ToDouble(workStr.Substring(workStr.IndexOf(currency_32)+currency_32.Length));
+                    }
+                    else
+                    {
+                        string[] dateStr = (workArr[ind + 1].Split(':')[1]).Split(' ');
+                        date_32 = new DateTime(Convert.ToInt32(dateStr[3]), thesaurus.mount(dateStr[2]), Convert.ToInt32(dateStr[1]));
+                        currency_32 = workArr[ind + 2].Split(':')[1].Split('(')[0];
+                        amount_32 = Convert.ToDouble(workArr[ind + 3].Split('#')[1]);
+                    }
                 }
 
                 if (workArr[ind].IndexOf("32B:") != -1)
