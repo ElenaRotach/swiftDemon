@@ -18,7 +18,7 @@ namespace swiftDemon
     {
         public delegate void MethodContainer(bool s);
         public static event MethodContainer onCount;
-        static string curFile = Environment.CurrentDirectory + @"\log.txt";
+        static string curFile = Environment.CurrentDirectory + @"\log\log_" + DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + ".txt";
         private static void logEntry(string mess)
         {
                 using (StreamWriter sw = File.AppendText(curFile))
