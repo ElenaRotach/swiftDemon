@@ -137,7 +137,7 @@ namespace swiftDemon
                 }
                 if (workArr[ind].IndexOf("58A:") != -1)
                 {
-                    beneficiaryInstitution_58 = workArr[ind + 1];
+                    beneficiaryInstitution_58 = workArr[ind + 1] + ' ' + workArr[ind + 2] + ' ' + workArr[ind + 3];
                     beneficiaryInstitution_58 = beneficiaryInstitution_58.Replace("'", "''");
                 }
                 if (workArr[ind].IndexOf("59: Beneficiary Customer-Name & Addr") != -1)
