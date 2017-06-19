@@ -291,7 +291,6 @@ namespace swiftDemon
                     logs.outStr("Новый файл " + files[z.ToString()] + "\t" + File.GetLastAccessTime(files[z.ToString()]), false, messObj);
                     string[] filName = files[z.ToString()].Split('\\');
                     mess += filName[filName.Length - 1] + '\n';
-                    File.Move(files[z.ToString()], path + pathName + "\\" + filName[filName.Length - 1]);
                 }
                 if (outMess)
                 {

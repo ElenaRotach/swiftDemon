@@ -116,7 +116,18 @@ namespace swift
             InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new System.Globalization.CultureInfo("en-US"));
             List<swiftMess_str> allMess = new List<swiftMess_str>();
             allMess = getDataJournal("");
-                tabMess.Columns.Add("0", "20 transactionReferenceNumber_20");
+            //int indColumn = 0;
+            string[] columnsName = { "20 transactionReferenceNumber_20", "30 valueDate_30V" , "32 date_32" , "32 currency_32", "32 amount_32", "33 currency_33B", "33 amount_33B", "50 orderingCustomer_50",
+                                   "52 orderingInstitution_52", "53 senderCorrespondent_53", "54 receiverCorrespondent_54", "56 intermediaryInstitution_56", "57 accountWithInstitution_57",
+                                   "58 beneficiaryInstitution_58", "59 beneficiaryCustomer_59", "00 processingCharacteristic", "00 mess_direction", "00 comment", "00 dateTime_mess", "00 referenceMess",
+                                   "00 fin", "00 swiftNumberBankKontragent", "00 naimBankKontragent", "00 thread", "00 fileName", "00 direction", "00 id" };
+            for(int i=0; i<columnsName.Length; i++)
+            {
+                int indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", columnsName[i].Split(' ')[1]));
+                tabMess.Columns.Add(indColumn.ToString(), columnsName[i]);
+                //string columnWidth = reestr.getParam("\\columnWidth", columnName);
+            }
+                /*tabMess.Columns.Add("0", "20 transactionReferenceNumber_20");
                 tabMess.Columns.Add("1", "30 valueDate_30V");
                 tabMess.Columns.Add("2", "32 date_32");
                 tabMess.Columns.Add("3", "32 currency_32");
@@ -142,7 +153,7 @@ namespace swift
                 tabMess.Columns.Add("23", "00 thread");
                 tabMess.Columns.Add("24", "00 fileName");
                 tabMess.Columns.Add("25", "00 direction");
-                tabMess.Columns.Add("26", "00 id");
+                tabMess.Columns.Add("26", "00 id");*/
 
             for (int i = 0; i < tabMess.Columns.Count; i++)
             {

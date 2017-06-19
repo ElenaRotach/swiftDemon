@@ -2,6 +2,8 @@
 using System.IO;
 using System.Windows.Forms;
 using System.IO.Compression;
+using swiftDemon;
+using System.Globalization;
 
 namespace swiftDemon
 {
@@ -60,6 +62,31 @@ namespace swiftDemon
                     //{
                     //    onCount(false);
                     //}
+                    string path = "";
+                    settings setting = new settings();
+                    DateTime workDate = DateTime.Now;
+                    string pattern = "dd.MM.yyyy H:mm:ff";
+                    DateTime parsedDate;
+                    DateTime.TryParseExact(workDate.ToString(), pattern, null, DateTimeStyles.None, out parsedDate);
+                    string newDate = string.Format("{0:d}", parsedDate);
+                    string pathName = newDate;
+                    if (!Directory.Exists(path + pathName))
+                    {
+                        Directory.CreateDirectory(path + pathName);
+                    }
+                    if (obj.direction == "OUT")
+                    {
+                        path = setting.outArhiv;
+                    }
+                    else
+                    {
+                        path = setting.inArhiv;
+                    }
+                    try
+                    {
+                        File.Move(obj.fileName, path + pathName + "\\" + Path.GetFileName(obj.fileName));
+                    }
+                    catch { }
                 }
                 
             }
