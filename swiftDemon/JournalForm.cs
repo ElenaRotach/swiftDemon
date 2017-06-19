@@ -356,6 +356,15 @@ namespace swift
                     }
 
                 }
+                int indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"))+1;
+                if (tabMess.Rows[j].Cells[25].Value.ToString() == "IN")
+                {
+                    for (int cellNum = 0; cellNum < 27; cellNum++)
+                    {
+                        tabMess.Rows[j].Cells[cellNum].Style.Font = new Font(tabMess.DefaultCellStyle.Font, FontStyle.Bold);
+                    }
+                }
+                    //dataGridView1.Rows[1].Cells[1].Style.Font = new Font(dataGridView1.DefaultCellStyle.Font, FontStyle.Bold);
             }
         }
         private void columnIndex()
