@@ -265,6 +265,10 @@ namespace swiftDemon
             fileName = p25;
             direction = p26;
             id = p27;
+            while(id.Length<7)
+            {
+                id = '0' + id;
+            }
         }
     }
 }

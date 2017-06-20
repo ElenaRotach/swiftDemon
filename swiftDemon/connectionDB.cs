@@ -25,6 +25,16 @@ namespace swiftDemon
                 myOleDbConnection.Open();
                 myOleDbDataReader = myOleDbCommand.ExecuteReader();
             }
+            catch( NullReferenceException e)
+            {
+                logs.logEntry(e.Message);
+                logs.logEntry(e.StackTrace);
+            }
+            catch(OleDbException e)
+            {
+                logs.logEntry(e.Message);
+                logs.logEntry(e.StackTrace);
+            }
             catch (Exception e)
             {
                 logs.outStr(e.Message, true, null);
@@ -45,7 +55,17 @@ namespace swiftDemon
                 { }
                 myOleDbDataReader.Close();
             }
-            catch(Exception e)
+            catch (NullReferenceException e)
+            {
+                logs.logEntry(e.Message);
+                logs.logEntry(e.StackTrace);
+            }
+            catch (OleDbException e)
+            {
+                logs.logEntry(e.Message);
+                logs.logEntry(e.StackTrace);
+            }
+            catch (Exception e)
             {
                 logs.outStr(e.Message, true, null);
                 logs.outStr(e.StackTrace, true, null);

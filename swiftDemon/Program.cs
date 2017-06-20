@@ -104,7 +104,7 @@ namespace swiftDemon
                 {
                     jurnal.ShowDialog();
                 }
-                catch { }
+                catch (Exception e) { }
             }
             catch(ApplicationException e) {
                 MessageBox.Show(e.Message);
@@ -248,62 +248,65 @@ namespace swiftDemon
 
         public static void work(bool outMess)
         {
-            Dictionary<string, string> files = new Dictionary<string, string>();
-            settings setting = new settings();
-            /*получаем папку для переноса файлов по принципу:
-             1. Формируем родительскую папку если исходящии setting.outArhiv, иначе setting.inArhiv
-             2. Формируем имя папки формат "YYYY_MM_DD"
-             3. Если папку не существует - создаем
-             */
-            string direction = "";
-            string path = "";
+            try
+            {
+                Dictionary<string, string> files = new Dictionary<string, string>();
+                settings setting = new settings();
+                /*получаем папку для переноса файлов по принципу:
+                 1. Формируем родительскую папку если исходящии setting.outArhiv, иначе setting.inArhiv
+                 2. Формируем имя папки формат "YYYY_MM_DD"
+                 3. Если папку не существует - создаем
+                 */
+                string direction = "";
+                string path = "";
 
-            if (outMess)
-            {
-                direction = "OUT";
-                path = setting.outArhiv;
-            }
-            else
-            {
-                direction = "IN";
-                path = setting.inArhiv;
-            }
-
-            DateTime workDate = DateTime.Now;
-            string pattern = "dd.MM.yyyy H:mm:ff";
-            DateTime parsedDate;
-            DateTime.TryParseExact(workDate.ToString(), pattern, null, DateTimeStyles.None, out parsedDate);
-            string newDate = string.Format("{0:d}", parsedDate);
-
-            string pathName = newDate;
-            if (!Directory.Exists(path + pathName))
-            {
-                Directory.CreateDirectory(path + pathName);
-            }
-            files = newSwiftFiles(firstStart, outMess);
-            firstStart = false;
-            if (files.Count > 0)
-            {
-                string mess = "Получены новые файлы: \n";
-                for (int z = 0; z < files.Count; z++)
-                {
-                    swiftMess messObj = new swiftMess(File.ReadAllText(files[z.ToString()]), files[z.ToString()], direction);
-                    logs.outStr("Новый файл " + files[z.ToString()] + "\t" + File.GetLastAccessTime(files[z.ToString()]), false, messObj);
-                    string[] filName = files[z.ToString()].Split('\\');
-                    mess += filName[filName.Length - 1] + '\n';
-                }
                 if (outMess)
                 {
-                    MessageBox.Show(mess, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                    direction = "OUT";
+                    path = setting.outArhiv;
                 }
-                //пока просто переносим обработанные, без архивирования, архивирование логично запускать для предыдущего дня при утреннем старте
+                else
+                {
+                    direction = "IN";
+                    path = setting.inArhiv;
+                }
 
-                //string startPath = @"c:\example\start";
-                //string zipPath = @"c:\example\result.zip";
-                //ZipFile.CreateFromDirectory(startPath, zipPath);
+                DateTime workDate = DateTime.Now;
+                string pattern = "dd.MM.yyyy H:mm:ff";
+                DateTime parsedDate;
+                DateTime.TryParseExact(workDate.ToString(), pattern, null, DateTimeStyles.None, out parsedDate);
+                string newDate = string.Format("{0:d}", parsedDate);
 
+                string pathName = newDate;
+                if (!Directory.Exists(path + pathName))
+                {
+                    Directory.CreateDirectory(path + pathName);
+                }
+                files = newSwiftFiles(firstStart, outMess);
+                firstStart = false;
+                if (files.Count > 0)
+                {
+                    string mess = "Получены новые файлы: \n";
+                    for (int z = 0; z < files.Count; z++)
+                    {
+                        swiftMess messObj = new swiftMess(File.ReadAllText(files[z.ToString()]), files[z.ToString()], direction);
+                        logs.outStr("Новый файл " + files[z.ToString()] + "\t" + File.GetLastAccessTime(files[z.ToString()]), false, messObj);
+                        string[] filName = files[z.ToString()].Split('\\');
+                        mess += filName[filName.Length - 1] + '\n';
+                    }
+                    if (outMess)
+                    {
+                        MessageBox.Show(mess, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                    }
+                    //пока просто переносим обработанные, без архивирования, архивирование логично запускать для предыдущего дня при утреннем старте
 
+                    //string startPath = @"c:\example\start";
+                    //string zipPath = @"c:\example\result.zip";
+                    //ZipFile.CreateFromDirectory(startPath, zipPath);
+
+                }
             }
+            catch { }
         }
     }
 }

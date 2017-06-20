@@ -125,35 +125,38 @@ namespace swift
             {
                 int indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", columnsName[i].Split(' ')[1]));
                 tabMess.Columns.Add(indColumn.ToString(), columnsName[i]);
+                /*dt.Columns.Add( "Int32_Code", typeof( int ), "Code" );
+dt.DefaultView.Sort("Int32_Code");
+dt = dt.DefaultView.ToTable();*/
                 //string columnWidth = reestr.getParam("\\columnWidth", columnName);
             }
-                /*tabMess.Columns.Add("0", "20 transactionReferenceNumber_20");
-                tabMess.Columns.Add("1", "30 valueDate_30V");
-                tabMess.Columns.Add("2", "32 date_32");
-                tabMess.Columns.Add("3", "32 currency_32");
-                tabMess.Columns.Add("4", "32 amount_32");
-                tabMess.Columns.Add("5", "33 currency_33B");
-                tabMess.Columns.Add("6", "33 amount_33B");
-                tabMess.Columns.Add("7", "50 orderingCustomer_50");
-                tabMess.Columns.Add("8", "52 orderingInstitution_52");
-                tabMess.Columns.Add("9", "53 senderCorrespondent_53");
-                tabMess.Columns.Add("10", "54 receiverCorrespondent_54");
-                tabMess.Columns.Add("11", "56 intermediaryInstitution_56");
-                tabMess.Columns.Add("12", "57 accountWithInstitution_57");
-                tabMess.Columns.Add("13", "58 beneficiaryInstitution_58");
-                tabMess.Columns.Add("14", "59 beneficiaryCustomer_59");
-                tabMess.Columns.Add("15", "00 processingCharacteristic");
-                tabMess.Columns.Add("16", "00 mess_direction");
-                tabMess.Columns.Add("17", "00 comment");
-                tabMess.Columns.Add("18", "00 dateTime_mess");
-                tabMess.Columns.Add("19", "00 referenceMess");
-                tabMess.Columns.Add("20", "00 fin");
-                tabMess.Columns.Add("21", "00 swiftNumberBankKontragent");
-                tabMess.Columns.Add("22", "00 naimBankKontragent");
-                tabMess.Columns.Add("23", "00 thread");
-                tabMess.Columns.Add("24", "00 fileName");
-                tabMess.Columns.Add("25", "00 direction");
-                tabMess.Columns.Add("26", "00 id");*/
+            /*tabMess.Columns.Add("0", "20 transactionReferenceNumber_20");
+            tabMess.Columns.Add("1", "30 valueDate_30V");
+            tabMess.Columns.Add("2", "32 date_32");
+            tabMess.Columns.Add("3", "32 currency_32");
+            tabMess.Columns.Add("4", "32 amount_32");
+            tabMess.Columns.Add("5", "33 currency_33B");
+            tabMess.Columns.Add("6", "33 amount_33B");
+            tabMess.Columns.Add("7", "50 orderingCustomer_50");
+            tabMess.Columns.Add("8", "52 orderingInstitution_52");
+            tabMess.Columns.Add("9", "53 senderCorrespondent_53");
+            tabMess.Columns.Add("10", "54 receiverCorrespondent_54");
+            tabMess.Columns.Add("11", "56 intermediaryInstitution_56");
+            tabMess.Columns.Add("12", "57 accountWithInstitution_57");
+            tabMess.Columns.Add("13", "58 beneficiaryInstitution_58");
+            tabMess.Columns.Add("14", "59 beneficiaryCustomer_59");
+            tabMess.Columns.Add("15", "00 processingCharacteristic");
+            tabMess.Columns.Add("16", "00 mess_direction");
+            tabMess.Columns.Add("17", "00 comment");
+            tabMess.Columns.Add("18", "00 dateTime_mess");
+            tabMess.Columns.Add("19", "00 referenceMess");
+            tabMess.Columns.Add("20", "00 fin");
+            tabMess.Columns.Add("21", "00 swiftNumberBankKontragent");
+            tabMess.Columns.Add("22", "00 naimBankKontragent");
+            tabMess.Columns.Add("23", "00 thread");
+            tabMess.Columns.Add("24", "00 fileName");
+            tabMess.Columns.Add("25", "00 direction");
+            tabMess.Columns.Add("26", "00 id");*/
 
             for (int i = 0; i < tabMess.Columns.Count; i++)
             {
@@ -308,6 +311,7 @@ namespace swift
                     //                    tabMess.Rows[i].Cells[24].Value = allMess[i].fileName;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[25].Value = s), allMess[i].direction);
                     //                    tabMess.Rows[i].Cells[25].Value = allMess[i].direction;
+                    
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[26].Value = s), allMess[i].id);
                     //                    tabMess.Rows[i].Cells[26].Value = allMess[i].id;
                     //                    i++;
