@@ -306,7 +306,10 @@ namespace swiftDemon
 
                 }
             }
-            catch { }
+            catch(ApplicationException e) {
+                logs.logEntry(e.Message);
+                logs.logEntry(e.StackTrace);
+            }
         }
     }
 }

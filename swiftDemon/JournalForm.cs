@@ -20,6 +20,10 @@ namespace swift
         delegate void rowsClear();
         delegate void rowsAdd(string count);
         bool repet = true;
+        string[] columnsName = { "20 transactionReferenceNumber_20", "30 valueDate_30V" , "32 date_32" , "32 currency_32", "32 amount_32", "33 currency_33B", "33 amount_33B", "50 orderingCustomer_50",
+                                   "52 orderingInstitution_52", "53 senderCorrespondent_53", "54 receiverCorrespondent_54", "56 intermediaryInstitution_56", "57 accountWithInstitution_57",
+                                   "58 beneficiaryInstitution_58", "59 beneficiaryCustomer_59", "00 processingCharacteristic", "00 mess_direction", "00 comment", "00 dateTime_mess", "00 referenceMess",
+                                   "00 fin", "00 swiftNumberBankKontragent", "00 naimBankKontragent", "00 thread", "00 fileName", "00 direction", "00 id" };
         public JournalForm()
         {
             InitializeComponent();
@@ -117,10 +121,7 @@ namespace swift
             List<swiftMess_str> allMess = new List<swiftMess_str>();
             allMess = getDataJournal("");
             //int indColumn = 0;
-            string[] columnsName = { "20 transactionReferenceNumber_20", "30 valueDate_30V" , "32 date_32" , "32 currency_32", "32 amount_32", "33 currency_33B", "33 amount_33B", "50 orderingCustomer_50",
-                                   "52 orderingInstitution_52", "53 senderCorrespondent_53", "54 receiverCorrespondent_54", "56 intermediaryInstitution_56", "57 accountWithInstitution_57",
-                                   "58 beneficiaryInstitution_58", "59 beneficiaryCustomer_59", "00 processingCharacteristic", "00 mess_direction", "00 comment", "00 dateTime_mess", "00 referenceMess",
-                                   "00 fin", "00 swiftNumberBankKontragent", "00 naimBankKontragent", "00 thread", "00 fileName", "00 direction", "00 id" };
+            
             for(int i=0; i<columnsName.Length; i++)
             {
                 int indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", columnsName[i].Split(' ')[1]));
@@ -252,73 +253,96 @@ dt = dt.DefaultView.ToTable();*/
             l_strAll.Text = allMess.Count.ToString();
             if (allMess.Count > 0)
             {
-                //dgLogGrid.Invoke((MethodInvoker)(() => dgLogGrid.Rows.Add(myArray)));
                 tabMess.Invoke((MethodInvoker)(() => tabMess.Rows.Add(allMess.Count + 1)));
-                //tabMess.Invoke(new rowsAdd((s) => tabMess.Rows.Add(s), allMess.Count));
-                //tabMess.Rows.Add(allMess.Count);
-                //int i = 0;
                 for (int i = 0; i < allMess.Count; i++)
                 {
+                    int indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "transactionReferenceNumber_20"));
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[0].Value = s), allMess[i].transactionReferenceNumber_20);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "valueDate_30V"));
                     //tabMess.Rows[i].Cells[0].Value = allMess[i].transactionReferenceNumber_20;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[1].Value = s), allMess[i].valueDate_30V);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "date_32"));
                     //tabMess.Rows[i].Cells[1].Value = allMess[i].valueDate_30V;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[2].Value = s), allMess[i].date_32);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "currency_32"));
                     //tabMess.Rows[i].Cells[2].Value = allMess[i].date_32;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[3].Value = s), allMess[i].currency_32);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "amount_32"));
                     //tabMess.Rows[i].Cells[3].Value = allMess[i].currency_32;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[4].Value = s), allMess[i].amount_32);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //tabMess.Rows[i].Cells[4].Value = allMess[i].amount_32;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[5].Value = s), allMess[i].currency_33B);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[5].Value = allMess[i].currency_33B;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[6].Value = s), allMess[i].amount_33B);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[6].Value = allMess[i].amount_33B;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[7].Value = s), allMess[i].orderingCustomer_50);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[7].Value = allMess[i].orderingCustomer_50;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[8].Value = s), allMess[i].orderingInstitution_52);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[8].Value = allMess[i].orderingInstitution_52;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[9].Value = s), allMess[i].senderCorrespondent_53);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[9].Value = allMess[i].senderCorrespondent_53;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[10].Value = s), allMess[i].receiverCorrespondent_54);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[10].Value = allMess[i].receiverCorrespondent_54;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[11].Value = s), allMess[i].intermediaryInstitution_56);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[11].Value = allMess[i].intermediaryInstitution_56;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[12].Value = s), allMess[i].accountWithInstitution_57);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[12].Value = allMess[i].accountWithInstitution_57;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[13].Value = s), allMess[i].beneficiaryInstitution_58);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[13].Value = allMess[i].beneficiaryInstitution_58;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[14].Value = s), allMess[i].beneficiaryCustomer_59);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[14].Value = allMess[i].beneficiaryCustomer_59;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[15].Value = s), allMess[i].processingCharacteristic);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[15].Value = allMess[i].processingCharacteristic;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[16].Value = s), allMess[i].mess_direction);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[16].Value = allMess[i].mess_direction;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[17].Value = s), allMess[i].comment);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[17].Value = allMess[i].comment;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[18].Value = s), allMess[i].dateTime_mess);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[18].Value = allMess[i].dateTime_mess;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[19].Value = s), allMess[i].referenceMess);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[19].Value = allMess[i].referenceMess;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[20].Value = s), allMess[i].fin);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[20].Value = allMess[i].fin;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[21].Value = s), allMess[i].swiftNumberBankKontragent);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[21].Value = allMess[i].swiftNumberBankKontragent;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[22].Value = s), allMess[i].naimBankKontragent);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[22].Value = allMess[i].naimBankKontragent;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[23].Value = s), allMess[i].thread);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[23].Value = allMess[i].thread;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[24].Value = s), allMess[i].fileName);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[24].Value = allMess[i].fileName;
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[25].Value = s), allMess[i].direction);
+                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
                     //                    tabMess.Rows[i].Cells[25].Value = allMess[i].direction;
-                    
+
                     tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[26].Value = s), allMess[i].id);
                     //                    tabMess.Rows[i].Cells[26].Value = allMess[i].id;
                     //                    i++;
                 }
                 paintCells();
                 tabMess.Sort(tabMess.Columns[26], ListSortDirection.Descending);
-                columnIndex();
+                //columnIndex();
             }
         }
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -371,16 +395,16 @@ dt = dt.DefaultView.ToTable();*/
                     //dataGridView1.Rows[1].Cells[1].Style.Font = new Font(dataGridView1.DefaultCellStyle.Font, FontStyle.Bold);
             }
         }
-        private void columnIndex()
-        {
-            for (int i = 0; i < tabMess.Columns.Count; i++)
-            {
-                string columnName = tabMess.Columns[i].HeaderCell.FormattedValue.ToString().Split(' ')[1];
-                //MessageBox.Show(columnName);
-                string columnInd = reestr.getParam("\\columnIndex", columnName);
-                //MessageBox.Show(columnWidth);
-                tabMess.Columns[i].DisplayIndex = Convert.ToInt32(columnInd);
-            }
-        }
+        //private void columnIndex()
+        //{
+        //    for (int i = 0; i < tabMess.Columns.Count; i++)
+        //    {
+        //        string columnName = tabMess.Columns[i].HeaderCell.FormattedValue.ToString().Split(' ')[1];
+        //        //MessageBox.Show(columnName);
+        //        string columnInd = reestr.getParam("\\columnIndex", columnName);
+        //        //MessageBox.Show(columnWidth);
+        //        tabMess.Columns[i].DisplayIndex = Convert.ToInt32(columnInd);
+        //    }
+        //}
     }
 }
