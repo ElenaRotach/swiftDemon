@@ -99,7 +99,7 @@ namespace swiftDemon
 
                 if (workArr[ind].IndexOf("32A:") != -1 || workArr[ind].IndexOf("32D:") != -1)
                 {
-                    if (fin == "192" || fin == "195") {
+                    if (fin == "192" || fin == "195" || fin == "196") {
                         /*170609CNY31724,33*/
                         string workStr = workArr[ind].Replace(" ", "");
                         date_32 = new DateTime(Convert.ToInt32(workStr.Substring(5, 2)), Convert.ToInt32(workStr.Substring(7, 2)), Convert.ToInt32(workStr.Substring(9,2)));
