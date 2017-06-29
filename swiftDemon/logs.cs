@@ -96,7 +96,7 @@ namespace swiftDemon
         {
             try
             {
-                if (paramName != "valueDate_30V" && paramName != "date_32" && paramName != "dateTime_mess")
+                if (paramName != "valueDate_30V" && paramName != "date_32")// && paramName != "dateTime_mess")
                 {
                     if (paramName == "amount_32" || paramName == "amount_33B")
                     {

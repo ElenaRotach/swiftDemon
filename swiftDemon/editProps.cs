@@ -32,7 +32,8 @@ namespace swift
         private void save_Click(object sender, EventArgs e)
         {
             parent.tabMess.Rows[X].Cells[Y].Value = param.Text;
-            logs.saveParam(parent.tabMess.Columns[Y].HeaderCell.FormattedValue.ToString().Split(' ')[1], param.Text, parent.tabMess.Rows[X].Cells["26"].Value.ToString());
+            int idColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "id"))+1;
+            logs.saveParam(parent.tabMess.Columns[Y].HeaderCell.FormattedValue.ToString().Split(' ')[1], param.Text, parent.tabMess.Rows[X].Cells[idColumn].Value.ToString());
             parent.tabMess.Rows[X].Cells[16].Value = "True";
             for (int cellNum = 0; cellNum < 27; cellNum++)
             {

@@ -220,7 +220,10 @@ dt = dt.DefaultView.ToTable();*/
         private List<swiftMess_str> getDataJournal(string condition)
         {
             List<swiftMess_str> allMess = new List<swiftMess_str>();
-            string sql = @"SELECT * FROM mess";
+            //condition = dateTime_mess
+            //DateTime.Now.GetDateTimeFormats()[0]; WHERE ((mess.[dateTime_mess])>#6/29/2017#)
+            DateTime firstDay = (DateTime.Now.AddDays(-6));
+            string sql = @"SELECT * FROM mess WHERE ((mess.[dateTime_mess])>#" + firstDay.Month + "/" + firstDay.Day + "/" + firstDay.Year + "#)";
             if (condition != "")
             {
                 sql = @"SELECT * FROM [mess] WHERE " + condition;
