@@ -8,12 +8,140 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace swift
+{/*using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+ 
+namespace _Visual_C_Sharp__Сортировка_DataGrid
 {
+    public partial class Form1 : Form
+    {
+        private static Random r = new Random();
+ 
+        private DataGridView MainDataTable = new DataGridView();
+ 
+        public Form1()
+        {
+            InitializeComponent();
+            //Настройка формы
+            {
+                this.Text = "(Visual C#) Программная сортировка таблицу";
+                this.Size = new Size(800, 400);
+                this.MaximumSize = this.Size;
+                this.MinimumSize = this.Size;
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+                this.StartPosition = FormStartPosition.CenterScreen;
+                this.BackColor = Color.White;
+            }
+            //Добавление таблицы на форму
+            {
+                this.Controls.Add(this.MainDataTable);
+                {
+                    //Добавление столбцов и строк
+                    this.MainDataTable.Columns.Add("Column_01", "Дата и время");
+                    this.MainDataTable.Columns.Add("Column_02", "Число");
+                    this.MainDataTable.Columns.Add("Column_03", "Строка");
+                    this.MainDataTable.Columns.Add("Column_04", "Логика");
+                    //Указываем тип данных
+                    this.MainDataTable.Columns[0].DefaultCellStyle.Format = "dd.mm.yyyy";//Указываем тип данных по умолчанию для 1го столбца, как дата и время в формате ДД.ММ.ГГГГ(Дата.Месяц.Год)
+                    this.MainDataTable.Columns[1].DefaultCellStyle.Format = "##.0";//Указываем тип данных по умолчанию для 2го столбца, как числовой
+                    //Как задать строковый тип - не в курсе...
+                    //Как задать логический тип - не в курсе...
+                    //Добавляем случайные строки
+                    {
+                        for (int i = 0; i < 15; i++) this.MainDataTable.Rows.Add(
+                                                                                   new DateTime(r.Next(1990, DateTime.Now.Year + 1), r.Next(1, 13), r.Next(1, 29)).ToShortDateString(),
+                                                                                   r.Next(1, 101).ToString(),
+                                                                                   r.Next(1000, 10000).ToString(),
+                                                                                   (r.Next(1, 3) % 2 == 0).ToString()
+                                                                                );
+                    }
+                    this.MainDataTable.Size = this.ClientSize;
+                    this.MainDataTable.AllowUserToAddRows = false;
+                    this.MainDataTable.AllowUserToDeleteRows = false;
+                    this.MainDataTable.AllowUserToOrderColumns = false;
+                    this.MainDataTable.AllowUserToResizeColumns = false;
+                    this.MainDataTable.AllowUserToResizeRows = false;
+                    this.MainDataTable.ReadOnly = true;
+                    this.MainDataTable.RowHeadersVisible = false;
+                    this.MainDataTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    //Указываем тип данных
+                    this.MainDataTable.Columns[0].DefaultCellStyle.Format = "dd.mm.yyyy";//Указываем тип данных по умолчанию для 1го столбца, как дата и время в формате ДД.ММ.ГГГГ(Дата.Месяц.Год)
+                    this.MainDataTable.Columns[1].DefaultCellStyle.Format = "##.0";//Указываем тип данных по умолчанию для 2го столбца, как числовой
+                }
+                //Теперь, добавляем событие при отображении таблицы/формы
+                this.Shown += this.OnFormShow;
+            }
+        }
+ 
+        private void OnFormShow(Object Sender, EventArgs E)
+        {
+            //Сортировка при помощи метода Sort
+                //Первым входным параметром является столбец(можно указать сам столбец, либо его индификатор/имя), а вторым параметром будет метод сортировки(по возрастанию Ascending или по убыванию Descending)...
+            MessageBox.Show("Сейчас будет выполнена сортировка таблицы стандартным методом Sort по первому столбцу...\nСортируем по возростанию\n\nДля выполнгения сортировки нажмите ОК.", "Сообщение");
+            this.MainDataTable.Sort(this.MainDataTable.Columns[0], ListSortDirection.Ascending);
+            MessageBox.Show("Сейчас будет выполнена сортировка таблицы стандартным методом Sort по первому столбцу...\nСортируем по убыванию\n\nДля выполнгения сортировки нажмите ОК.", "Сообщение");
+            this.MainDataTable.Sort(this.MainDataTable.Columns[0], ListSortDirection.Descending);
+            MessageBox.Show("Сейчас будет выполнена сортировка таблицы стандартным методом Sort по второму столбцу...\nСортируем по возрастанию\n\nДля выполнгения сортировки нажмите ОК.", "Сообщение");
+            this.MainDataTable.Sort(this.MainDataTable.Columns[1], ListSortDirection.Ascending);
+            MessageBox.Show("Сейчас будет выполнена сортировка таблицы стандартным методом Sort по второму столбцу...\nСортируем по убыванию\n\nДля выполнгения сортировки нажмите ОК.", "Сообщение");
+            this.MainDataTable.Sort(this.MainDataTable.Columns[1], ListSortDirection.Descending);
+            MessageBox.Show("Сейчас будет выполнена сортировка таблицы стандартным методом Sort по третему столбцу...\nСортируем по возрастанию\n\nДля выполнгения сортировки нажмите ОК.", "Сообщение");
+            this.MainDataTable.Sort(this.MainDataTable.Columns[2], ListSortDirection.Ascending);
+            MessageBox.Show("Сейчас будет выполнена сортировка таблицы стандартным методом Sort по третему столбцу...\nСортируем по убыванию\n\nДля выполнгения сортировки нажмите ОК.", "Сообщение");
+            this.MainDataTable.Sort(this.MainDataTable.Columns[2], ListSortDirection.Descending);
+            MessageBox.Show("Сейчас будет выполнена сортировка таблицы стандартным методом Sort по четвёртому столбцу...\nСортируем по возрастанию\n\nДля выполнгения сортировки нажмите ОК.", "Сообщение");
+            this.MainDataTable.Sort(this.MainDataTable.Columns[3], ListSortDirection.Ascending);
+            MessageBox.Show("Сейчас будет выполнена сортировка таблицы стандартным методом Sort по четвёртому столбцу...\nСортируем по убыванию\n\nДля выполнгения сортировки нажмите ОК.", "Сообщение");
+            this.MainDataTable.Sort(this.MainDataTable.Columns[3], ListSortDirection.Descending);
+            //Пытаемся отсортировать при помощи DataSource
+                //Сортируем по первому столбцу по возрастанию(это уже чисто для примера)
+            {
+                DataTable DT = new DataTable();//Создаём новый "временный" DataTable/Таблицу данных
+                DT.Columns.AddRange(new DataColumn[]{//Указываем добавление сразу нескольких столбцов
+                                                        new DataColumn("Column_01", typeof(DateTime)),//Каждому новому столбцу указываем наименование/имя и тип данных
+                                                        new DataColumn("Column_02", typeof(Int32)),
+                                                        new DataColumn("Column_03", typeof(String)),
+                                                        new DataColumn("Column_04", typeof(Boolean))
+                                                    });
+                List<String> ListOfHeaderTextColumns = new List<String>();//Создаём "временный" список, в котором будут наименования столбцов
+                for (int i = 0; i < this.MainDataTable.ColumnCount; i++)//Объявляем цикл прохода по всем столбцам
+                {
+                    ListOfHeaderTextColumns.Add(this.MainDataTable.Columns[i].HeaderText);//Добавляем в список наименования столбцов(это нам понадобится несколько позже
+                }
+                for (int i = 0; i < this.MainDataTable.RowCount; i++)//Выполняем цикл прохода по всем строкам
+                {
+                    DataRow NewRow = DT.NewRow();//Создаём новую строку такого же типажа, как строка из DT
+                    NewRow.ItemArray = new object[] { Convert.ToDateTime(this.MainDataTable[0, i].Value), Convert.ToInt32(this.MainDataTable[1, i].Value), Convert.ToString(this.MainDataTable[2, i].Value), Convert.ToBoolean(this.MainDataTable[3, i].Value) };//Заносим новые данные в строку
+                    DT.Rows.Add(NewRow);//Добавляем новую строку в DT
+                }
+                this.MainDataTable.Columns.Clear();//Очищение стролбцов в исходной таблице
+                this.MainDataTable.Rows.Clear();//Очищаем строки в исходной таблице
+                this.MainDataTable.DataSource = null;//Сбрасываем источник данных
+                MessageBox.Show("А вот сейчас будет выполнена сортировка через DataTable//DataSource...\nСортировка по возростанию\n\nНажмите ОК для продолжения...", "Сообщение");
+                DT = DT.AsEnumerable().OrderBy(row => row.Field<DateTime>("Column_01")).CopyToDataTable();//Выполняем саму сортировку по возростанию
+                //Для того, чтобы отсортировать по убыванию, необходимо использовать OrderByDescending
+                this.MainDataTable.DataSource = DT;//Указываем источник данных, как новый DataTable(отсортированная таблица)
+                for (int i=0; i<ListOfHeaderTextColumns.Count; i++)//Задаём цикл по всем столбцам в новой таблице(ну, по сути, в новой)
+                {
+                    this.MainDataTable.Columns[i].HeaderText = ListOfHeaderTextColumns[i];//Тут мы через цикл восстанавливаем заголовок столбцов
+                }
+            }
+        }
+    }
+}*/
     public partial class JournalForm : Form
     {
         ContextMenuStrip contextMenuStripJournal = new ContextMenuStrip();
@@ -42,9 +170,92 @@ namespace swift
             //tabMess.CellContextMenuStripNeeded += TabMess_CellContextMenuStripNeeded;
             tabMess.ColumnWidthChanged += TabMess_ColumnWidthChanged;
             tabMess.ColumnDisplayIndexChanged += TabMess_ColumnDisplayIndexChanged;
-            logs.onCount += reshouBtbClick;
+            //logs.onCount += reshouBtbClick;
+            
         }
+        private void show(string sql)
+        {
+            InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new System.Globalization.CultureInfo("en-US"));
 
+            Dictionary<int, string> columns = getColumns();
+            addColumns(tabMess, columns);
+            List<swiftMess_str> allMess = getDataJournal("");
+            addLines(tabMess, allMess);
+        }
+        private Dictionary<int, string> getColumns()
+        {
+            Dictionary<int, string> columns = new Dictionary<int, string>();
+            string str = @"Software\swift" + "\\columnIndex\\";
+            //Microsoft.Win32.RegistryKey
+            string[] keys = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(str).GetValueNames();
+            //System.Windows.Forms.MessageBox.Show(rk.GetValue(name).ToString());
+            foreach(var key in keys)
+            {
+                Microsoft.Win32.RegistryKey rk = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(str);
+                //System.Windows.Forms.MessageBox.Show(rk.GetValue(name).ToString());
+                string valueColumns = key;
+                int keyColumns = Convert.ToInt32(rk.GetValue(valueColumns).ToString());
+                /*получить ключ по значению*/
+                columns.Add(keyColumns, valueColumns);
+            }
+            //return rk.GetValue(name).ToString();
+            return columns;
+        }
+        private void addColumns(DataGridView tab, Dictionary<int, string> columns)
+        {
+            try
+            {
+                SortedDictionary<int, string> newColumns = new SortedDictionary<int, string>();
+                foreach (var column in columns)
+                {
+                    newColumns.Add(column.Key, column.Value);
+                }
+                foreach (var column in newColumns)
+                {
+                    tabMess.Columns.Add(column.Key.ToString(), reestr.getParam("\\columnName", column.Value));
+                    string columnWidth = reestr.getParam("\\columnWidth", column.Value);
+                    try
+                    {
+                        tabMess.Columns[column.Key.ToString()].Width = Convert.ToInt32(columnWidth);
+                    }
+                    catch (Exception ex) { }
+                    tabMess.Columns[column.Key.ToString()].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+                    tabMess.Columns[column.Key.ToString()].ReadOnly = true;
+                }
+            }
+            catch (Exception e) { }
+
+        }
+        private void addLines(DataGridView tab, List<swiftMess_str> allMess)
+        {
+            l_strAll.Text = allMess.Count.ToString();
+            int index = 0;
+            foreach (var line in allMess)
+            {
+                tabMess.Invoke((MethodInvoker)(() => tabMess.Rows.Add(allMess.Count + 1)));
+                Dictionary<string, string> propertys = getObjProperty(line);
+                foreach(var prop in propertys)
+                {
+                    int indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", prop.Key));
+                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[index].Cells[indColumn].Value = s), prop.Value); 
+                }
+                index++;
+            }
+        }
+        private Dictionary<string, string> getObjProperty(swiftMess_str obj)
+        {
+            Dictionary<string, string> property = new Dictionary<string, string>();
+            /* перебор свойств объекта с получением значений через рефлексию*/
+            Type t = typeof (swiftMess_str);
+            FieldInfo[] Propertys = t.GetFields();
+            foreach (FieldInfo Property in Propertys)
+            {
+                swiftMess_str ob = obj;
+                FieldInfo prop = obj.GetType().GetField(Property.Name);
+                property.Add(Property.Name, prop.GetValue(obj).ToString());
+            }
+            return property;
+        }
         private void TabMess_ColumnDisplayIndexChanged(object sender, DataGridViewColumnEventArgs e)
         {
             //throw new NotImplementedException();
@@ -115,64 +326,34 @@ namespace swift
             Process.Start("C:\\Windows\\System32\\notepad.exe", curFile.Trim());
         }
 
-        private void JournalForm_Load(object sender, EventArgs e)
+       private void JournalForm_Load(object sender, EventArgs e)
         {
             InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new System.Globalization.CultureInfo("en-US"));
-            List<swiftMess_str> allMess = new List<swiftMess_str>();
-            allMess = getDataJournal("");
-            //int indColumn = 0;
-            
-            for(int i=0; i<columnsName.Length; i++)
-            {
-                int indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", columnsName[i].Split(' ')[1]));
-                tabMess.Columns.Add(indColumn.ToString(), columnsName[i]);
-                /*dt.Columns.Add( "Int32_Code", typeof( int ), "Code" );
-dt.DefaultView.Sort("Int32_Code");
-dt = dt.DefaultView.ToTable();*/
-                //string columnWidth = reestr.getParam("\\columnWidth", columnName);
-            }
-            /*tabMess.Columns.Add("0", "20 transactionReferenceNumber_20");
-            tabMess.Columns.Add("1", "30 valueDate_30V");
-            tabMess.Columns.Add("2", "32 date_32");
-            tabMess.Columns.Add("3", "32 currency_32");
-            tabMess.Columns.Add("4", "32 amount_32");
-            tabMess.Columns.Add("5", "33 currency_33B");
-            tabMess.Columns.Add("6", "33 amount_33B");
-            tabMess.Columns.Add("7", "50 orderingCustomer_50");
-            tabMess.Columns.Add("8", "52 orderingInstitution_52");
-            tabMess.Columns.Add("9", "53 senderCorrespondent_53");
-            tabMess.Columns.Add("10", "54 receiverCorrespondent_54");
-            tabMess.Columns.Add("11", "56 intermediaryInstitution_56");
-            tabMess.Columns.Add("12", "57 accountWithInstitution_57");
-            tabMess.Columns.Add("13", "58 beneficiaryInstitution_58");
-            tabMess.Columns.Add("14", "59 beneficiaryCustomer_59");
-            tabMess.Columns.Add("15", "00 processingCharacteristic");
-            tabMess.Columns.Add("16", "00 mess_direction");
-            tabMess.Columns.Add("17", "00 comment");
-            tabMess.Columns.Add("18", "00 dateTime_mess");
-            tabMess.Columns.Add("19", "00 referenceMess");
-            tabMess.Columns.Add("20", "00 fin");
-            tabMess.Columns.Add("21", "00 swiftNumberBankKontragent");
-            tabMess.Columns.Add("22", "00 naimBankKontragent");
-            tabMess.Columns.Add("23", "00 thread");
-            tabMess.Columns.Add("24", "00 fileName");
-            tabMess.Columns.Add("25", "00 direction");
-            tabMess.Columns.Add("26", "00 id");*/
+            show("");
+            /*List<swiftMess_str> allMess = new List<swiftMess_str>();
+           allMess = getDataJournal("");
+           //int indColumn = 0;
 
-            for (int i = 0; i < tabMess.Columns.Count; i++)
-            {
-                string columnName = tabMess.Columns[i].HeaderCell.FormattedValue.ToString().Split(' ')[1];
-                //MessageBox.Show(columnName);
-                string columnWidth = reestr.getParam("\\columnWidth", columnName);
-                //MessageBox.Show(columnWidth);
-                tabMess.Columns[i].Width = Convert.ToInt32(columnWidth);
-                tabMess.Columns[i].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-                tabMess.Columns[i].ReadOnly = true;
-            }
-            tabMess.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;   
-            tabMess.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;   
-            //MessageBox.Show(tabMess.Columns[0].HeaderCell.FormattedValue.ToString());
-            showRows(allMess);
+           for(int i=0; i<columnsName.Length; i++)
+           {
+               int indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", columnsName[i].Split(' ')[1]));
+               tabMess.Columns.Add(indColumn.ToString(), columnsName[i]);
+           }
+
+           for (int i = 0; i < tabMess.Columns.Count; i++)
+           {
+               string columnName = tabMess.Columns[i].HeaderCell.FormattedValue.ToString().Split(' ')[1];
+               //MessageBox.Show(columnName);
+               string columnWidth = reestr.getParam("\\columnWidth", columnName);
+               //MessageBox.Show(columnWidth);
+               tabMess.Columns[i].Width = Convert.ToInt32(columnWidth);
+               tabMess.Columns[i].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+               tabMess.Columns[i].ReadOnly = true;
+           }
+           tabMess.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;   
+           tabMess.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;   
+           //MessageBox.Show(tabMess.Columns[0].HeaderCell.FormattedValue.ToString());
+           showRows(allMess);*/
         }
 
         private void export_Click(object sender, EventArgs e)
@@ -251,8 +432,9 @@ dt = dt.DefaultView.ToTable();*/
             return allMess;
         }
 
-        private void showRows(List<swiftMess_str> allMess)
+       /* private void showRows(List<swiftMess_str> allMess)
         {
+
             l_strAll.Text = allMess.Count.ToString();
             if (allMess.Count > 0)
             {
@@ -347,7 +529,7 @@ dt = dt.DefaultView.ToTable();*/
                 tabMess.Sort(tabMess.Columns[26], ListSortDirection.Descending);
                 //columnIndex();
             }
-        }
+        }*/
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             //tabMess.Columns.Add
@@ -361,9 +543,9 @@ dt = dt.DefaultView.ToTable();*/
         public void reshouBtbClick(bool sss=false)
         {
             tabMess.Invoke(new rowsClear(() => tabMess.Rows.Clear()));
-                List<swiftMess_str> newData = new List<swiftMess_str>();
-                newData = getDataJournal(tb_condition.Text);
-                this.showRows(newData);
+                /*List<swiftMess_str> newData = new List<swiftMess_str>();
+                newData = getDataJournal(tb_condition.Text);*/
+                this.show(tb_condition.Text);
             if (this.repet)
             {
                 repet = false;

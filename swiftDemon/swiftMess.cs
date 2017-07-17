@@ -193,7 +193,7 @@ namespace swiftDemon
         public string id = "";
 
         /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-        public static string transactionReferenceNumber_20_n = "transactionReferenceNumber_20";
+       /* public static string transactionReferenceNumber_20_n = "transactionReferenceNumber_20";
         public static string valueDate_30V_n = "valueDate_30V";
         public static string date_32_n = "date_32";
         public static string currency_32_n = "currency_32";
@@ -219,7 +219,7 @@ namespace swiftDemon
         public static string thread_n = "thread";
         public static string fileName_n = "fileName";
         public static string direction_n = "direction";
-        public static string id_n = "id";
+        public static string id_n = "id";*/
         /*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
         public swiftMess_str(string p1, string p2, string p3, string p4, string p5, string p6, string p7, string p8, string p9, string p10, string p11, string p12, string p13, string p14, string p15, string p16,
             string p17, string p18, string p19, string p20, string p21, string p22, string p23, string p24, string p25, string p26, string p27)
