@@ -66,8 +66,19 @@ namespace swift
 
         private void выходToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void системныеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             swiftDemon.settingsForm settings = new swiftDemon.settingsForm();
             settings.Show();
+        }
+
+        private void столбцыЖурналаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            swiftDemon.settingsColumnsJournal settingsColumnsJournal = new swiftDemon.settingsColumnsJournal();
+            settingsColumnsJournal.Show();
         }
     }
 }

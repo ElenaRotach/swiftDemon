@@ -171,18 +171,20 @@ namespace _Visual_C_Sharp__Сортировка_DataGrid
             tabMess.ColumnWidthChanged += TabMess_ColumnWidthChanged;
             tabMess.ColumnDisplayIndexChanged += TabMess_ColumnDisplayIndexChanged;
             //logs.onCount += reshouBtbClick;
+            //tabMess.Sort(System.Collections.)
             
         }
         private void show(string sql)
         {
             InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new System.Globalization.CultureInfo("en-US"));
-
+            tabMess.Columns.Clear();
             Dictionary<int, string> columns = getColumns();
             addColumns(tabMess, columns);
-            List<swiftMess_str> allMess = getDataJournal("");
+            List<swiftMess_str> allMess = getDataJournal(tb_condition.Text);
             addLines(tabMess, allMess);
+            paintCells();
         }
-        private Dictionary<int, string> getColumns()
+        public static Dictionary<int, string> getColumns()
         {
             Dictionary<int, string> columns = new Dictionary<int, string>();
             string str = @"Software\swift" + "\\columnIndex\\";
@@ -219,7 +221,7 @@ namespace _Visual_C_Sharp__Сортировка_DataGrid
                         tabMess.Columns[column.Key.ToString()].Width = Convert.ToInt32(columnWidth);
                     }
                     catch (Exception ex) { }
-                    tabMess.Columns[column.Key.ToString()].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+                    //tabMess.Columns[column.Key.ToString()].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
                     tabMess.Columns[column.Key.ToString()].ReadOnly = true;
                 }
             }
@@ -241,6 +243,7 @@ namespace _Visual_C_Sharp__Сортировка_DataGrid
                 }
                 index++;
             }
+
         }
         private Dictionary<string, string> getObjProperty(swiftMess_str obj)
         {
@@ -329,6 +332,7 @@ namespace _Visual_C_Sharp__Сортировка_DataGrid
        private void JournalForm_Load(object sender, EventArgs e)
         {
             InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new System.Globalization.CultureInfo("en-US"));
+            //tabMess.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             show("");
             /*List<swiftMess_str> allMess = new List<swiftMess_str>();
            allMess = getDataJournal("");
@@ -396,7 +400,8 @@ namespace _Visual_C_Sharp__Сортировка_DataGrid
 
         private void reshow_Click(object sender, EventArgs e)
         {
-            reshouBtbClick();
+            show(tb_condition.Text);
+            //reshouBtbClick();
         }
         private List<swiftMess_str> getDataJournal(string condition)
         {
@@ -559,20 +564,39 @@ namespace _Visual_C_Sharp__Сортировка_DataGrid
         }
         private void paintCells()
         {
+            //tabMess.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            for(int j = 0; j < tabMess.Columns.Count; j++)
+            {
+                string columnAlignment = reestr.getParam("\\columnAlignment", tabMess.Columns[j].HeaderText.Split(' ')[1]);
+                //var Alignment;
+                switch (columnAlignment){
+                    case "r":
+                        tabMess.Columns[j].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; 
+                        //Alignment = DataGridViewContentAlignment.MiddleRight;//64
+                        break;
+                    case "l":
+                        tabMess.Columns[j].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;//16
+                        break;
+                    case "c":
+                        tabMess.Columns[j].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;//32
+                        break;
+                }
+            }
             for (int j = 0; j < tabMess.Rows.Count - 2; j++)
             {
-                if (tabMess.Rows[j].Cells[16].Value.ToString() == "False")
+                int indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "mess_direction"));
+                if (tabMess.Rows[j].Cells[indColumn].Value != null && tabMess.Rows[j].Cells[indColumn].Value.ToString() == "False")
                 {
-                    for (int cellNum = 0; cellNum < 27; cellNum++)
+                    for (int cellNum = 0; cellNum < tabMess.Columns.Count; cellNum++)
                     {
                         tabMess.Rows[j].Cells[cellNum].Style.BackColor = System.Drawing.Color.CadetBlue;
                     }
 
                 }
-                int indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"))+1;
-                if (tabMess.Rows[j].Cells[25].Value.ToString() == "IN")
+                indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
+                if (tabMess.Rows[j].Cells[indColumn].Value != null && tabMess.Rows[j].Cells[indColumn].Value.ToString() == "IN")
                 {
-                    for (int cellNum = 0; cellNum < 27; cellNum++)
+                    for (int cellNum = 0; cellNum < tabMess.Columns.Count; cellNum++)
                     {
                         tabMess.Rows[j].Cells[cellNum].Style.Font = new Font(tabMess.DefaultCellStyle.Font, FontStyle.Bold);
                     }

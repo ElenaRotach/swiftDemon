@@ -33,6 +33,8 @@
             this.транслитерацияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.журналToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.системныеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.столбцыЖурналаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.информацияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -66,10 +68,27 @@
             // 
             // выходToolStripMenuItem
             // 
+            this.выходToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.системныеToolStripMenuItem,
+            this.столбцыЖурналаToolStripMenuItem});
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
             this.выходToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.выходToolStripMenuItem.Text = "настройки";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.выходToolStripMenuItem_Click);
+            // 
+            // системныеToolStripMenuItem
+            // 
+            this.системныеToolStripMenuItem.Name = "системныеToolStripMenuItem";
+            this.системныеToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.системныеToolStripMenuItem.Text = "системные";
+            this.системныеToolStripMenuItem.Click += new System.EventHandler(this.системныеToolStripMenuItem_Click);
+            // 
+            // столбцыЖурналаToolStripMenuItem
+            // 
+            this.столбцыЖурналаToolStripMenuItem.Name = "столбцыЖурналаToolStripMenuItem";
+            this.столбцыЖурналаToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.столбцыЖурналаToolStripMenuItem.Text = "столбцы журнала";
+            this.столбцыЖурналаToolStripMenuItem.Click += new System.EventHandler(this.столбцыЖурналаToolStripMenuItem_Click);
             // 
             // информацияToolStripMenuItem
             // 
@@ -102,6 +121,8 @@
         private System.Windows.Forms.ToolStripMenuItem журналToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem информацияToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem системныеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem столбцыЖурналаToolStripMenuItem;
     }
 }
 
