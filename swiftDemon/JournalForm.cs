@@ -232,9 +232,10 @@ namespace _Visual_C_Sharp__Сортировка_DataGrid
         {
             l_strAll.Text = allMess.Count.ToString();
             int index = 0;
+            tabMess.Invoke((MethodInvoker)(() => tabMess.Rows.Add(allMess.Count - 1)));
             foreach (var line in allMess)
             {
-                tabMess.Invoke((MethodInvoker)(() => tabMess.Rows.Add(allMess.Count + 1)));
+               
                 Dictionary<string, string> propertys = getObjProperty(line);
                 foreach(var prop in propertys)
                 {
@@ -323,7 +324,7 @@ namespace _Visual_C_Sharp__Сортировка_DataGrid
             string curFile = Environment.CurrentDirectory + @"\tmp.txt";
             using (StreamWriter sw = File.AppendText(curFile))
             {
-                sw.WriteLine(tabMess.Rows[index].Cells[23].Value);
+                sw.WriteLine(tabMess.Rows[index].Cells[Convert.ToInt32(reestr.getParam("\\columnIndex", "thread"))].Value);
                 sw.Close();
             }
             Process.Start("C:\\Windows\\System32\\notepad.exe", curFile.Trim());
