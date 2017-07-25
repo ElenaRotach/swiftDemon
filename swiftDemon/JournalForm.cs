@@ -14,136 +14,58 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace swift
-{/*using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
- 
-namespace _Visual_C_Sharp__Сортировка_DataGrid
-{
-    public partial class Form1 : Form
-    {
-        private static Random r = new Random();
- 
-        private DataGridView MainDataTable = new DataGridView();
- 
-        public Form1()
-        {
-            InitializeComponent();
-            //Настройка формы
-            {
-                this.Text = "(Visual C#) Программная сортировка таблицу";
-                this.Size = new Size(800, 400);
-                this.MaximumSize = this.Size;
-                this.MinimumSize = this.Size;
-                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-                this.StartPosition = FormStartPosition.CenterScreen;
-                this.BackColor = Color.White;
-            }
-            //Добавление таблицы на форму
-            {
-                this.Controls.Add(this.MainDataTable);
-                {
-                    //Добавление столбцов и строк
-                    this.MainDataTable.Columns.Add("Column_01", "Дата и время");
-                    this.MainDataTable.Columns.Add("Column_02", "Число");
-                    this.MainDataTable.Columns.Add("Column_03", "Строка");
-                    this.MainDataTable.Columns.Add("Column_04", "Логика");
-                    //Указываем тип данных
-                    this.MainDataTable.Columns[0].DefaultCellStyle.Format = "dd.mm.yyyy";//Указываем тип данных по умолчанию для 1го столбца, как дата и время в формате ДД.ММ.ГГГГ(Дата.Месяц.Год)
-                    this.MainDataTable.Columns[1].DefaultCellStyle.Format = "##.0";//Указываем тип данных по умолчанию для 2го столбца, как числовой
-                    //Как задать строковый тип - не в курсе...
-                    //Как задать логический тип - не в курсе...
-                    //Добавляем случайные строки
-                    {
-                        for (int i = 0; i < 15; i++) this.MainDataTable.Rows.Add(
-                                                                                   new DateTime(r.Next(1990, DateTime.Now.Year + 1), r.Next(1, 13), r.Next(1, 29)).ToShortDateString(),
-                                                                                   r.Next(1, 101).ToString(),
-                                                                                   r.Next(1000, 10000).ToString(),
-                                                                                   (r.Next(1, 3) % 2 == 0).ToString()
-                                                                                );
-                    }
-                    this.MainDataTable.Size = this.ClientSize;
-                    this.MainDataTable.AllowUserToAddRows = false;
-                    this.MainDataTable.AllowUserToDeleteRows = false;
-                    this.MainDataTable.AllowUserToOrderColumns = false;
-                    this.MainDataTable.AllowUserToResizeColumns = false;
-                    this.MainDataTable.AllowUserToResizeRows = false;
-                    this.MainDataTable.ReadOnly = true;
-                    this.MainDataTable.RowHeadersVisible = false;
-                    this.MainDataTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                    //Указываем тип данных
-                    this.MainDataTable.Columns[0].DefaultCellStyle.Format = "dd.mm.yyyy";//Указываем тип данных по умолчанию для 1го столбца, как дата и время в формате ДД.ММ.ГГГГ(Дата.Месяц.Год)
-                    this.MainDataTable.Columns[1].DefaultCellStyle.Format = "##.0";//Указываем тип данных по умолчанию для 2го столбца, как числовой
-                }
-                //Теперь, добавляем событие при отображении таблицы/формы
-                this.Shown += this.OnFormShow;
-            }
-        }
- 
-        private void OnFormShow(Object Sender, EventArgs E)
-        {
-            //Сортировка при помощи метода Sort
-                //Первым входным параметром является столбец(можно указать сам столбец, либо его индификатор/имя), а вторым параметром будет метод сортировки(по возрастанию Ascending или по убыванию Descending)...
-            MessageBox.Show("Сейчас будет выполнена сортировка таблицы стандартным методом Sort по первому столбцу...\nСортируем по возростанию\n\nДля выполнгения сортировки нажмите ОК.", "Сообщение");
-            this.MainDataTable.Sort(this.MainDataTable.Columns[0], ListSortDirection.Ascending);
-            MessageBox.Show("Сейчас будет выполнена сортировка таблицы стандартным методом Sort по первому столбцу...\nСортируем по убыванию\n\nДля выполнгения сортировки нажмите ОК.", "Сообщение");
-            this.MainDataTable.Sort(this.MainDataTable.Columns[0], ListSortDirection.Descending);
-            MessageBox.Show("Сейчас будет выполнена сортировка таблицы стандартным методом Sort по второму столбцу...\nСортируем по возрастанию\n\nДля выполнгения сортировки нажмите ОК.", "Сообщение");
-            this.MainDataTable.Sort(this.MainDataTable.Columns[1], ListSortDirection.Ascending);
-            MessageBox.Show("Сейчас будет выполнена сортировка таблицы стандартным методом Sort по второму столбцу...\nСортируем по убыванию\n\nДля выполнгения сортировки нажмите ОК.", "Сообщение");
-            this.MainDataTable.Sort(this.MainDataTable.Columns[1], ListSortDirection.Descending);
-            MessageBox.Show("Сейчас будет выполнена сортировка таблицы стандартным методом Sort по третему столбцу...\nСортируем по возрастанию\n\nДля выполнгения сортировки нажмите ОК.", "Сообщение");
-            this.MainDataTable.Sort(this.MainDataTable.Columns[2], ListSortDirection.Ascending);
-            MessageBox.Show("Сейчас будет выполнена сортировка таблицы стандартным методом Sort по третему столбцу...\nСортируем по убыванию\n\nДля выполнгения сортировки нажмите ОК.", "Сообщение");
-            this.MainDataTable.Sort(this.MainDataTable.Columns[2], ListSortDirection.Descending);
-            MessageBox.Show("Сейчас будет выполнена сортировка таблицы стандартным методом Sort по четвёртому столбцу...\nСортируем по возрастанию\n\nДля выполнгения сортировки нажмите ОК.", "Сообщение");
-            this.MainDataTable.Sort(this.MainDataTable.Columns[3], ListSortDirection.Ascending);
-            MessageBox.Show("Сейчас будет выполнена сортировка таблицы стандартным методом Sort по четвёртому столбцу...\nСортируем по убыванию\n\nДля выполнгения сортировки нажмите ОК.", "Сообщение");
-            this.MainDataTable.Sort(this.MainDataTable.Columns[3], ListSortDirection.Descending);
-            //Пытаемся отсортировать при помощи DataSource
-                //Сортируем по первому столбцу по возрастанию(это уже чисто для примера)
-            {
-                DataTable DT = new DataTable();//Создаём новый "временный" DataTable/Таблицу данных
-                DT.Columns.AddRange(new DataColumn[]{//Указываем добавление сразу нескольких столбцов
-                                                        new DataColumn("Column_01", typeof(DateTime)),//Каждому новому столбцу указываем наименование/имя и тип данных
-                                                        new DataColumn("Column_02", typeof(Int32)),
-                                                        new DataColumn("Column_03", typeof(String)),
-                                                        new DataColumn("Column_04", typeof(Boolean))
-                                                    });
-                List<String> ListOfHeaderTextColumns = new List<String>();//Создаём "временный" список, в котором будут наименования столбцов
-                for (int i = 0; i < this.MainDataTable.ColumnCount; i++)//Объявляем цикл прохода по всем столбцам
-                {
-                    ListOfHeaderTextColumns.Add(this.MainDataTable.Columns[i].HeaderText);//Добавляем в список наименования столбцов(это нам понадобится несколько позже
-                }
-                for (int i = 0; i < this.MainDataTable.RowCount; i++)//Выполняем цикл прохода по всем строкам
-                {
-                    DataRow NewRow = DT.NewRow();//Создаём новую строку такого же типажа, как строка из DT
-                    NewRow.ItemArray = new object[] { Convert.ToDateTime(this.MainDataTable[0, i].Value), Convert.ToInt32(this.MainDataTable[1, i].Value), Convert.ToString(this.MainDataTable[2, i].Value), Convert.ToBoolean(this.MainDataTable[3, i].Value) };//Заносим новые данные в строку
-                    DT.Rows.Add(NewRow);//Добавляем новую строку в DT
-                }
-                this.MainDataTable.Columns.Clear();//Очищение стролбцов в исходной таблице
-                this.MainDataTable.Rows.Clear();//Очищаем строки в исходной таблице
-                this.MainDataTable.DataSource = null;//Сбрасываем источник данных
-                MessageBox.Show("А вот сейчас будет выполнена сортировка через DataTable//DataSource...\nСортировка по возростанию\n\nНажмите ОК для продолжения...", "Сообщение");
-                DT = DT.AsEnumerable().OrderBy(row => row.Field<DateTime>("Column_01")).CopyToDataTable();//Выполняем саму сортировку по возростанию
-                //Для того, чтобы отсортировать по убыванию, необходимо использовать OrderByDescending
-                this.MainDataTable.DataSource = DT;//Указываем источник данных, как новый DataTable(отсортированная таблица)
-                for (int i=0; i<ListOfHeaderTextColumns.Count; i++)//Задаём цикл по всем столбцам в новой таблице(ну, по сути, в новой)
-                {
-                    this.MainDataTable.Columns[i].HeaderText = ListOfHeaderTextColumns[i];//Тут мы через цикл восстанавливаем заголовок столбцов
-                }
-            }
-        }
-    }
-}*/
+{    
     public partial class JournalForm : Form
     {
+        private class RowComparer : System.Collections.IComparer
+        {
+            private static int sortOrderModifier = 1;
+            private string head;
+            public RowComparer(SortOrder sortOrder, string Header)
+            {
+                head = Header;
+                //sortOrderModifier = -sortOrderModifier;
+                if (sortOrder == SortOrder.Descending)
+                {
+                    sortOrderModifier = -1;
+                }
+                else if (sortOrder == SortOrder.Ascending)
+                {
+                    sortOrderModifier = 1;
+                }
+            }
+
+            public int Compare(object x, object y)
+            {
+                DataGridViewRow DataGridViewRow1 = (DataGridViewRow)x;
+                DataGridViewRow DataGridViewRow2 = (DataGridViewRow)y;
+
+                // Try to sort based on the Last Name column.
+                int indColumnSort = Convert.ToInt32(reestr.getParam("\\columnIndex", head.Split(' ')[1]));
+                int indColumnId = Convert.ToInt32(reestr.getParam("\\columnIndex", "id"));
+                double chx = 0;
+                double chy = 0;
+                if (DataGridViewRow1.Cells[indColumnSort].Value.ToString() != "")
+                {
+                    chx = Convert.ToDouble(DataGridViewRow1.Cells[indColumnSort].Value.ToString().Replace(".", ","));
+                }
+                if (DataGridViewRow2.Cells[indColumnSort].Value.ToString() != "")
+                {
+                    chy = Convert.ToDouble(DataGridViewRow2.Cells[indColumnSort].Value.ToString().Replace(".", ","));
+                }
+                int CompareResult = (int)(chx - chy);//0;
+                if (chx > chy) { CompareResult = 1; }
+                if (CompareResult == 0)
+                {
+                    CompareResult = Convert.ToInt32(DataGridViewRow1.Cells[indColumnId].Value.ToString()) - Convert.ToInt32(DataGridViewRow2.Cells[indColumnId].Value.ToString());
+                    //if(Convert.ToInt32(DataGridViewRow1.Cells[indColumnId].Value.ToString())> Convert.ToInt32(DataGridViewRow2.Cells[indColumnId].Value.ToString()))
+                    //{
+                    //    CompareResult = 1;
+                    //}
+                }
+                return CompareResult * sortOrderModifier;
+            }
+        }
         ContextMenuStrip contextMenuStripJournal = new ContextMenuStrip();
         delegate void rowsClear();
         delegate void rowsAdd(string count);
@@ -171,9 +93,52 @@ namespace _Visual_C_Sharp__Сортировка_DataGrid
             tabMess.ColumnWidthChanged += TabMess_ColumnWidthChanged;
             tabMess.ColumnDisplayIndexChanged += TabMess_ColumnDisplayIndexChanged;
             //logs.onCount += reshouBtbClick;
-            //tabMess.Sort(System.Collections.)
-            
+            //tabMess.Sorted += TabMess_Sorted;
+            //tabMess.SortCompare += new DataGridViewSortCompareEventHandler(TabMess_SortCompare);
+            //tabMess.ColumnHeaderMouseClick += TabMess_Sorted(DataGridView sender, DataGridViewCellMouseEventArgs e);
+            tabMess.ColumnHeaderMouseClick += TabMess_ColumnHeaderMouseClickP;
+
         }
+
+        private void TabMess_ColumnHeaderMouseClickP(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (tabMess.Columns[e.ColumnIndex].HeaderText == "32 amount_32" || tabMess.Columns[e.ColumnIndex].HeaderText == "33 amount_33B" || tabMess.Columns[e.ColumnIndex].HeaderText == "00 id")
+            {
+                tabMess.Sort(new RowComparer(SortOrder.Descending, tabMess.Columns[e.ColumnIndex].HeaderText));
+                tabMess.ColumnHeaderMouseClick -= TabMess_ColumnHeaderMouseClickP;
+                tabMess.ColumnHeaderMouseClick += TabMess_ColumnHeaderMouseClickM;
+            }
+        }
+
+        private void TabMess_ColumnHeaderMouseClickM(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (tabMess.Columns[e.ColumnIndex].HeaderText == "32 amount_32")
+            {
+                tabMess.Sort(new RowComparer(SortOrder.Ascending, tabMess.Columns[e.ColumnIndex].HeaderText));
+                tabMess.ColumnHeaderMouseClick -= TabMess_ColumnHeaderMouseClickM;
+                tabMess.ColumnHeaderMouseClick += TabMess_ColumnHeaderMouseClickP;
+            }
+        }
+
+        //private void TabMess_SortCompare(object sender, DataGridViewSortCompareEventArgs e)
+        //{
+        //    //e.Column.SortMode = DataGridViewColumnSortMode.Programmatic;
+        //    if (e.Column.HeaderText == "32 amount_32")
+        //    {
+        //        tabMess.Sort(new RowComparer(SortOrder.Descending));
+        //    }
+
+        //}
+
+        //private void TabMess_Sorted(DataGridView sender, DataGridViewCellMouseEventArgs e)
+        //{
+        //    //if (e.Column.HeaderText == "32 amount_32")
+        //    if(sender.Columns[e.ColumnIndex].HeaderText== "32 amount_32")
+        //    {
+        //        tabMess.Sort(new RowComparer(SortOrder.Descending));
+        //    }
+        //}
+
         private void show(string sql)
         {
             InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new System.Globalization.CultureInfo("en-US"));
@@ -607,6 +572,11 @@ namespace _Visual_C_Sharp__Сортировка_DataGrid
                 }
                     //dataGridView1.Rows[1].Cells[1].Style.Font = new Font(dataGridView1.DefaultCellStyle.Font, FontStyle.Bold);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            tabMess.Sort(new RowComparer(SortOrder.Descending, ""));
         }
         //private void columnIndex()
         //{
