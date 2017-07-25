@@ -24,7 +24,6 @@ namespace swift
             public RowComparer(SortOrder sortOrder, string Header)
             {
                 head = Header;
-                //sortOrderModifier = -sortOrderModifier;
                 if (sortOrder == SortOrder.Descending)
                 {
                     sortOrderModifier = -1;
@@ -40,28 +39,50 @@ namespace swift
                 DataGridViewRow DataGridViewRow1 = (DataGridViewRow)x;
                 DataGridViewRow DataGridViewRow2 = (DataGridViewRow)y;
 
-                // Try to sort based on the Last Name column.
                 int indColumnSort = Convert.ToInt32(reestr.getParam("\\columnIndex", head.Split(' ')[1]));
                 int indColumnId = Convert.ToInt32(reestr.getParam("\\columnIndex", "id"));
-                double chx = 0;
-                double chy = 0;
-                if (DataGridViewRow1.Cells[indColumnSort].Value.ToString() != "")
+                int CompareResult = 0;
+                //forInt
+                string type = thesaurus.getType(head.Split(' ')[1]);
+                if(type== "double" || type== "int")
                 {
-                    chx = Convert.ToDouble(DataGridViewRow1.Cells[indColumnSort].Value.ToString().Replace(".", ","));
+                    double chx = 0;
+                    double chy = 0;
+                    if (DataGridViewRow1.Cells[indColumnSort].Value.ToString() != "")
+                    {
+                        chx = Convert.ToDouble(DataGridViewRow1.Cells[indColumnSort].Value.ToString().Replace(".", ","));
+                    }
+                    if (DataGridViewRow2.Cells[indColumnSort].Value.ToString() != "")
+                    {
+                        chy = Convert.ToDouble(DataGridViewRow2.Cells[indColumnSort].Value.ToString().Replace(".", ","));
+                    }
+                    CompareResult = (int)(chx - chy);//0;
+                    if (chx > chy) { CompareResult = 1; }
+                    if (CompareResult == 0)
+                    {
+                        CompareResult = Convert.ToInt32(DataGridViewRow1.Cells[indColumnId].Value.ToString()) - Convert.ToInt32(DataGridViewRow2.Cells[indColumnId].Value.ToString());
+                    }
                 }
-                if (DataGridViewRow2.Cells[indColumnSort].Value.ToString() != "")
+                //forDate
+                if(type== "date")
                 {
-                    chy = Convert.ToDouble(DataGridViewRow2.Cells[indColumnSort].Value.ToString().Replace(".", ","));
-                }
-                int CompareResult = (int)(chx - chy);//0;
-                if (chx > chy) { CompareResult = 1; }
-                if (CompareResult == 0)
-                {
-                    CompareResult = Convert.ToInt32(DataGridViewRow1.Cells[indColumnId].Value.ToString()) - Convert.ToInt32(DataGridViewRow2.Cells[indColumnId].Value.ToString());
-                    //if(Convert.ToInt32(DataGridViewRow1.Cells[indColumnId].Value.ToString())> Convert.ToInt32(DataGridViewRow2.Cells[indColumnId].Value.ToString()))
-                    //{
-                    //    CompareResult = 1;
-                    //}
+                    DateTime chx = new DateTime();
+                    DateTime chy = new DateTime();
+                    if (DataGridViewRow1.Cells[indColumnSort].Value.ToString() != "")
+                    {
+                        chx = Convert.ToDateTime(DataGridViewRow1.Cells[indColumnSort].Value.ToString());
+                    }
+                    if (DataGridViewRow2.Cells[indColumnSort].Value.ToString() != "")
+                    {
+                        chy = Convert.ToDateTime(DataGridViewRow2.Cells[indColumnSort].Value.ToString());
+                    }
+                    
+                    CompareResult = (chx - chy).Milliseconds;//0;
+                    if (chx > chy) { CompareResult = 1; }
+                    if (CompareResult == 0)
+                    {
+                        CompareResult = Convert.ToInt32(DataGridViewRow1.Cells[indColumnId].Value.ToString()) - Convert.ToInt32(DataGridViewRow2.Cells[indColumnId].Value.ToString());
+                    }
                 }
                 return CompareResult * sortOrderModifier;
             }
@@ -70,10 +91,10 @@ namespace swift
         delegate void rowsClear();
         delegate void rowsAdd(string count);
         bool repet = true;
-        string[] columnsName = { "20 transactionReferenceNumber_20", "30 valueDate_30V" , "32 date_32" , "32 currency_32", "32 amount_32", "33 currency_33B", "33 amount_33B", "50 orderingCustomer_50",
-                                   "52 orderingInstitution_52", "53 senderCorrespondent_53", "54 receiverCorrespondent_54", "56 intermediaryInstitution_56", "57 accountWithInstitution_57",
-                                   "58 beneficiaryInstitution_58", "59 beneficiaryCustomer_59", "00 processingCharacteristic", "00 mess_direction", "00 comment", "00 dateTime_mess", "00 referenceMess",
-                                   "00 fin", "00 swiftNumberBankKontragent", "00 naimBankKontragent", "00 thread", "00 fileName", "00 direction", "00 id" };
+        //string[] columnsName = { "20 transactionReferenceNumber_20", "30 valueDate_30V" , "32 date_32" , "32 currency_32", "32 amount_32", "33 currency_33B", "33 amount_33B", "50 orderingCustomer_50",
+        //                           "52 orderingInstitution_52", "53 senderCorrespondent_53", "54 receiverCorrespondent_54", "56 intermediaryInstitution_56", "57 accountWithInstitution_57",
+        //                           "58 beneficiaryInstitution_58", "59 beneficiaryCustomer_59", "00 processingCharacteristic", "00 mess_direction", "00 comment", "00 dateTime_mess", "00 referenceMess",
+        //                           "00 fin", "00 swiftNumberBankKontragent", "00 naimBankKontragent", "00 thread", "00 fileName", "00 direction", "00 id" };
         public JournalForm()
         {
             InitializeComponent();
@@ -88,21 +109,15 @@ namespace swift
             // устанавливаем обработчики событий для меню
             printMenuItem.Click += printMenuItem_Click;
             editMenuItem.Click += EditMenuItem_Click;
-            //tabMess.CellMouseClick += TabMess_CellMouseClick;
-            //tabMess.CellContextMenuStripNeeded += TabMess_CellContextMenuStripNeeded;
             tabMess.ColumnWidthChanged += TabMess_ColumnWidthChanged;
             tabMess.ColumnDisplayIndexChanged += TabMess_ColumnDisplayIndexChanged;
-            //logs.onCount += reshouBtbClick;
-            //tabMess.Sorted += TabMess_Sorted;
-            //tabMess.SortCompare += new DataGridViewSortCompareEventHandler(TabMess_SortCompare);
-            //tabMess.ColumnHeaderMouseClick += TabMess_Sorted(DataGridView sender, DataGridViewCellMouseEventArgs e);
             tabMess.ColumnHeaderMouseClick += TabMess_ColumnHeaderMouseClickP;
 
         }
 
         private void TabMess_ColumnHeaderMouseClickP(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (tabMess.Columns[e.ColumnIndex].HeaderText == "32 amount_32" || tabMess.Columns[e.ColumnIndex].HeaderText == "33 amount_33B" || tabMess.Columns[e.ColumnIndex].HeaderText == "00 id")
+            //if (tabMess.Columns[e.ColumnIndex].HeaderText == "32 amount_32" || tabMess.Columns[e.ColumnIndex].HeaderText == "33 amount_33B" || tabMess.Columns[e.ColumnIndex].HeaderText == "00 id" || tabMess.Columns[e.ColumnIndex].HeaderText == "20 transactionReferenceNumber_20")
             {
                 tabMess.Sort(new RowComparer(SortOrder.Descending, tabMess.Columns[e.ColumnIndex].HeaderText));
                 tabMess.ColumnHeaderMouseClick -= TabMess_ColumnHeaderMouseClickP;
@@ -112,33 +127,13 @@ namespace swift
 
         private void TabMess_ColumnHeaderMouseClickM(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (tabMess.Columns[e.ColumnIndex].HeaderText == "32 amount_32")
+            //if (tabMess.Columns[e.ColumnIndex].HeaderText == "32 amount_32" || tabMess.Columns[e.ColumnIndex].HeaderText == "33 amount_33B" || tabMess.Columns[e.ColumnIndex].HeaderText == "00 id" || tabMess.Columns[e.ColumnIndex].HeaderText == "20 transactionReferenceNumber_20")
             {
                 tabMess.Sort(new RowComparer(SortOrder.Ascending, tabMess.Columns[e.ColumnIndex].HeaderText));
                 tabMess.ColumnHeaderMouseClick -= TabMess_ColumnHeaderMouseClickM;
                 tabMess.ColumnHeaderMouseClick += TabMess_ColumnHeaderMouseClickP;
             }
         }
-
-        //private void TabMess_SortCompare(object sender, DataGridViewSortCompareEventArgs e)
-        //{
-        //    //e.Column.SortMode = DataGridViewColumnSortMode.Programmatic;
-        //    if (e.Column.HeaderText == "32 amount_32")
-        //    {
-        //        tabMess.Sort(new RowComparer(SortOrder.Descending));
-        //    }
-
-        //}
-
-        //private void TabMess_Sorted(DataGridView sender, DataGridViewCellMouseEventArgs e)
-        //{
-        //    //if (e.Column.HeaderText == "32 amount_32")
-        //    if(sender.Columns[e.ColumnIndex].HeaderText== "32 amount_32")
-        //    {
-        //        tabMess.Sort(new RowComparer(SortOrder.Descending));
-        //    }
-        //}
-
         private void show(string sql)
         {
             InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new System.Globalization.CultureInfo("en-US"));
@@ -230,10 +225,8 @@ namespace swift
         }
         private void TabMess_ColumnDisplayIndexChanged(object sender, DataGridViewColumnEventArgs e)
         {
-            //throw new NotImplementedException();
             int ind = e.Column.Index;
             string columnName = tabMess.Columns[ind].HeaderCell.FormattedValue.ToString().Split(' ')[1];
-            //MessageBox.Show(columnName);
             reestr.setParam("\\columnIndex", columnName, e.Column.DisplayIndex.ToString());
         }
 
@@ -241,39 +234,18 @@ namespace swift
         {
             int ind = e.Column.Index;
             string columnName = tabMess.Columns[ind].HeaderCell.FormattedValue.ToString().Split(' ')[1];
-            //MessageBox.Show(columnName);
             reestr.setParam("\\columnWidth", columnName, e.Column.Width.ToString());
-            //throw new NotImplementedException();
         }
 
         private void EditMenuItem_Click(object sender, EventArgs e)
         {
-            //throw new NotImplementedException();
             int index = tabMess.CurrentRow.Index;
             int id = thesaurus.columnIndex(tabMess.Columns, "id");
             int mess_direction = thesaurus.columnIndex(tabMess.Columns, "mess_direction");
             tabMess.Rows[index].Selected = true;
-            //swiftMess_str msg = new swiftMess_str(tabMess.Rows[index].Cells[0].Value.ToString(), tabMess.Rows[index].Cells[1].Value.ToString(), tabMess.Rows[index].Cells[2].Value.ToString(), tabMess.Rows[index].Cells[3].Value.ToString(), tabMess.Rows[index].Cells[4].Value.ToString(), tabMess.Rows[index].Cells[5].Value.ToString(), tabMess.Rows[index].Cells[6].Value.ToString(), tabMess.Rows[index].Cells[7].Value.ToString(), tabMess.Rows[index].Cells[8].Value.ToString(), tabMess.Rows[index].Cells[9].Value.ToString(), tabMess.Rows[index].Cells[10].Value.ToString(), tabMess.Rows[index].Cells[11].Value.ToString(), tabMess.Rows[index].Cells[12].Value.ToString(), tabMess.Rows[index].Cells[13].Value.ToString(), tabMess.Rows[index].Cells[14].Value.ToString(), tabMess.Rows[index].Cells[15].Value.ToString(), tabMess.Rows[index].Cells[16].Value.ToString(), tabMess.Rows[index].Cells[17].Value.ToString(), tabMess.Rows[index].Cells[18].Value.ToString(), tabMess.Rows[index].Cells[19].Value.ToString(), tabMess.Rows[index].Cells[20].Value.ToString(), tabMess.Rows[index].Cells[21].Value.ToString(), tabMess.Rows[index].Cells[22].Value.ToString(), tabMess.Rows[index].Cells[23].Value.ToString(), tabMess.Rows[index].Cells[24].Value.ToString(), tabMess.Rows[index].Cells[25].Value.ToString(), tabMess.Rows[index].Cells[26].Value.ToString());
             editProps editPropWindow = new editProps(this, index, tabMess.CurrentCell.ColumnIndex);
             editPropWindow.Show();
         }
-
-        //private void TabMess_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        //{
-        //    if (e.Button == MouseButtons.Right)
-        //    {
-        //        tabMess.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = true;
-        //        //tabMess.CellContextMenuStripNeeded();
-        //    }
-        //}
-
-        //private void TabMess_CellContextMenuStripNeeded(object sender, DataGridViewCellContextMenuStripNeededEventArgs e)
-        //{
-        //    if (e.ColumnIndex != -1 && e.RowIndex != -1)
-        //    {
-        //        contextMenuStripJournal.Show(Cursor.Position);
-        //    }
-        //}
 
         private void printMenuItem_Click(object sender, EventArgs e)
         {
@@ -301,32 +273,7 @@ namespace swift
        private void JournalForm_Load(object sender, EventArgs e)
         {
             InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new System.Globalization.CultureInfo("en-US"));
-            //tabMess.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             show("");
-            /*List<swiftMess_str> allMess = new List<swiftMess_str>();
-           allMess = getDataJournal("");
-           //int indColumn = 0;
-
-           for(int i=0; i<columnsName.Length; i++)
-           {
-               int indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", columnsName[i].Split(' ')[1]));
-               tabMess.Columns.Add(indColumn.ToString(), columnsName[i]);
-           }
-
-           for (int i = 0; i < tabMess.Columns.Count; i++)
-           {
-               string columnName = tabMess.Columns[i].HeaderCell.FormattedValue.ToString().Split(' ')[1];
-               //MessageBox.Show(columnName);
-               string columnWidth = reestr.getParam("\\columnWidth", columnName);
-               //MessageBox.Show(columnWidth);
-               tabMess.Columns[i].Width = Convert.ToInt32(columnWidth);
-               tabMess.Columns[i].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-               tabMess.Columns[i].ReadOnly = true;
-           }
-           tabMess.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;   
-           tabMess.Columns[6].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;   
-           //MessageBox.Show(tabMess.Columns[0].HeaderCell.FormattedValue.ToString());
-           showRows(allMess);*/
         }
 
         private void export_Click(object sender, EventArgs e)
@@ -336,7 +283,6 @@ namespace swift
             dynamic workbook = excel.Workbooks.Add();
             dynamic worksheet = workbook.ActiveSheet; //.Worksheets.Add();
             worksheet.Application.Worksheets.Add(); //добавить лист
-            //worksheet.Application.Worksheets.Add(); 
             int totalSheets = worksheet.Application.ActiveWorkbook.Sheets.Count;
             (worksheet.Application.ActiveSheet).Move(worksheet.Application.Worksheets[totalSheets]);
             (worksheet.Application.ActiveWorkbook.Sheets[1]).Activate();
@@ -370,13 +316,10 @@ namespace swift
         private void reshow_Click(object sender, EventArgs e)
         {
             show(tb_condition.Text);
-            //reshouBtbClick();
         }
         private List<swiftMess_str> getDataJournal(string condition)
         {
             List<swiftMess_str> allMess = new List<swiftMess_str>();
-            //condition = dateTime_mess
-            //DateTime.Now.GetDateTimeFormats()[0]; WHERE ((mess.[dateTime_mess])>#6/29/2017#)
             DateTime firstDay = (DateTime.Now.AddDays(-6));
             string sql = @"SELECT * FROM mess WHERE ((mess.[dateTime_mess])>#" + firstDay.Month + "/" + firstDay.Day + "/" + firstDay.Year + "#)";
             if (condition != "")
@@ -406,107 +349,8 @@ namespace swift
             return allMess;
         }
 
-       /* private void showRows(List<swiftMess_str> allMess)
-        {
-
-            l_strAll.Text = allMess.Count.ToString();
-            if (allMess.Count > 0)
-            {
-                tabMess.Invoke((MethodInvoker)(() => tabMess.Rows.Add(allMess.Count + 1)));
-                for (int i = 0; i < allMess.Count; i++)
-                {
-                    int indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "transactionReferenceNumber_20"));
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[0].Value = s), allMess[i].transactionReferenceNumber_20);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "valueDate_30V"));
-                    //tabMess.Rows[i].Cells[0].Value = allMess[i].transactionReferenceNumber_20;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[1].Value = s), allMess[i].valueDate_30V);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "date_32"));
-                    //tabMess.Rows[i].Cells[1].Value = allMess[i].valueDate_30V;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[2].Value = s), allMess[i].date_32);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "currency_32"));
-                    //tabMess.Rows[i].Cells[2].Value = allMess[i].date_32;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[3].Value = s), allMess[i].currency_32);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "amount_32"));
-                    //tabMess.Rows[i].Cells[3].Value = allMess[i].currency_32;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[4].Value = s), allMess[i].amount_32);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //tabMess.Rows[i].Cells[4].Value = allMess[i].amount_32;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[5].Value = s), allMess[i].currency_33B);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[5].Value = allMess[i].currency_33B;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[6].Value = s), allMess[i].amount_33B);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[6].Value = allMess[i].amount_33B;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[7].Value = s), allMess[i].orderingCustomer_50);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[7].Value = allMess[i].orderingCustomer_50;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[8].Value = s), allMess[i].orderingInstitution_52);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[8].Value = allMess[i].orderingInstitution_52;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[9].Value = s), allMess[i].senderCorrespondent_53);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[9].Value = allMess[i].senderCorrespondent_53;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[10].Value = s), allMess[i].receiverCorrespondent_54);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[10].Value = allMess[i].receiverCorrespondent_54;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[11].Value = s), allMess[i].intermediaryInstitution_56);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[11].Value = allMess[i].intermediaryInstitution_56;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[12].Value = s), allMess[i].accountWithInstitution_57);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[12].Value = allMess[i].accountWithInstitution_57;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[13].Value = s), allMess[i].beneficiaryInstitution_58);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[13].Value = allMess[i].beneficiaryInstitution_58;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[14].Value = s), allMess[i].beneficiaryCustomer_59);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[14].Value = allMess[i].beneficiaryCustomer_59;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[15].Value = s), allMess[i].processingCharacteristic);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[15].Value = allMess[i].processingCharacteristic;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[16].Value = s), allMess[i].mess_direction);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[16].Value = allMess[i].mess_direction;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[17].Value = s), allMess[i].comment);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[17].Value = allMess[i].comment;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[18].Value = s), allMess[i].dateTime_mess);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[18].Value = allMess[i].dateTime_mess;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[19].Value = s), allMess[i].referenceMess);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[19].Value = allMess[i].referenceMess;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[20].Value = s), allMess[i].fin);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[20].Value = allMess[i].fin;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[21].Value = s), allMess[i].swiftNumberBankKontragent);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[21].Value = allMess[i].swiftNumberBankKontragent;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[22].Value = s), allMess[i].naimBankKontragent);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[22].Value = allMess[i].naimBankKontragent;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[23].Value = s), allMess[i].thread);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[23].Value = allMess[i].thread;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[24].Value = s), allMess[i].fileName);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[24].Value = allMess[i].fileName;
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[25].Value = s), allMess[i].direction);
-                    indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", "direction"));
-                    //                    tabMess.Rows[i].Cells[25].Value = allMess[i].direction;
-
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[i].Cells[26].Value = s), allMess[i].id);
-                    //                    tabMess.Rows[i].Cells[26].Value = allMess[i].id;
-                    //                    i++;
-                }
-                paintCells();
-                tabMess.Sort(tabMess.Columns[26], ListSortDirection.Descending);
-                //columnIndex();
-            }
-        }*/
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            //tabMess.Columns.Add
         }
 
         private void btn_condition_Click(object sender, EventArgs e)
@@ -517,31 +361,21 @@ namespace swift
         public void reshouBtbClick(bool sss=false)
         {
             tabMess.Invoke(new rowsClear(() => tabMess.Rows.Clear()));
-                /*List<swiftMess_str> newData = new List<swiftMess_str>();
-                newData = getDataJournal(tb_condition.Text);*/
                 this.show(tb_condition.Text);
             if (this.repet)
             {
                 repet = false;
-                //MessageBox.Show("Test");
-                //reshouBtbClick();
-                //reshow.PerformClick();
-                //reshow.Invoke((MethodInvoker)(() => reshow.PerformClick()));
-
             }
             repet = true;
         }
         private void paintCells()
         {
-            //tabMess.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             for(int j = 0; j < tabMess.Columns.Count; j++)
             {
                 string columnAlignment = reestr.getParam("\\columnAlignment", tabMess.Columns[j].HeaderText.Split(' ')[1]);
-                //var Alignment;
                 switch (columnAlignment){
                     case "r":
                         tabMess.Columns[j].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight; 
-                        //Alignment = DataGridViewContentAlignment.MiddleRight;//64
                         break;
                     case "l":
                         tabMess.Columns[j].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;//16
@@ -570,7 +404,6 @@ namespace swift
                         tabMess.Rows[j].Cells[cellNum].Style.Font = new Font(tabMess.DefaultCellStyle.Font, FontStyle.Bold);
                     }
                 }
-                    //dataGridView1.Rows[1].Cells[1].Style.Font = new Font(dataGridView1.DefaultCellStyle.Font, FontStyle.Bold);
             }
         }
 
@@ -578,16 +411,5 @@ namespace swift
         {
             tabMess.Sort(new RowComparer(SortOrder.Descending, ""));
         }
-        //private void columnIndex()
-        //{
-        //    for (int i = 0; i < tabMess.Columns.Count; i++)
-        //    {
-        //        string columnName = tabMess.Columns[i].HeaderCell.FormattedValue.ToString().Split(' ')[1];
-        //        //MessageBox.Show(columnName);
-        //        string columnInd = reestr.getParam("\\columnIndex", columnName);
-        //        //MessageBox.Show(columnWidth);
-        //        tabMess.Columns[i].DisplayIndex = Convert.ToInt32(columnInd);
-        //    }
-        //}
     }
 }
