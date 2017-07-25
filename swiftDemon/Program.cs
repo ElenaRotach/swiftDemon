@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using swift;
+using System.Media;
 
 namespace swiftDemon
 {
@@ -303,6 +304,7 @@ namespace swiftDemon
                     }
                     if (outMess)
                     {
+                        SystemSounds.Beep.Play();
                         MessageBox.Show(mess, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
                     }
                     //пока просто переносим обработанные, без архивирования, архивирование логично запускать для предыдущего дня при утреннем старте
