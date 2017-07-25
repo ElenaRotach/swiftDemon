@@ -232,17 +232,20 @@ namespace _Visual_C_Sharp__Сортировка_DataGrid
         {
             l_strAll.Text = allMess.Count.ToString();
             int index = 0;
-            tabMess.Invoke((MethodInvoker)(() => tabMess.Rows.Add(allMess.Count - 1)));
-            foreach (var line in allMess)
+            if (allMess.Count > 0)
             {
-               
-                Dictionary<string, string> propertys = getObjProperty(line);
-                foreach(var prop in propertys)
+                tabMess.Invoke((MethodInvoker)(() => tabMess.Rows.Add(allMess.Count)));
+                foreach (var line in allMess)
                 {
-                    int indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", prop.Key));
-                    tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[index].Cells[indColumn].Value = s), prop.Value); 
+
+                    Dictionary<string, string> propertys = getObjProperty(line);
+                    foreach (var prop in propertys)
+                    {
+                        int indColumn = Convert.ToInt32(reestr.getParam("\\columnIndex", prop.Key));
+                        tabMess.Invoke(new rowsAdd((s) => tabMess.Rows[index].Cells[indColumn].Value = s), prop.Value);
+                    }
+                    index++;
                 }
-                index++;
             }
 
         }

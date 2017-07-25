@@ -65,7 +65,7 @@ namespace swiftDemon
                 TrayIcon.Visible = true;
                 // обработчик событий по таймеру
                 TrayTimer = new System.Timers.Timer();
-                TrayTimer.Interval = 290000;
+                TrayTimer.Interval = 20000;//290000;
                 TrayTimer.Enabled = true;
                 TrayTimer.Elapsed += new System.Timers.ElapsedEventHandler(MainFunction); // основная функция консоли
                                                                                           // запуск обработчика событий
@@ -289,10 +289,17 @@ namespace swiftDemon
                     string mess = "Получены новые файлы: \n";
                     for (int z = 0; z < files.Count; z++)
                     {
-                        swiftMess messObj = new swiftMess(File.ReadAllText(files[z.ToString()]), files[z.ToString()], direction);
-                        logs.outStr("Новый файл " + files[z.ToString()] + "\t" + File.GetLastAccessTime(files[z.ToString()]), false, messObj);
-                        string[] filName = files[z.ToString()].Split('\\');
-                        mess += filName[filName.Length - 1] + '\n';
+                        try
+                        {
+                            swiftMess messObj = new swiftMess(File.ReadAllText(files[z.ToString()]), files[z.ToString()], direction);
+                            logs.outStr("Новый файл " + files[z.ToString()] + "\t" + File.GetLastAccessTime(files[z.ToString()]), false, messObj);
+                            string[] filName = files[z.ToString()].Split('\\');
+                            mess += filName[filName.Length - 1] + '\n';
+                        }
+                        catch(ApplicationException e) {
+                            logs.logEntry(e.Message);
+                            logs.logEntry(e.StackTrace);
+                        }
                     }
                     if (outMess)
                     {

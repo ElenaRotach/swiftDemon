@@ -86,7 +86,10 @@ namespace swiftDemon
                     {
                         File.Move(obj.fileName, path + pathName + "\\" + Path.GetFileName(obj.fileName));
                     }
-                    catch { }
+                    catch(ApplicationException e) {
+                        logs.logEntry(e.Message);
+                        logs.logEntry(e.StackTrace);
+                    }
                 }
                 
             }

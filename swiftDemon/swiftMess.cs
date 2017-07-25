@@ -51,45 +51,64 @@ namespace swiftDemon
                 {
                     //получаем fin
                     fin = strMess.Substring(ind + 4, 3);
-                    parse(strMess);
+                    
+                }
+                if (this.direction == "OUT")
+                {
+                    parse(strMess, true);
+                }else
+                {
+                    parse(strMess, false);
                 }
             }
         }
-        public swiftMess(string strMess, string fn)
+        public swiftMess(string strMess, string fn,bool outMess)
         {
             if (strMess.Length > 0)
             {
                 fileName = fn;
                 thread = strMess.Replace("'", "\'\'").Replace(@"\", @"\\");
-                parse(strMess);
+                parse(strMess, outMess);
             }
         }
-        private void parse(string str)
+        private void parse(string str, bool outMess)
         {
             //thread = @str;
             str = str.Replace("\n", "").Replace("\t", "");
+            char[] charsToTrim = { ' ' };
             String[] workArr = str.Split('\r');
             dateTime_mess = DateTime.Parse((workArr[3].Split(' ')[0]).Replace("-", " "));
             referenceMess = workArr[3].Split(' ')[12].Replace("MPALLout-", "").Replace("MpALLack-", "");
             if(referenceMess=="")
             {
                 referenceMess = workArr[3].Split(' ')[16].Replace("MpALLack-", "");
-                referenceMess = referenceMess.Replace("'", "''");
+                referenceMess = referenceMess.Replace("'", "''").Trim(charsToTrim);
             }
             for (int ind = 0; ind < workArr.Length; ind++)
             {
-                if (workArr[ind].IndexOf("Sender   : ") != -1)
+                if (outMess)
                 {
-                    swiftNumberBankKontragent = workArr[ind].Split(':')[1];
-                    swiftNumberBankKontragent = swiftNumberBankKontragent.Replace("'", "''");
-                    naimBankKontragent = workArr[ind + 1] + " " + workArr[ind + 2];
-                    naimBankKontragent = naimBankKontragent.Replace("'", "''");
+                    if (workArr[ind].IndexOf("Sender   : ") != -1)
+                    {
+                        swiftNumberBankKontragent = workArr[ind].Split(':')[1];
+                        swiftNumberBankKontragent = swiftNumberBankKontragent.Replace("'", "''").Trim(charsToTrim);
+                        naimBankKontragent = workArr[ind + 1] + " " + workArr[ind + 2];
+                        naimBankKontragent = naimBankKontragent.Replace("'", "''").Trim(charsToTrim);
+                    }
+                }else
+                {
+                    if (workArr[ind].IndexOf("Receiver :") != -1)
+                    {
+                        swiftNumberBankKontragent = workArr[ind].Split(':')[1];
+                        swiftNumberBankKontragent = swiftNumberBankKontragent.Replace("'", "''").Trim(charsToTrim);
+                        naimBankKontragent = workArr[ind + 1] + " " + workArr[ind + 2];
+                        naimBankKontragent = naimBankKontragent.Replace("'", "''").Trim(charsToTrim);
+                    }
                 }
-
                 if (workArr[ind].IndexOf("20: Sender's Reference") != -1 || workArr[ind].IndexOf("20: Transaction Reference Number") != -1)
                 {
                     transactionReferenceNumber_20 = workArr[ind + 1];
-                    transactionReferenceNumber_20 = transactionReferenceNumber_20.Replace("'", "''");
+                    transactionReferenceNumber_20 = transactionReferenceNumber_20.Replace("'", "''").Trim(charsToTrim);
                 }
                 if (workArr[ind].IndexOf("30V: Value Date") != -1)
                 {
@@ -103,61 +122,61 @@ namespace swiftDemon
                         /*170609CNY31724,33*/
                         string workStr = workArr[ind].Replace(" ", "");
                         date_32 = new DateTime(Convert.ToInt32(workStr.Substring(5, 2)), Convert.ToInt32(workStr.Substring(7, 2)), Convert.ToInt32(workStr.Substring(9,2)));
-                        currency_32 = new string(workStr.Substring(5, workStr.Length-5).Where(Char.IsLetter).ToArray());
+                        currency_32 = new string(workStr.Substring(5, workStr.Length-5).Where(Char.IsLetter).ToArray()).Trim(charsToTrim);
                         amount_32 = Convert.ToDouble(workStr.Substring(workStr.IndexOf(currency_32)+currency_32.Length));
                     }
                     else
                     {
                         string[] dateStr = (workArr[ind + 1].Split(':')[1]).Split(' ');
                         date_32 = new DateTime(Convert.ToInt32(dateStr[3]), thesaurus.mount(dateStr[2]), Convert.ToInt32(dateStr[1]));
-                        currency_32 = workArr[ind + 2].Split(':')[1].Split('(')[0];
+                        currency_32 = workArr[ind + 2].Split(':')[1].Split('(')[0].Trim(charsToTrim);
                         amount_32 = Convert.ToDouble(workArr[ind + 3].Split('#')[1]);
                     }
                 }
 
                 if (workArr[ind].IndexOf("32B:") != -1)
                 {
-                    currency_32 = workArr[ind + 1].Split(':')[1].Split('(')[0];
+                    currency_32 = workArr[ind + 1].Split(':')[1].Split('(')[0].Trim(charsToTrim);
                     amount_32 = Convert.ToDouble(workArr[ind + 2].Split('#')[1]);
                 }
                 if (workArr[ind].IndexOf("33B: Currency, Amount") != -1)
                 {
-                    currency_33B = workArr[ind + 1].Split(':')[1].Split('(')[0];
+                    currency_33B = workArr[ind + 1].Split(':')[1].Split('(')[0].Trim(charsToTrim);
                     amount_33B = Convert.ToDouble(workArr[ind + 2].Split('#')[1]);
                 }
                 if (workArr[ind].IndexOf("50K:") != -1)
                 {
                     orderingCustomer_50 = workArr[ind + 1] + ' ' + workArr[ind + 2];
-                    orderingCustomer_50 = orderingCustomer_50.Replace("'", "''");
+                    orderingCustomer_50 = orderingCustomer_50.Replace("'", "''").Trim(charsToTrim);
                 }
                 if (workArr[ind].IndexOf("52D:") != -1 || workArr[ind].IndexOf("52A:") != -1)
                 {
                     this.orderingInstitution_52 = workArr[ind + 1];
-                    orderingInstitution_52 = orderingInstitution_52.Replace("'", "''");
+                    orderingInstitution_52 = orderingInstitution_52.Replace("'", "''").Trim(charsToTrim);
                 }
                 if (workArr[ind].IndexOf("53B:") != -1)
                 {
                     senderCorrespondent_53 = workArr[ind + 1];
-                    senderCorrespondent_53 = senderCorrespondent_53.Replace("'", "''");
+                    senderCorrespondent_53 = senderCorrespondent_53.Replace("'", "''").Trim(charsToTrim);
                 }
                 if (workArr[ind].IndexOf("57A:") != -1 || workArr[ind].IndexOf("57D:") != -1)
                 {
                     if (fin != "320")
                     {
                         accountWithInstitution_57 += workArr[ind + 1] + ' ' + workArr[ind + 2] + ' ' + workArr[ind + 3];
-                        accountWithInstitution_57 = accountWithInstitution_57.Replace("'", "''");
+                        accountWithInstitution_57 = accountWithInstitution_57.Replace("'", "''").Trim(charsToTrim);
                     }
                 }
                 if (workArr[ind].IndexOf("58A:") != -1)
                 {
                     beneficiaryInstitution_58 = workArr[ind + 1] + ' ' + workArr[ind + 2] + ' ' + workArr[ind + 3];
-                    beneficiaryInstitution_58 = beneficiaryInstitution_58.Replace("'", "''");
+                    beneficiaryInstitution_58 = beneficiaryInstitution_58.Replace("'", "''").Trim(charsToTrim);
                 }
                 if (workArr[ind].IndexOf("59: Beneficiary Customer-Name & Addr") != -1)
                 {
                     //MessageBox.Show(ind.ToString());
                     beneficiaryCustomer_59 = workArr[ind + 1] + ' ' + workArr[ind + 2];
-                    beneficiaryCustomer_59 = beneficiaryCustomer_59.Replace("'", "''");
+                    beneficiaryCustomer_59 = beneficiaryCustomer_59.Replace("'", "''").Trim(charsToTrim);
                 }
             }
         }
