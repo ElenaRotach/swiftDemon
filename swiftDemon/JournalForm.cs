@@ -64,7 +64,7 @@ namespace swift
                     }
                 }
                 //forDate
-                if(type== "date")
+                if(type== "date" || head== "00 dateTime_mess")
                 {
                     DateTime chx = new DateTime();
                     DateTime chy = new DateTime();
@@ -76,8 +76,8 @@ namespace swift
                     {
                         chy = Convert.ToDateTime(DataGridViewRow2.Cells[indColumnSort].Value.ToString());
                     }
-                    
-                    CompareResult = (chx - chy).Milliseconds;//0;
+
+                    CompareResult = chx.CompareTo(chy);
                     if (chx > chy) { CompareResult = 1; }
                     if (CompareResult == 0)
                     {

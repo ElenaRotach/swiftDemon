@@ -70,10 +70,7 @@ namespace swiftDemon
                     DateTime.TryParseExact(workDate.ToString(), pattern, null, DateTimeStyles.None, out parsedDate);
                     string newDate = string.Format("{0:d}", parsedDate);
                     string pathName = newDate;
-                    if (!Directory.Exists(path + pathName))
-                    {
-                        Directory.CreateDirectory(path + pathName);
-                    }
+
                     if (obj.direction == "OUT")
                     {
                         path = setting.outArhiv;
@@ -81,6 +78,10 @@ namespace swiftDemon
                     else
                     {
                         path = setting.inArhiv;
+                    }
+                    if (!Directory.Exists(path + pathName))
+                    {
+                        Directory.CreateDirectory(path + pathName);
                     }
                     try
                     {

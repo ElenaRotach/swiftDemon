@@ -304,7 +304,10 @@ namespace swiftDemon
                     }
                     if (outMess)
                     {
-                        SystemSounds.Asterisk.Play();
+//                        SystemSounds.Asterisk.Play();
+
+                        SoundPlayer player = new SoundPlayer(Environment.CurrentDirectory + "\\sound\\alert-tone.wav");//В скобках имя файла в формате wav
+                        player.Play();
                         MessageBox.Show(mess, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
                     }
                     //пока просто переносим обработанные, без архивирования, архивирование логично запускать для предыдущего дня при утреннем старте
