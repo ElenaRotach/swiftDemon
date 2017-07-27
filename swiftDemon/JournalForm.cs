@@ -44,7 +44,7 @@ namespace swift
                 int CompareResult = 0;
                 //forInt
                 string type = thesaurus.getType(head.Split(' ')[1]);
-                if(type== "double" || type== "int")
+                if (type == "double" || type == "int")
                 {
                     double chx = 0;
                     double chy = 0;
@@ -64,7 +64,7 @@ namespace swift
                     }
                 }
                 //forDate
-                if(type== "date" || head== "00 dateTime_mess")
+                else if (type == "date" || head == "00 dateTime_mess")
                 {
                     DateTime chx = new DateTime();
                     DateTime chy = new DateTime();
@@ -79,6 +79,13 @@ namespace swift
 
                     CompareResult = chx.CompareTo(chy);
                     if (chx > chy) { CompareResult = 1; }
+                    if (CompareResult == 0)
+                    {
+                        CompareResult = Convert.ToInt32(DataGridViewRow1.Cells[indColumnId].Value.ToString()) - Convert.ToInt32(DataGridViewRow2.Cells[indColumnId].Value.ToString());
+                    }
+                }
+                else {
+                    CompareResult = DataGridViewRow1.Cells[indColumnSort].Value.ToString().CompareTo(DataGridViewRow2.Cells[indColumnSort].Value.ToString());
                     if (CompareResult == 0)
                     {
                         CompareResult = Convert.ToInt32(DataGridViewRow1.Cells[indColumnId].Value.ToString()) - Convert.ToInt32(DataGridViewRow2.Cells[indColumnId].Value.ToString());
@@ -355,9 +362,16 @@ namespace swift
 
         private void btn_condition_Click(object sender, EventArgs e)
         {
-            condition conditionForm = new condition(this, "");
+            condition conditionForm = new condition(this);
+            conditionForm.FilterAdded += ConditionForm_FilterAdded;
             conditionForm.Show();
         }
+
+        private void ConditionForm_FilterAdded(string newTbCondition)
+        {
+            tb_condition.Text += newTbCondition;
+        }
+
         public void reshouBtbClick(bool sss=false)
         {
             tabMess.Invoke(new rowsClear(() => tabMess.Rows.Clear()));

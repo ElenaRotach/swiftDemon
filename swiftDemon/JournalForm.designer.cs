@@ -56,7 +56,7 @@
             this.export.Name = "export";
             this.export.Size = new System.Drawing.Size(75, 23);
             this.export.TabIndex = 1;
-            this.export.Text = "export";
+            this.export.Text = "выгрузить";
             this.export.UseVisualStyleBackColor = true;
             this.export.Click += new System.EventHandler(this.export_Click);
             // 
@@ -66,7 +66,7 @@
             this.reshow.Name = "reshow";
             this.reshow.Size = new System.Drawing.Size(75, 23);
             this.reshow.TabIndex = 2;
-            this.reshow.Text = "reshow";
+            this.reshow.Text = "обновить";
             this.reshow.UseVisualStyleBackColor = true;
             this.reshow.Click += new System.EventHandler(this.reshow_Click);
             // 

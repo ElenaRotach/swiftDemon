@@ -42,6 +42,7 @@
             this.btn_exit = new System.Windows.Forms.Button();
             this.lb_outCondition_test = new System.Windows.Forms.Label();
             this.tb_outCondition = new System.Windows.Forms.TextBox();
+            this.btn_reflex = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -178,11 +179,22 @@
             this.tb_outCondition.Size = new System.Drawing.Size(731, 49);
             this.tb_outCondition.TabIndex = 14;
             // 
+            // btn_reflex
+            // 
+            this.btn_reflex.Location = new System.Drawing.Point(12, 113);
+            this.btn_reflex.Name = "btn_reflex";
+            this.btn_reflex.Size = new System.Drawing.Size(134, 23);
+            this.btn_reflex.TabIndex = 15;
+            this.btn_reflex.Text = "добавить";
+            this.btn_reflex.UseVisualStyleBackColor = true;
+            this.btn_reflex.Click += new System.EventHandler(this.btn_reflex_Click);
+            // 
             // condition
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(955, 211);
+            this.Controls.Add(this.btn_reflex);
             this.Controls.Add(this.tb_outCondition);
             this.Controls.Add(this.lb_outCondition_test);
             this.Controls.Add(this.btn_exit);
@@ -221,5 +233,6 @@
         private System.Windows.Forms.Button btn_exit;
         private System.Windows.Forms.Label lb_outCondition_test;
         private System.Windows.Forms.TextBox tb_outCondition;
+        private System.Windows.Forms.Button btn_reflex;
     }
 }

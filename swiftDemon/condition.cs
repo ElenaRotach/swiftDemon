@@ -12,24 +12,49 @@ namespace swiftDemon
 {
     public partial class condition : Form
     {
-        public JournalForm parent;
-        public string join;
-        private string outCondition;
-        public string childOutCondition = "";
-        public condition(JournalForm parent, string join)
+        private Form parent;
+        //private TextBox tb_parent;
+        //public string join;
+        //private string outCondition;
+        //public string childOutCondition = "";
+        //private condition parentConditionForm;
+        public delegate void NewFilterAdd(string newTbCondition);
+        public event NewFilterAdd FilterAdded;
+        public condition(Form parent)
         {
             this.parent = parent;
-            this.join = join;
+            //this.join = join;
             List<string> tabNameSource = new List<string>(); //new Array(parent.tabMess.ColumnCount);
-            for (int i = 0; i < parent.tabMess.ColumnCount; i++)
+            /*for (int i = 0; i < parent.tabMess.ColumnCount; i++)
             {
                 tabNameSource.Add(parent.tabMess.Columns[i].HeaderCell.FormattedValue.ToString().Split(' ')[1]);
+            }*/
+            Dictionary<int, string> tabmessHeders = JournalForm.getColumns();
+            for (int i = 0; i < tabmessHeders.Count; i++)
+            {
+                tabNameSource.Add(tabmessHeders[i].ToString());
             }
             InitializeComponent();
             cb_columnsName.DataSource = tabNameSource;
             cb_conditions.DataSource = thesaurus.conditions;
+            this.ControlBox = false;
         }
 
+        //private condition(JournalForm parent, string join, condition parentConditionForm)
+        //{
+        //    this.parentConditionForm = parentConditionForm;
+        //    this.parent = parent;
+        //    this.join = join;
+        //    List<string> tabNameSource = new List<string>(); //new Array(parent.tabMess.ColumnCount);
+        //    for (int i = 0; i < parent.tabMess.ColumnCount; i++)
+        //    {
+        //        tabNameSource.Add(parent.tabMess.Columns[i].HeaderCell.FormattedValue.ToString().Split(' ')[1]);
+        //    }
+        //    InitializeComponent();
+        //    cb_columnsName.DataSource = tabNameSource;
+        //    cb_conditions.DataSource = thesaurus.conditions;
+        //    this.ControlBox = false;
+        //}
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -92,11 +117,29 @@ namespace swiftDemon
 
         private void btn_exit_Click(object sender, EventArgs e)
         {
+            if (parent is JournalForm)
+            {
+               if( ((JournalForm)parent).tb_condition.Text != "")
+                {
+                    tb_outCondition.Text = ' ' + radioVoid() + " (" + tb_outCondition.Text + ')';
+                }
+            }
+            else if (parent is condition)
+            {
+               if( ((condition)parent).tb_outCondition.Text != "")
+                {
+                    tb_outCondition.Text = ' ' + radioVoid() + " (" + tb_outCondition.Text + ')';
+                }
+            }
+            if (FilterAdded != null)
+                FilterAdded(tb_outCondition.Text);
             this.Close();
         }
 
         public bool validSaveCondition(out string msg)
         {
+            //if(childOutCondition!="") { childOutCondition = '(' + childOutCondition + ')'; }
+            string outCondition = "";
             bool rez = true;
             msg = "";
             string type = thesaurus.getType(cb_columnsName.SelectedValue.ToString());
@@ -110,11 +153,11 @@ namespace swiftDemon
                     }
                     if (cb_conditions.Text == "LIKE")
                     {
-                        outCondition = '(' + "[" + cb_columnsName.SelectedValue.ToString() + "] " + cb_conditions.Text + " '%" + ((TextBox)Controls["tb_value"]).Text + "%'" + childOutCondition + ')';
+                        outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + " '%" + ((TextBox)Controls["tb_value"]).Text + "%'";// + childOutCondition;
                     }
                     else
                     {
-                        outCondition = '(' + "[" + cb_columnsName.SelectedValue.ToString() + "] " + cb_conditions.Text + " '" + ((TextBox)Controls["tb_value"]).Text + "'" + childOutCondition + ')';
+                        outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + " '" + ((TextBox)Controls["tb_value"]).Text + "'";// + childOutCondition;
                     }
                     break;
                 case "int":
@@ -133,7 +176,7 @@ namespace swiftDemon
                         msg = "Сравнение производится только с целыми положительными числами";
                         rez = false;
                     }
-                    outCondition = '(' + cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((TextBox)Controls["tb_value"]).Text + childOutCondition + ')';
+                    outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((TextBox)Controls["tb_value"]).Text;// + childOutCondition;
                     break;
                 case "double":
                     if (cb_conditions.Text == "LIKE")
@@ -146,7 +189,7 @@ namespace swiftDemon
                         msg = "Не заполнено значение для сравнения";
                         rez = false;
                     }
-                    outCondition = '(' + cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((TextBox)Controls["tb_value"]).Text + childOutCondition + ')';
+                    outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((TextBox)Controls["tb_value"]).Text;// + childOutCondition;
                     double strDbl = 0.00;
                     string test = ((TextBox)Controls["tb_value"]).Text;
                     if (!Double.TryParse(test.Replace(".", ","), out strDbl))
@@ -154,7 +197,7 @@ namespace swiftDemon
                         msg = "Сравнение производится только с числами двойной точности";
                         rez = false;
                     }
-                    outCondition = '(' + cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((TextBox)Controls["tb_value"]).Text + childOutCondition + ')';
+                    outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((TextBox)Controls["tb_value"]).Text;// + childOutCondition;
                     break;
                 case "date":
                     //#4/11/2017#
@@ -175,8 +218,8 @@ namespace swiftDemon
                         msg = "Сравнение производится только с датами";
                         rez = false;
                     }
-                    
-                    outCondition = '(' + cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + " #" + strDate.Month + "/" + strDate.Day + "/" + strDate.Year + "#" + childOutCondition + ')';
+
+                    outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + " #" + strDate.Month + "/" + strDate.Day + "/" + strDate.Year + "#";// + childOutCondition;
                     break;
                 case "bool":
                     if (cb_conditions.Text == ">" || cb_conditions.Text == ">=" || cb_conditions.Text == "<" || cb_conditions.Text == "<=" || cb_conditions.Text == "LIKE")
@@ -184,22 +227,23 @@ namespace swiftDemon
                         msg = "Для логического типа данных доступны операции =, <>";
                         rez = false;
                     }
-                    outCondition = '(' + cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((CheckBox)Controls["tb_value"]).Checked.ToString() + childOutCondition + ')';
+                    outCondition = cb_columnsName.SelectedValue.ToString() + ' ' + cb_conditions.Text + ' ' + ((CheckBox)Controls["tb_value"]).Checked.ToString();// + childOutCondition;
                     break;
             }
-            if(join == "")
-            {
+            //if(join == "")
+            //{
                 if (tb_outCondition.Text != "")
                 {
-                    join = radioVoid();
-                    outCondition = tb_outCondition.Text + " " + join + outCondition;
+                    string join = radioVoid();
+                    tb_outCondition.Text = tb_outCondition.Text + " " + join + ' ' + outCondition;
+                    //outCondition = "";
                 }
                 //outCondition = " " + join + outCondition;
-            }
-            else
-            {
-                outCondition = tb_outCondition.Text + " " + join + outCondition;
-            }
+            //}
+                else
+                {
+                    tb_outCondition.Text = outCondition;// tb_outCondition.Text + ' ' + join + ' ' + outCondition;
+                }
             return rez;
         }
 
@@ -208,8 +252,15 @@ namespace swiftDemon
             string msg;
             if (validSaveCondition(out msg)) {
                 //this.lb_outCondition.
-                tb_outCondition.Text = outCondition;
-                parent.tb_condition.Text = outCondition;
+                //tb_outCondition.Text = outCondition;
+                //if (parentConditionForm != null)
+                //{
+                //    parentConditionForm.childOutCondition = tb_outCondition.Text;
+                //}
+                //else
+                //{
+                   // tb_parent.Text = tb_outCondition.Text;
+                //}
             }
             else
             {
@@ -220,7 +271,7 @@ namespace swiftDemon
         private void btn_addFilter_Click(object sender, EventArgs e)
         {
             string join = radioVoid();
-            condition addFilter = new condition(parent, join);
+            condition addFilter = new condition(this);
             addFilter.Show();
         }
         private string radioVoid()
@@ -235,6 +286,12 @@ namespace swiftDemon
             }
             //MessageBox.Show(((RadioButton)Controls["rb_OR"]).Checked.ToString());
             //((GroupBox)Controls["groupBox1"])
+        }
+
+        private void btn_reflex_Click(object sender, EventArgs e)
+        {
+            //condition conditionForm = new condition(parent, this.radioVoid(), this);
+            //conditionForm.Show();
         }
     }
 }
