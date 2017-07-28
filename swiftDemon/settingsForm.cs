@@ -186,6 +186,20 @@ namespace swiftDemon
             param.outMess = tb_outMess.Text;
             //ssageBox.Show("Test");
         }
+
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(settingsForm));
+            this.SuspendLayout();
+            // 
+            // settingsForm
+            // 
+            this.ClientSize = new System.Drawing.Size(292, 273);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "settingsForm";
+            this.ResumeLayout(false);
+
+        }
     }
 }
 

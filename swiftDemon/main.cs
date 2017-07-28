@@ -1,4 +1,5 @@
-﻿using System;
+﻿using swiftDemon;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -79,6 +80,12 @@ namespace swift
         {
             swiftDemon.settingsColumnsJournal settingsColumnsJournal = new swiftDemon.settingsColumnsJournal();
             settingsColumnsJournal.Show();
+        }
+
+        private void звукToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            sound soundForm = new sound();
+            soundForm.Show();
         }
     }
 }

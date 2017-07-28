@@ -99,6 +99,12 @@
     <Compile Include="settingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="sound.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="sound.Designer.cs">
+      <DependentUpon>sound.cs</DependentUpon>
+    </Compile>
     <Compile Include="swiftMess.cs" />
     <Compile Include="thesaurus.cs" />
     <Compile Include="translite.cs" />
@@ -128,6 +134,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="settingsColumnsJournal.resx">
       <DependentUpon>settingsColumnsJournal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="settingsForm.resx">
+      <DependentUpon>settingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sound.resx">
+      <DependentUpon>sound.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

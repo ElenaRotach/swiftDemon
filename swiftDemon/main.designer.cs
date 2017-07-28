@@ -36,6 +36,7 @@
             this.системныеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.столбцыЖурналаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.информацияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.звукToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,7 +71,8 @@
             // 
             this.выходToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.системныеToolStripMenuItem,
-            this.столбцыЖурналаToolStripMenuItem});
+            this.столбцыЖурналаToolStripMenuItem,
+            this.звукToolStripMenuItem});
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
             this.выходToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.выходToolStripMenuItem.Text = "настройки";
@@ -95,6 +97,13 @@
             this.информацияToolStripMenuItem.Name = "информацияToolStripMenuItem";
             this.информацияToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
             this.информацияToolStripMenuItem.Text = "информация";
+            // 
+            // звукToolStripMenuItem
+            // 
+            this.звукToolStripMenuItem.Name = "звукToolStripMenuItem";
+            this.звукToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.звукToolStripMenuItem.Text = "звук";
+            this.звукToolStripMenuItem.Click += new System.EventHandler(this.звукToolStripMenuItem_Click);
             // 
             // fMain
             // 
@@ -123,6 +132,7 @@
         private System.Windows.Forms.ToolStripMenuItem информацияToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem системныеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem столбцыЖурналаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem звукToolStripMenuItem;
     }
 }
 
