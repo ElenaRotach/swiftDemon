@@ -40,7 +40,7 @@ namespace swiftDemon
         public static bool firstStart = true;
         private static Thread jurnalThread;
         private Thread jurnalStart;
-
+        [STAThread]
         static void Main(string[] args)
         {
             #region new

@@ -35,8 +35,9 @@
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.системныеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.столбцыЖурналаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.информацияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.звукToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.информацияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -92,18 +93,22 @@
             this.столбцыЖурналаToolStripMenuItem.Text = "столбцы журнала";
             this.столбцыЖурналаToolStripMenuItem.Click += new System.EventHandler(this.столбцыЖурналаToolStripMenuItem_Click);
             // 
-            // информацияToolStripMenuItem
-            // 
-            this.информацияToolStripMenuItem.Name = "информацияToolStripMenuItem";
-            this.информацияToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
-            this.информацияToolStripMenuItem.Text = "информация";
-            // 
             // звукToolStripMenuItem
             // 
             this.звукToolStripMenuItem.Name = "звукToolStripMenuItem";
             this.звукToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.звукToolStripMenuItem.Text = "звук";
             this.звукToolStripMenuItem.Click += new System.EventHandler(this.звукToolStripMenuItem_Click);
+            // 
+            // информацияToolStripMenuItem
+            // 
+            this.информацияToolStripMenuItem.Name = "информацияToolStripMenuItem";
+            this.информацияToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.информацияToolStripMenuItem.Text = "информация";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // fMain
             // 
@@ -133,6 +138,7 @@
         private System.Windows.Forms.ToolStripMenuItem системныеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem столбцыЖурналаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem звукToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

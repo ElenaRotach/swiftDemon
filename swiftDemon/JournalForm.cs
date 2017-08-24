@@ -296,25 +296,28 @@ namespace swift
             worksheet = workbook.ActiveSheet;
             worksheet.Name = "export";
             excel.Columns("A:AA").ColumnWidth = 50;
-            int str = 1;
-            for(int z=0; z<23; z++)
+            int str = 0;
+            for(int z=0; z< tabMess.Columns.Count; z++)
             {
                 worksheet.Cells[1, z+1] = tabMess.Columns[z].HeaderCell.FormattedValue.ToString().Split(' ')[1];
             }
             while (str < tabMess.RowCount)
             {
-                for (int st = 0; st < 23; st++)
+                for (int st = 0; st < tabMess.Columns.Count; st++)
                 {
-                    string value = "";
-                    if (tabMess.Rows[str].Cells[st].Value == null)
-                    {
-                        value = "";
+                    if (tabMess.Columns[st].HeaderCell.FormattedValue.ToString().Split(' ')[1] != "thread") {
+                        string value = "";
+                        if (tabMess.Rows[str].Cells[st].Value == null)
+                        {
+                            value = "";
+                        }
+                        else
+                        {
+                            value = tabMess.Rows[str].Cells[st].Value.ToString();
+                        }
+                        worksheet.Cells[str + 2, st + 1] = value;
                     }
-                    else
-                    {
-                        value = tabMess.Rows[str].Cells[st].Value.ToString();
-                    }
-                    worksheet.Cells[str + 1, st + 1] = value;
+
                 }
                 str++;
             }
